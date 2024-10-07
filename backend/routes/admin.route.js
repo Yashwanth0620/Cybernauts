@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail, removeParticipant} = require("../controllers/admin.controller");
+const {getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail, removeParticipant, sendResponse} = require("../controllers/admin.controller");
 
 router.route("/events")
     .get(getEvents)
@@ -16,6 +16,7 @@ router.route("/event/remove/:id")
 
 router.post("/notify", addUpdates);
 router.post("/events/mail/:eventId", sendMail);
+router.post("/response/:contactId", sendResponse);
 
 module.exports = router;
 

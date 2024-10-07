@@ -2,6 +2,9 @@ const errorHandler = require("express-async-handler");
 const updatesModel = require("../models/updates.model");
 const eventModel = require("../models/event.model")
 
+const {eventUpdateMail, updateRejection, sendResponse} = require("./mail.controller");
+const contactModel = require("../models/contact.model");
+
 // @desc to get all the core body members of particular year
 // @API GET /admin/events
 const getEvents = errorHandler(async (req, res) => {
@@ -54,7 +57,20 @@ const addUpdates = errorHandler(async (req, res) => {
 // @desc to send mail for all event members
 // @API POST /admin/events/mail/:eventid/
 const sendMail = errorHandler(async (req, res) => {
+    const eventId = req.params.eventId;
+    const event = await eventModel.findById(eventId);
+    if(!event) {
+        res.status(404);
+        throw new Error("Event not found");
+    }
 
+    try {
+        await eventUpdateMail(req, res, participants);
+        res.status(200).json({ message: "Mail sent successfully" });
+    } catch {
+        res.status(500);
+        throw new Error("Mail not sent");
+    }
 });
 
 
@@ -76,9 +92,37 @@ const removeParticipant = errorHandler(async (req,res)=>{
         throw new Error("Event not found");
     }
 
-    res.status(200).json({ message: "Member removed successfully" });
+    try {
+        await updateRejection(req, res, participant);
+        res.status(200).json({ message: "Member removed successfully" });
+    } catch {
+        res.status(500);
+        throw new Error("Mail not sent");
+    }
+});
+
+const sendResponse = errorHandler(async (req, res) => {
+    const contactId = req.params.contactId;
+    const {response} = req.body;
+
+    if(!response) {
+        return res.status(400).json({ message: 'Please provide a response for the feedback.' });
+    }
+    const contact = await contactModel.findById(contactId);
+    if(!contact) {
+        res.status(404);
+        throw new Error("Contact details not found.");
+    }
+
+    try {
+        await sendResponse(req, res, contact.email, response);
+        res.status(200).json({ message: "Response sent successfully" });
+    } catch {
+        res.status(500);
+        throw new Error("Mail not sent");
+    }
 });
 
 // also add controllers for members functionality
 
-module.exports = { getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail,removeParticipant };
+module.exports = { getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail,removeParticipant, sendResponse };

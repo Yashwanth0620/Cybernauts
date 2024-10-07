@@ -23,11 +23,13 @@ const adminRoutes = require('./routes/admin.route');
 const eventRoutes = require("./routes/event.route");
 const memberRoutes = require("./routes/member.route");
 const loginRoutes = require("./routes/login.route")
+const contactRoutes = require("./routes/contact.route")
 // routing of endpoints
 app.use("/admin", isAuthenticated, adminRoutes);
 app.use("/events", eventRoutes);
 app.use("/members", memberRoutes);
 app.use("/auth", loginRoutes);
+app.use("/contact", contactRoutes);
 
 app.listen(PORT, () => {
     console.log(`Sever listening on port ${PORT}...`);
