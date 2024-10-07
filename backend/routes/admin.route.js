@@ -1,15 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-const {getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail} = require("../controllers/admin.controller");
+const {getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail, removeParticipant} = require("../controllers/admin.controller");
 
-router.use("/events")
+router.route("/events")
     .get(getEvents)
     .post(addEvent);
 
-router.use("/events/:id")
+router.route("/events/:id")
     .patch(updateEvent)
     .delete(deleteEvent);
+    
+router.route("/event/remove/:id")
+    .patch(removeParticipant);
 
 router.post("/notify", addUpdates);
 router.post("/events/mail/:eventId", sendMail);

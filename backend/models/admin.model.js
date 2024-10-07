@@ -17,6 +17,10 @@ const adminSchema = mongoose.Schema({
     },
     phone: {
         type: String
+    },
+    role: {
+        type: String,
+        default : "admin"
     }
 })
 
