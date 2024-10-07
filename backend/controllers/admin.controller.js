@@ -28,7 +28,7 @@ const updateEvent = errorHandler(async (req, res) => {
     const updatedEvent = await eventModel.findByIdAndReplace(id,event);
     if (!updatedEvent){
         res.status(404);
-        throw new error("Event not found" );
+        throw new Error("Event not found" );
     }
     else res.status(200).json({message : "Event Deleted Successfully"});
 });
@@ -40,8 +40,8 @@ const deleteEvent = errorHandler(async (req, res) => {
     const event = await eventModel.findByIdAndDelete(id);
     if (!event){
         res.status(404);
-        throw new error("Event not found" );
-    } 
+        throw new Error("Event not found" );
+    }
     else res.status(200).json({message : "Event Deleted Successfully"});
 });
 

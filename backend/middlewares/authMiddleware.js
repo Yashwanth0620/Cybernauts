@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const isAuthenticated = asyncHandler(async (req, res, next) => {
     let token;
     const authHeader = req.headers.authorization || req.headers.Authorization;
-
+    
     if (authHeader && authHeader.startsWith("Bearer")) {
         token = authHeader.split(" ")[1];
 
