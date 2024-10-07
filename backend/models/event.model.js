@@ -11,7 +11,7 @@ const eventSchema = mongoose.Schema({
     startDate: {
         type: Date,
         required: true,
-        default: Date.now()
+        default: Date.now
     },
     endDate: {
         type: Date,
@@ -21,7 +21,7 @@ const eventSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    participants: [String],
+  
     startTime: {
         type: String,
         required: true
@@ -33,7 +33,19 @@ const eventSchema = mongoose.Schema({
     form: {
         type: String,
         required: true
-    }
+    },
+    participants: [String],
+    organizer: String,
+    faculty: [String],
+    winners: [{
+        position: { type: String}, 
+        name: { type: String}     
+    }],
+    cheifGuest : String,
+    contributers : [{
+        contribution: { type: String}, 
+        roll: { type: String} 
+    }]
 })
 
 module.exports = mongoose.model("Event", eventSchema);

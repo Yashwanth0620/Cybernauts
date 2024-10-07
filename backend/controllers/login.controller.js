@@ -22,16 +22,16 @@ const checkUser = errorHandler(async (req, res) => {
                     res.status(200).json({ status: "success", token, email,role });
                 } else {
                     res.status(500)
-                    throw new error("JWT Error");
+                    throw new Error("JWT Error");
                 }
             });
         } else {
             res.status(401)
-            throw new error("Invalid Credentials");
+            throw new Error("Invalid Credentials");
         }
     } else {
         res.status(500)
-        throw new error("Server Error");
+        throw new Error("Server Error");
     }
 });
 
@@ -43,7 +43,7 @@ const saveUser = errorHandler(async (req, res) => {
 
     if (existingUser) {
         res.status(400)
-        throw new error("User already exists");
+        throw new Error("User already exists");
     } else {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
