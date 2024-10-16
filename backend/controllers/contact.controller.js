@@ -1,4 +1,4 @@
-const contactModel = require('../models/contactModel');
+const contactModel = require('../models/contact.model');
 const errorHandler = require("express-async-handler");
 
 const sendFeedback = errorHandler(async (req, res) => {

@@ -2,7 +2,7 @@ const errorHandler = require("express-async-handler");
 const updatesModel = require("../models/updates.model");
 const eventModel = require("../models/event.model")
 
-const {eventUpdateMail, updateRejection, sendResponse} = require("./mail.controller");
+const {eventUpdateMail, updateRejection, sendMailResponse} = require("./mail.controller");
 const contactModel = require("../models/contact.model");
 
 // @desc to get all the core body members of particular year
@@ -58,6 +58,7 @@ const addUpdates = errorHandler(async (req, res) => {
 // @API POST /admin/events/mail/:eventid/
 const sendMail = errorHandler(async (req, res) => {
     const eventId = req.params.eventId;
+    const {notice} = req.body;
     const event = await eventModel.findById(eventId);
     if(!event) {
         res.status(404);
@@ -65,7 +66,7 @@ const sendMail = errorHandler(async (req, res) => {
     }
 
     try {
-        await eventUpdateMail(req, res, participants);
+        await eventUpdateMail(event.participants, notice);
         res.status(200).json({ message: "Mail sent successfully" });
     } catch {
         res.status(500);
@@ -93,7 +94,7 @@ const removeParticipant = errorHandler(async (req,res)=>{
     }
 
     try {
-        await updateRejection(req, res, participant);
+        await updateRejection(participant);
         res.status(200).json({ message: "Member removed successfully" });
     } catch {
         res.status(500);
@@ -115,7 +116,7 @@ const sendResponse = errorHandler(async (req, res) => {
     }
 
     try {
-        await sendResponse(req, res, contact.email, response);
+        await sendMailResponse(contact.email, response);
         res.status(200).json({ message: "Response sent successfully" });
     } catch {
         res.status(500);
