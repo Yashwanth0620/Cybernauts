@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* Contact Section */
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-content {
+    width: 50%;
+    padding: 100px;
+    font-family: 'Playfair display', sans-serif;
+}
+
+.contact-content h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.contact-content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.contact-form {
+    width: 38%;
+    height: 320px;
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 10px 10px 5px grey;
+    margin-right: 130px;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-size: 18px;
+    color: #663300;
+    margin-bottom: 5px;
+}
+
+.contact-form input, .contact-form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%;
+    background-color: #fafafa;
+}
+
+.contact-form input::placeholder, .contact-form textarea::placeholder {
+    color: #ccc;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: #6633cc;
+    box-shadow: 0 0 5px rgba(102, 51, 204, 0.5);
+}
+
+.submit-btn {
+    background-color: #003366;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #002244;
+}
+
+
+@media (max-width: 1240px) {
+    .contact-section {
+        flex-direction: column;
+    }
+    .contact-form {
+        margin: auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-section {
+        flex-direction: column;
+        align-items: center; 
+        padding: 20px; 
+    }
+
+    .contact-content, .contact-form {
+        width: 90%; 
+        margin: 0; 
+    }
+
+    .contact-content {
+        padding: 20px; 
+        text-align: center; 
+    }
+
+    .contact-form {
+        margin-right: 0;
+    }
+
+    nav .nav-menu li {
+        display: block; 
+        margin: 10px 0; 
+    }
+}

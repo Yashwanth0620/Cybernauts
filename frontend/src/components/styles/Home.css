@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+a {
+  text-decoration: none;
+}
+
+/* Top Header */
+.top-header {
+  background-color: #eee;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  position: relative;
+  text-align: center;
+}
+
+.top-header span, .top-header .link{
+  width: 33.33%;
+}
+
+.top-header span {
+  text-align: left;
+}
+
+.top-header .admin-link {
+  text-align: right;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-link a {
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  font-family: 'Montserrat', sans-serif;
+  background: url('../../assets/banner.jpeg') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+  position: relative;
+  min-height: 80px;
+  display: flex;
+}
+
+.hero .logo {
+  flex-basis: 1;
+  flex-grow: 1;
+}
+
+.hero img {
+  width: 80%;
+  height: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero div:not(.logo) {
+  flex-basis: 3;
+  flex-grow: 3;
+  text-align: left;
+  margin-left: 10px;
+  align-content: center;
+  /* transform: translateY(-50%); */
+}
+
+.hero div:not(.logo) * {
+  
+}
+
+.hero h1 {
+  font-size: 3em;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.hero i {
+  color: white;
+}
+
+.hero p, .hero h4, .hero h5 {
+  color: white;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-weight: bold;
+}
+
+.hero button {
+  margin-top: 10px;
+  background-color: #5aa9e6;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 50px;
+  border: none;
+  font-size: 20px;
+}
+
+
+/* About Section */
+.about {
+  padding: 0 100px;
+  margin-bottom: 40px;
+  background-color: #fff;
+  color: #162978;
+}
+
+.about p, .recent-event p {
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 60px;
+  margin-bottom: 20px;
+}
+
+.about h2, .recent-event h2 {
+  text-align: left;
+  font-family: 'Playfair Display', sans-serif;
+  font-size: 2em;
+}
+
+.about h4, .recent-event h4 {
+  font-family: 'Playfair Display', sans-serif;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+
+.about h3, .recent-event h3 {
+  text-align: left;
+  font-family: 'Playfair Display', sans-serif;
+  margin-bottom: 20px;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.about .text-content {
+  flex-grow: 1;
+  font-size: 20px;
+}
+
+.about .image-content img {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 10px;
+  max-height: 350px;
+}
+
+.about button, .recent-event button {
+  background-color: lightblue;
+  padding: 20px 70px;
+  border-radius: 50px;
+  border: none;
+  font-size: 20px;
+  margin-top: 20px;
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+/* Recent Event Section */
+.recent-event {
+  padding: 0 100px;
+  margin-bottom: 40px;
+  background-color: white;
+  text-align: center;
+}
+
+.recent-event img {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+
+.event-content p {
+  margin-left: 0;
+  text-align: justify;
+}
+
+.event-content h4 {
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .top-header {
+    flex-direction: column;
+  }
+
+  .top-header span, .top-header .link {
+    width: 100%;
+  }
+
+  .top-header span {
+    text-align: center;
+  }
+
+  .top-header .admin-link {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+  }
+  
+  .hero img {
+    width: 150px;
+    position: relative;
+    top: 0;
+    transform: translateY(0);
+  }
+  
+  .hero h1 {
+    font-size: 1.5em;
+    text-align: center;
+  }
+  
+  .hero button {
+    padding: 10px 30px;
+  }
+  
+  .about-content h4, .about-content p {
+    margin-left: 0;
+  }
+  
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .about .text-content, .about .image-content {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .about button {
+    padding: 15px 50px;
+  }
+
+  .recent-event {
+    text-align: left;
+  }
+
+  .recent-event img {
+    height: auto;
+    max-width: 100%;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1400px) {
+  .about-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .about, .recent-event {
+    padding: 40px 50px;
+  }
+
+  .about {
+    padding-bottom: 0;
+  }
+}

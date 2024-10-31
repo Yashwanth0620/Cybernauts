@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+/* Blog Section */
+.blog-section {
+    padding: 40px 10%;
+}
+
+.blog-section h2 {
+    font-size: 36px;
+    margin-bottom: 5px;
+    font-family: 'Playfair Display', sans-serif;
+}
+
+.blog-section p {
+    font-family: 'Playfair Display', sans-serif;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.blog-post {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+}
+
+.post-content {
+    width: 60%;
+}
+
+.blog-post h3 {
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.post-content p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.post-content .date {
+    font-size: 14px;
+    color: #999;
+}
+
+.post-image {
+    width: 30%;
+}
+
+.post-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Footer */
+
+/* .footer-content {
+    display: flex;
+    justify-content: space-between;
+} */
+
+/* .footer-content .left img {
+    width: 150px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+} */
+
+/* .footer-content .left p {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-left: 1px;
+} */
+
+/* .footer-content .center h4,
+.footer-content .right h4 {
+    font-size: 18px;
+    color: #003366;
+    margin-bottom: 10px;
+} */
+
+/* .footer-content .center ul,
+.footer-content .right ul {
+    list-style-type: none;
+    padding: 0;
+} */
+
+/* .footer-content .center ul li {
+    margin-bottom: 10px;
+} */
+
+/* .footer-content .center ul li a,
+.footer-content .right p a {
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+} */
+
+
+
+/* .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block; 
+        margin: 5px 0; 
+    }
+
+    .post-content p {
+        margin-bottom: 10px;
+    }
+
+    .blog-post {
+        flex-direction: column;
+    }
+    .blog-post .post-content {
+        width: 100%;
+    }
+
+    .blog-post .post-image  {
+        width: 80%;
+        align-self: center;
+        margin-top: 20px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-content .left img {
+        margin-left: 170px;
+    }
+}

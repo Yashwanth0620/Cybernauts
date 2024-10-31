@@ -1,27 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
-import Form from './Form';
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Home from "./components/Home";
+import Events from "./components/Events"
+import Footer from "./components/Footer";
+import Blog from "./components/Blog";
+import Contact from "./components/Contact";
+import NavBar from "./components/NavBar";
+import "./App.css";
 function App() {
+
+  const location = useLocation();
   return (
-    <BrowserRouter>
-      <div className="app">
-        {isAuthenticated ? (
-          <div className="d-flex h-100">
-            <Routes>
-              {/* for admin routes */}
-            </Routes>
-          </div>
-        ) : (
-          <div className="">
-            <Routes>
-              {/* for user routes */}
-            </Routes>
-          </div>
-        )}
-      </div>
-    </BrowserRouter>
+    <div className="container">
+      {location.pathname !== "/" && <NavBar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/contactus" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 
-export default App;
+function WrappedApp() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default WrappedApp;
