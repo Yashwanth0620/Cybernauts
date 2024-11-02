@@ -97,7 +97,7 @@ export default function Events() {
       <div className="card-container">
         {upcomingEvents.map((event, index) => (
           <div className="card" key={index}>
-            <img className="im" src={event.imgSrc} alt={event.alt} />
+            <div class="im-parent"><img className="im" src={event.imgSrc} alt={event.alt} /></div>
             <div className="card-body">
               <div className="item1">
                 <h1>{event.title}</h1>

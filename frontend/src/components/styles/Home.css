@@ -5,6 +5,10 @@ a {
   text-decoration: none;
 }
 
+.homehome {
+  overflow-x: scroll;
+}
+
 /* Top Header */
 .top-header {
   background-color: #eee;

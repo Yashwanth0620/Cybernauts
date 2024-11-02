@@ -127,10 +127,19 @@ color: black;
 .card {
     width: 33.33%;
 }
-.im {
+.im-parent {
     width: 95%;
-    height: 250px;
+    aspect-ratio: 1.5 / 1;
+    /* height: 250px; */
     border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.im {
+  width: 100%;
 }
 .item1 {
     display: flex;

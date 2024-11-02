@@ -31,7 +31,7 @@ const App = () => {
         </div>
       </section>
 
-      <NavBar />
+      <NavBar largeWidth={ window.innerWidth > 670}/>
 
       {/* About Section */}
       <section className="about">

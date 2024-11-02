@@ -12,6 +12,22 @@
     color: #162978;
     padding: 20px 0;
     margin-bottom: 40px;
+    padding-left: 30px;
+}
+
+.nav-logo img {
+    margin-right: auto;
+}
+
+.nav-bar .bars {
+    padding: 0 20px;
+    display: none;
+    width: 100%;
+}
+
+.nav-bar .bar {
+    margin-left: auto;
+    cursor: pointer;
 }
   
 .nav-bar .link {
@@ -29,17 +45,33 @@
 @media (max-width: 670px) {
     .nav-bar {
         flex-direction: column;
+        padding-left: 0;
     }
-
+    
+    .nav-bar .bars * {
+        width: 50px;
+    }
+    
+    .nav-bar .bars {
+        display: flex;
+        padding-right: 0;
+        align-items: center;
+    }
+    
     .nav-bar p {
         display: none;
     }
-
+    
+    .nav-bar .link:hover {
+        background-color: rgb(57, 57, 143);
+        color: white;
+    }
+    
     .nav-bar .link {
         width: 100%;
         padding: 20px;
     }
-
+    
     .nav-bar .link:first-child {
         margin-left: 0px;
     }
