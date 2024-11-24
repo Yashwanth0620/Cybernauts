@@ -7,6 +7,7 @@ import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 import NavBar from "./components/NavBar";
 import "./App.css";
+import AdminLogin from "./components/AdminLogin";
 function App() {
 
   const location = useLocation();
@@ -18,6 +19,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/contactus" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/admin/login" element={<AdminLogin />}></Route>
       </Routes>
       <Footer />
     </div>

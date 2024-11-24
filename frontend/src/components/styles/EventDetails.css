@@ -1,0 +1,114 @@
+.event-details-page {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  max-height: 60%;
+  z-index: 999;
+  background-color: white;
+  padding: 50px 60px;
+  overflow-y: scroll;
+}
+
+.event-details-page .event-name {
+  font-family: "Playfair Display", sans-serif;
+  font-size: x-large;
+  color: black;
+}
+
+.event-details-page .date {
+  font-size: smaller;
+  color: black;
+}
+
+.event-details-page .people {
+  font-family: "roboto", sans-serif;
+  margin-bottom: 20px;
+}
+
+.event-details-page .people b {
+  color: rgb(65, 65, 65);
+}
+
+.event-details-page .description {
+  font-family: sans-serif;
+  text-align: justify;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.event-details-page .participants {
+  color: rgb(118, 118, 118);
+  font-size: smaller;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-bottom: 10px;
+}
+
+.image-carousel {
+  margin: auto;
+  width: 70%;
+  height: 200px;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-btn {
+  flex-grow: 1;
+  margin: 5px;
+  padding: 20px;
+  max-width: 300px;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.admin-btn.edit {
+  background-color: #3B71CA;
+}
+
+.admin-btn.delete {
+  background-color: #DC4C64;
+}
+
+@media (max-width: 1800px) {
+  .event-details-page {
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    max-height: 70%;
+  }
+  .event-details-page .image-carousel {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1200px) {
+    .event-details-page .image-carousel {
+        width: 80%;
+    }
+}
+
+@media (max-width: 900px) {
+    .event-details-page .image-carousel {
+        width: 100%;
+    }
+}
+
+@media (max-width: 670px) {
+  .event-details-page {
+    top: 20%;
+    left: 5%;
+    right: 5%;
+    max-height: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+    .event-details-page {
+        padding: 30px 30px;
+    }
+}
