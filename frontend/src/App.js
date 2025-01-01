@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 import NavBar from "./components/NavBar";
+import Members from "./components/Members"
 import "./App.css";
 import AdminLogin from "./components/AdminLogin";
 function App() {
@@ -16,6 +17,7 @@ function App() {
       {location.pathname !== "/" && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/members" element={<Members />} />
         <Route path="/events" element={<Events />} />
         <Route path="/contactus" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />

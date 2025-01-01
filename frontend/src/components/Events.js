@@ -163,6 +163,14 @@ export default function Events() {
           </div>
         ))}
       </div>
+
+      {/* Overlay controlling */}
+      {(registerPage || detailsPage) && <div className="overlay" onClick={() => {
+        setDetailsPage(false);
+        setRegisterPage(false);
+      }}></div>}
+
+      {/* Displaying details for an event */}
       {registerPage && <RegisterEvent event={selectedEvent} isAdmin={isAdmin} />}
       {detailsPage && <EventDetails event={selectedEvent} isAdmin={isAdmin} />}
     </div>

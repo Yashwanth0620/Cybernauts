@@ -92,24 +92,24 @@ color: black;
   padding-left: 20px;
   padding-right: 30px;
 }
-.section-label::after {
+.section-label::after, .section-label::before {
   content: "";
   flex-grow: 5;
   flex-shrink: 5;
   border-bottom: 4px solid black;
 }
-.section-label::before {
+.events .section-label::before {
   content: "";
   flex-grow: 0.4;
   flex-shrink: 0.4;
   border-bottom: 4px solid black;
 }
 
-.section-label::before {
+.events .section-label::before {
   margin-right: 10px;
 }
 
-.section-label::after {
+.events .section-label::after {
     margin-left: 10px;
 }
 

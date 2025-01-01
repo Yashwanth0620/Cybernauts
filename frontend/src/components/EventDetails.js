@@ -7,7 +7,7 @@ import "./styles/EventDetails.css";
 export default function EventDetails({ event, isAdmin }) {
   return (
     <div>
-      <div className="overlay"></div>
+      {/* <div className="overlay"></div> */}
 
       {/* Events Details Page */}
       <div className="event-details-page">

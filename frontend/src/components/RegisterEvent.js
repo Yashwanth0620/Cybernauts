@@ -4,7 +4,7 @@ import "./styles/RegisterEvent.css";
 export default function RegisterEvent({ event, isAdmin }) {
   return (
     <div>
-      <div className="overlay"></div>
+      {/* <div className="overlay"></div> */}
 
       {/* Register page */}
       <div className="register-page">

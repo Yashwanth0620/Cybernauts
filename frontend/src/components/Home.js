@@ -69,7 +69,7 @@ const App = () => {
         <h3>Our recent event</h3>
         <div className="event-content">
           <img
-            src="https://news.microsoft.com/wp-content/uploads/prod/sites/45/2019/07/Teamshacking@Microsoft2019hackathon_-960x630.jpg"
+            src="https://webflow-amber-prod.gumlet.io/620e4101b2ce12a1a6bff0e8/65e80f722774b7ae68fbecdb_samantha-gades-fIHozNWfcvs-unsplash%20(1).jpg?w=1600"
             alt="Recent Hackathon Event"
           />
           <h4>
