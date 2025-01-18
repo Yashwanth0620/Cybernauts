@@ -27,7 +27,7 @@ const App = () => {
           <h4>
             <i>"Innovating the future of Technology"</i>
           </h4>
-          <button>View Event Highlights</button>
+          <button><Link to="events">View Event Highlights</Link></button>
         </div>
       </section>
 
@@ -60,7 +60,7 @@ const App = () => {
               />
           </div>
         </div>
-        <button>View our Members</button>
+        <button><Link to="members">View our Members</Link></button>
       </section>
 
       {/* Recent Event Section */}
@@ -79,7 +79,7 @@ const App = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum esse accusantium ad velit mollitia illo repellendus, ipsam in deleniti. Possimus architecto reprehenderit dolor ea, soluta quibusdam est impedit vero similique?
             Reiciendis incidunt praesentium accusantium, modi sapiente quis natus minus facere, dolores optio veniam commodi fugit perferendis, dicta nesciunt earum ab. Iste saepe molestias laudantium voluptate voluptates eum recusandae pariatur veritatis.
           </p>
-          <button>Join Us</button>
+          <button><Link to="contactus">Contact Us</Link></button>
         </div>
       </section>
     </div>

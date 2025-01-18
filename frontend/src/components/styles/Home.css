@@ -96,14 +96,17 @@ a {
   font-weight: bold;
 }
 
-.hero button {
+.hero Button {
   margin-top: 10px;
-  background-color: #5aa9e6;
-  color: white;
-  padding: 15px 40px;
-  border-radius: 50px;
   border: none;
   font-size: 20px;
+}
+
+.hero Button * {
+  background-color: #5aa9e6;
+  border-radius: 50px;
+  padding: 15px 40px;
+  color: white;
 }
 
 

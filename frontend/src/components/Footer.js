@@ -17,10 +17,10 @@ export default function Footer() {
           <h4>Quick Links</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="events.js">Events</a></li>
-            <li><a href="members.js">Members</a></li>
-            <li><a href="blog.js">Blog</a></li>
-            <li><a href="contact.js">Contact us</a></li>
+            <li><a href="events">Events</a></li>
+            <li><a href="members">Members</a></li>
+            <li><a href="blog">Blog</a></li>
+            <li><a href="contactus">Contact us</a></li>
           </ul>
         </div>
         <div className="contact-info">
