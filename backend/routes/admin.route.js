@@ -11,7 +11,7 @@ const { addMember, getMembers, deleteMember, addContributions } = require("../co
 //routes for event operations
 router.route("/events")
     .get(getEvents)
-    .post(addEvent);
+    .post(upload.single("poster"),addEvent);
 
 router.route("/events/:id")
     .patch(updateEvent)

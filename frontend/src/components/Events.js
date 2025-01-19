@@ -7,6 +7,7 @@ export default function Events() {
   const [registerPage, setRegisterPage] = useState(false);
   const [detailsPage, setDetailsPage] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const isAdmin = !!localStorage.getItem("token");
 
   const upcomingEvents = [
@@ -18,59 +19,67 @@ export default function Events() {
       imgSrc:
         "https://cdn1.expresscomputer.in/wp-content/uploads/2019/07/25100405/Microsoft-Hackathon.jpg",
       alt: "XYZ Hackers Event",
-      buttonLabel: "Register",
-      desc: "lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, lorem ipsum dolor sit amet, con, sed diam nonum, consetetur, sed diam non, tempor, ",
     },
     {
-      _id: 1,
+      _id: 2,
       title: "Tech Seminar",
       startDate: "6th Nov 2024",
-      endDate: "7th Nov 2024",
       type: "Seminar",
       imgSrc: "https://eduadvice.in/media/uploads/blog/seminar_images.jpg",
       alt: "Tech Seminar Event",
-      buttonLabel: "Register",
     },
     {
-      _id: 1,
+      _id: 3,
       title: "IOT Workshop",
       startDate: "24th Dec 2024",
       type: "Workshop",
       imgSrc:
         "https://www.techmarshals.com/wp-content/uploads/2017/07/workshops.jpg",
       alt: "IOT Workshop Event",
-      buttonLabel: "Register",
     },
   ];
 
   const completedEvents = [
     {
+      _id: 4,
       title: "Gen AI Hackathon",
       startDate: "7th Oct 2024",
       type: "Hackathon",
       imgSrc: "https://cvr.ac.in/home4/images/hackathon2k18/2nd%20Prize.jpg",
       alt: "Gen AI Hackathon Event",
-      buttonLabel: "View Details",
     },
     {
+      _id: 5,
       title: "DevOps Workshop",
       startDate: "10th Sep 2024",
       type: "Workshop",
       imgSrc:
         "https://www.techmarshals.com/wp-content/uploads/2017/07/workshops.jpg",
       alt: "DevOps Workshop Event",
-      buttonLabel: "View Details",
     },
     {
+      _id: 6,
       title: "Virtual Reality in Learning",
       startDate: "30th Aug 2024",
       type: "Seminar",
       imgSrc:
         "https://tistcochin.edu.in/wp-content/uploads/2024/09/PIC2-CE-workshop24.png",
       alt: "Virtual Reality Seminar Event",
-      buttonLabel: "View Details",
     },
   ];
+
+  // Filter events based on the search query
+  const filteredUpcomingEvents = upcomingEvents.filter((event) =>
+    `${event.title} ${event.startDate} ${event.type}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
+  const filteredCompletedEvents = completedEvents.filter((event) =>
+    `${event.title} ${event.startDate} ${event.type}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="events">
@@ -80,21 +89,22 @@ export default function Events() {
       </div>
 
       <div className="search-bar">
-        <form action="/search" method="GET">
+        <form onSubmit={(e) => e.preventDefault()}>
           <span className="search-icon">
             <i className="fas fa-search"></i>
           </span>
           <input
             type="text"
             id="search"
-            placeholder="Search by name, date, description etc"
+            placeholder="Search by name, date, type etc"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </form>
-        <select>
-          <option value="" disabled selected hidden>
-            Filter
-          </option>
-          <option value="all">All</option>
+        <select
+          onChange={(e)=> setSearchQuery(e.target.value)}
+          >
+          <option value="">All</option>
           <option value="hackathon">Hackathon</option>
           <option value="seminar">Seminar</option>
           <option value="workshop">Workshop</option>
@@ -109,9 +119,9 @@ export default function Events() {
         <span>Upcoming</span>
       </div>
       <div className="card-container">
-        {upcomingEvents.map((event, index) => (
+        {filteredUpcomingEvents.map((event, index) => (
           <div className="card" key={index}>
-            <div class="im-parent">
+            <div className="im-parent">
               <img className="im" src={event.imgSrc} alt={event.alt} />
             </div>
             <div className="card-body">
@@ -139,7 +149,7 @@ export default function Events() {
         <span>Completed</span>
       </div>
       <div className="card-container">
-        {completedEvents.map((event, index) => (
+        {filteredCompletedEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
               <img className="im" src={event.imgSrc} alt={event.alt} />
@@ -165,10 +175,15 @@ export default function Events() {
       </div>
 
       {/* Overlay controlling */}
-      {(registerPage || detailsPage) && <div className="overlay" onClick={() => {
-        setDetailsPage(false);
-        setRegisterPage(false);
-      }}></div>}
+      {(registerPage || detailsPage) && (
+        <div
+          className="overlay"
+          onClick={() => {
+            setDetailsPage(false);
+            setRegisterPage(false);
+          }}
+        ></div>
+      )}
 
       {/* Displaying details for an event */}
       {registerPage && <RegisterEvent event={selectedEvent} isAdmin={isAdmin} />}

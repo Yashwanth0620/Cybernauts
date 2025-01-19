@@ -20,7 +20,12 @@ const getEvents = errorHandler(async (req, res) => {
 // @API POST /admin/events
 const addEvent = errorHandler(async (req, res) => {
   const event = req.body;
-  await eventModel.create(event);
+  const imageBuffer = req.file.buffer;
+  const newEvent={
+    ...event,
+    poster : imageBuffer
+  }
+  await eventModel.create(newEvent);
   res.status(200).json({ message: "Event added successfully" });
 });
 
