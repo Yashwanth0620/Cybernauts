@@ -52,7 +52,7 @@ const eventSchema = mongoose.Schema({
     },
   ],
   cheifGuest: String,
-  contributers: [
+  contributors: [
     {
       contribution: { type: String },
       roll: { type: String },

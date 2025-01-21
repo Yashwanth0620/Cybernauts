@@ -9,6 +9,25 @@
   padding: 5px 55px;
   font-family: 'Playfair Display', sans-serif;
 }
+.head-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.head-text {
+  max-width: 80%;
+}
+
+.head-btn {
+  background-color: #007bff; 
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 .head h1 {
   font-size: 30px;
   color: #1a1a5e;

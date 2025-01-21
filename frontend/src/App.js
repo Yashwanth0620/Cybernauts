@@ -9,8 +9,10 @@ import NavBar from "./components/NavBar";
 import Members from "./components/Members"
 import "./App.css";
 import AdminLogin from "./components/AdminLogin";
+import AddEventForm from "./components/Admin/AddEventForm";
+import EditEventForm from "./components/Admin/EditEventForm";
+import AddBlogForm from "./components/Admin/AddBlogForm";
 function App() {
-
   const location = useLocation();
   return (
     <div className="container">
@@ -22,6 +24,9 @@ function App() {
         <Route path="/contactus" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/admin/login" element={<AdminLogin />}></Route>
+        <Route path="/admin/add-event" element={<AddEventForm />}></Route>
+        <Route path="/admin/edit-event" element={<EditEventForm />}></Route>
+        <Route path="/admin/add-blog" element={<AddBlogForm />}></Route>
       </Routes>
       <Footer />
     </div>

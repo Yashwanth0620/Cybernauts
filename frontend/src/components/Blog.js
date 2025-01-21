@@ -27,10 +27,10 @@ const BlogPage = () => {
     return (
         <div>
 
-            {/* Blog Section */}
             <section className="blog-section">
                 <h2>Blog</h2>
                 <p>Stay informed with what we do...</p>
+                
 
                 {/* Blog Posts */}
                 {blogPosts.map((post, index) => (

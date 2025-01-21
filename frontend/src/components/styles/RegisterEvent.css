@@ -60,15 +60,26 @@
 
 .register-page .register-button {
   display: flex;
+  justify-content: center;
 }
 
-.register-page .register-button button {
-  margin: auto;
-  padding: 15px 90px;
-  border-radius: 20px;
-  background-color: rgb(45, 45, 45);
+.admin-btn {
+  flex-grow: 1;
+  margin: 5px;
+  padding: 20px;
+  max-width: 300px;
+  border-radius: 10px;
   color: white;
-  font-size: medium;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.admin-btn.edit {
+  background-color: #3B71CA;
+}
+
+.admin-btn.delete {
+  background-color: #DC4C64;
 }
 
 @media (max-width: 1800px) {

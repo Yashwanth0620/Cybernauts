@@ -20,13 +20,42 @@ const getEvents = errorHandler(async (req, res) => {
 // @API POST /admin/events
 const addEvent = errorHandler(async (req, res) => {
   const event = req.body;
-  const imageBuffer = req.file.buffer;
-  const newEvent={
-    ...event,
-    poster : imageBuffer
+
+  // Validate required fields (basic validation, you can expand as needed)
+  if (!event.title || !event.startDate || !event.endDate || !event.desc) {
+    return res.status(400).json({ message: "Missing required fields" });
   }
-  await eventModel.create(newEvent);
-  res.status(200).json({ message: "Event added successfully" });
+
+  // Validate contributors if they exist
+  let contributors = [];
+  try {
+    if (event.contributors) {
+      contributors = JSON.parse(event.contributors); // Parse the contributors if it's a string
+      if (!Array.isArray(contributors)) {
+        throw new Error("Contributors should be an array");
+      }
+    }
+  } catch (err) {
+    return res.status(400).json({ message: "Invalid contributors format" });
+  }
+
+  // Handle optional poster (it will be a buffer if uploaded)
+  const imageBuffer = req.file ? req.file.buffer : null;
+
+  const newEvent = {
+    ...event,
+    contributors, // Use the parsed contributors array
+    poster: imageBuffer, // Add poster if available
+  };
+
+  // Save event to the database
+  try {
+    await eventModel.create(newEvent);
+    res.status(200).json({ message: "Event added successfully" });
+  } catch (err) {
+    console.error("Error adding event:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 // @desc To update the event details
@@ -44,7 +73,7 @@ const updateEvent = errorHandler(async (req, res) => {
 // @desc To delete an event
 // @API DELETE /admin/events/:id
 const deleteEvent = errorHandler(async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const event = await eventModel.findByIdAndDelete(id);
   if (!event) {
     res.status(404);

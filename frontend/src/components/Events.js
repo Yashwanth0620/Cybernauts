@@ -1,91 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./styles/Events.css";
 import RegisterEvent from "./RegisterEvent";
 import EventDetails from "./EventDetails";
 
 export default function Events() {
+  const navigate = useNavigate();
+
   const [registerPage, setRegisterPage] = useState(false);
   const [detailsPage, setDetailsPage] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [completedEvents, setCompletedEvents] = useState([]);
+  const [filteredUpcomingEvents, setFilteredUpcomingEvents] = useState([]);
+  const [filteredCompletedEvents, setFilteredCompletedEvents] = useState([]);
   const isAdmin = !!localStorage.getItem("token");
 
-  const upcomingEvents = [
-    {
-      _id: 1,
-      title: "XYZ Hackers",
-      startDate: "17th Oct 2024",
-      type: "Hackathon",
-      imgSrc:
-        "https://cdn1.expresscomputer.in/wp-content/uploads/2019/07/25100405/Microsoft-Hackathon.jpg",
-      alt: "XYZ Hackers Event",
-    },
-    {
-      _id: 2,
-      title: "Tech Seminar",
-      startDate: "6th Nov 2024",
-      type: "Seminar",
-      imgSrc: "https://eduadvice.in/media/uploads/blog/seminar_images.jpg",
-      alt: "Tech Seminar Event",
-    },
-    {
-      _id: 3,
-      title: "IOT Workshop",
-      startDate: "24th Dec 2024",
-      type: "Workshop",
-      imgSrc:
-        "https://www.techmarshals.com/wp-content/uploads/2017/07/workshops.jpg",
-      alt: "IOT Workshop Event",
-    },
-  ];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/events");
+        const { upcomingEvents, completedEvents } = response.data;
 
-  const completedEvents = [
-    {
-      _id: 4,
-      title: "Gen AI Hackathon",
-      startDate: "7th Oct 2024",
-      type: "Hackathon",
-      imgSrc: "https://cvr.ac.in/home4/images/hackathon2k18/2nd%20Prize.jpg",
-      alt: "Gen AI Hackathon Event",
-    },
-    {
-      _id: 5,
-      title: "DevOps Workshop",
-      startDate: "10th Sep 2024",
-      type: "Workshop",
-      imgSrc:
-        "https://www.techmarshals.com/wp-content/uploads/2017/07/workshops.jpg",
-      alt: "DevOps Workshop Event",
-    },
-    {
-      _id: 6,
-      title: "Virtual Reality in Learning",
-      startDate: "30th Aug 2024",
-      type: "Seminar",
-      imgSrc:
-        "https://tistcochin.edu.in/wp-content/uploads/2024/09/PIC2-CE-workshop24.png",
-      alt: "Virtual Reality Seminar Event",
-    },
-  ];
+        setUpcomingEvents(upcomingEvents);
+        setCompletedEvents(completedEvents);
+        setFilteredCompletedEvents(completedEvents);
+        setFilteredUpcomingEvents(upcomingEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   // Filter events based on the search query
-  const filteredUpcomingEvents = upcomingEvents.filter((event) =>
-    `${event.title} ${event.startDate} ${event.type}`
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
-  );
 
-  const filteredCompletedEvents = completedEvents.filter((event) =>
-    `${event.title} ${event.startDate} ${event.type}`
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
-  );
+  const handleSearch = (e) => {
+    const query = e.target.value; // Get the input value
+    setSearchQuery(query); // Update the search query state
+
+    // Filter the events based on the input value
+    setFilteredCompletedEvents(
+      completedEvents.filter((event) =>
+        `${event.title} ${event.startDate} ${event.type}`
+          .toLowerCase()
+          .includes(query.toLowerCase())
+      )
+    );
+    setFilteredUpcomingEvents(
+      upcomingEvents.filter((event) =>
+        `${event.title} ${event.startDate} ${event.type}`
+          .toLowerCase()
+          .includes(query.toLowerCase())
+      )
+    );
+  };
+
+  const openAddEventForm = () => {
+    // window.open("/admin/add-event", "_blank");
+    navigate("/admin/add-event");
+  };
 
   return (
     <div className="events">
       <div className="head">
-        <h1>Events</h1>
-        <h2>Explore all our past and upcoming events</h2>
+        <div className="head-container">
+          <div className="head-text">
+            <h1>Events</h1>
+            <h2>Explore all our past and upcoming events</h2>
+          </div>
+          {isAdmin && (
+            <button className="head-btn" onClick={openAddEventForm}>
+              Add Event
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="search-bar">
@@ -98,12 +90,10 @@ export default function Events() {
             id="search"
             placeholder="Search by name, date, type etc"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearch}
           />
         </form>
-        <select
-          onChange={(e)=> setSearchQuery(e.target.value)}
-          >
+        <select onChange={handleSearch}>
           <option value="">All</option>
           <option value="hackathon">Hackathon</option>
           <option value="seminar">Seminar</option>
@@ -122,7 +112,7 @@ export default function Events() {
         {filteredUpcomingEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
-              <img className="im" src={event.imgSrc} alt={event.alt} />
+              <img className="im" src={event.poster} alt={event.alt} />
             </div>
             <div className="card-body">
               <div className="item1">
@@ -152,12 +142,12 @@ export default function Events() {
         {filteredCompletedEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
-              <img className="im" src={event.imgSrc} alt={event.alt} />
+              <img className="im" src={event.poster} alt={event.alt} />
             </div>
             <div className="card-body">
               <div className="item1">
                 <h1>{event.title}</h1>
-                <h2>{event.startDate}</h2>
+                <h2>{event.startDate.substring(0, 10)}</h2>
                 <h3>{event.type}</h3>
               </div>
               <button
@@ -186,7 +176,9 @@ export default function Events() {
       )}
 
       {/* Displaying details for an event */}
-      {registerPage && <RegisterEvent event={selectedEvent} isAdmin={isAdmin} />}
+      {registerPage && (
+        <RegisterEvent event={selectedEvent} isAdmin={isAdmin} />
+      )}
       {detailsPage && <EventDetails event={selectedEvent} isAdmin={isAdmin} />}
     </div>
   );
