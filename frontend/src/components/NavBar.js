@@ -24,7 +24,7 @@ export default function NavBar() {
         <p href="#">|</p>
         <Link to="/members" className="link" href="Members.js">Members</Link>
         <p href="#">|</p>
-        <Link to="/blog" className="link" href="Blog.js">Blog</Link>
+        <Link to="/blog" className="link">Blog</Link>
         <p href="#">|</p>
         <Link to="/contactus" className="link" href="contLinkct.js">Contact</Link>
       </>) : ""}

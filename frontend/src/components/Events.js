@@ -112,12 +112,24 @@ export default function Events() {
         {filteredUpcomingEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
-              <img className="im" src={event.poster} alt={event.alt} />
+            <img
+                className="im"
+                src={
+                  event.poster
+                    ? URL.createObjectURL(
+                        new Blob([new Uint8Array(event.poster.data)], {
+                          type: "image/jpeg",
+                        })
+                      )
+                    : ""
+                }
+                alt={<p>{event.title}</p>}
+              />
             </div>
             <div className="card-body">
               <div className="item1">
                 <h1>{event.title}</h1>
-                <h2>{event.startDate}</h2>
+                <h2>{event.startDate.substring(0, 10)}</h2>
                 <h3>{event.type}</h3>
               </div>
               <button
@@ -142,7 +154,19 @@ export default function Events() {
         {filteredCompletedEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
-              <img className="im" src={event.poster} alt={event.alt} />
+              <img
+                className="im"
+                src={
+                  event.poster
+                    ? URL.createObjectURL(
+                        new Blob([new Uint8Array(event.poster.data)], {
+                          type: "image/jpeg",
+                        })
+                      )
+                    : ""
+                }
+                alt={<p>{event.title}</p>}
+              />
             </div>
             <div className="card-body">
               <div className="item1">

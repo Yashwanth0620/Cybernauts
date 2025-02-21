@@ -38,6 +38,16 @@ export default function AddBlogForm({ closeForm }) {
           />
         </div>
 
+        <div className="form-group">
+          <label htmlFor="poster">Poster:</label>
+          <input
+            type="file"
+            id="poster"
+            name="poster"
+            accept="image/*"
+          />
+        </div>
+
         <div className="form-actions">
           <button type="submit" className="btn-submit">
             Submit

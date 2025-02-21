@@ -1,24 +1,35 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const storage = multer.memoryStorage(); 
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-
-const {getEvents, addEvent, updateEvent, deleteEvent, addUpdates, sendMail, removeParticipant, sendResponse} = require("../controllers/admin.controller");
-const { addMember, getMembers, deleteMember, addContributions } = require("../controllers/member.controller");
+const {
+  getEvents,
+  addEvent,
+  updateEvent,
+  deleteEvent,
+  addUpdates,
+  sendMail,
+  removeParticipant,
+  sendResponse,
+} = require("../controllers/admin.controller");
+const {
+  addMember,
+  getMembers,
+  deleteMember,
+  addContributions,
+} = require("../controllers/member.controller");
+const { addBlog } = require("../controllers/blog.controller");
 
 //routes for event operations
-router.route("/events")
-    .get(getEvents)
-    .post(upload.single("poster"),addEvent);
+router.route("/events").get(getEvents).post(upload.single("poster"), addEvent);
 
-router.route("/events/:id")
-    .patch(updateEvent)
-    .delete(deleteEvent);
-    
-router.route("/event/remove/:id")
-    .patch(removeParticipant);
+router.route("/events/:id").patch(updateEvent).delete(deleteEvent);
+
+// router.route("/blog").post(addBlog);
+
+router.route("/event/remove/:id").patch(removeParticipant);
 
 //routes for notifications
 router.post("/notify", addUpdates);
@@ -31,6 +42,4 @@ router.get("/members/:year", getMembers);
 router.delete("/members/:id", deleteMember);
 router.patch("/members/:id", addContributions);
 
-
 module.exports = router;
-

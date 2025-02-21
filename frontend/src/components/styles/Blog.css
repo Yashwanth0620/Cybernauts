@@ -4,7 +4,17 @@
 .blog-section {
     padding: 40px 10%;
 }
-
+.blog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+.blog-sectiontext{
+    max-width: 80%;
+}
+button{
+    margin-bottom: 10px;
+}
 .blog-section h2 {
     font-size: 36px;
     margin-bottom: 5px;
