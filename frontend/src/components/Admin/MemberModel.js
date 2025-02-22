@@ -1,16 +1,52 @@
 import React, { useState } from "react";
 import "../styles/MemberModel.css";
 
-export default function MemberModel({ closeModal, handleSubmit, formData, handleChange }) {
-
-
+export default function MemberModel({
+  closeModal,
+  handleSubmit,
+  formData,
+  handleChange,
+}) {
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>Assign Role</h2>
-        <h3>Designation: {formData.designation}</h3>
-        
+        {formData.desig !== "additional-expertise" && <h3>Designation: {formData.designation}</h3>}
+        {formData.desig === "additional-expertise" && 
+          <label>
+          Designation:
+          <input
+            type="text"
+            name="designation"
+            placeholder="Enter additional designation"
+            value={formData.designation}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        }
+
         <form onSubmit={handleSubmit}>
+          {!formData.designation.includes("chairperson") &&
+            !formData.designation.includes("secretary") &&
+            formData.desig !== "additional-expertise" && (
+              <label>
+                Position :
+                <select
+                  name="position"
+                  value={formData.position}
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected hidden>
+                    Choose
+                  </option>
+                  <option value="member">Member</option>
+                  <option value="lead">Lead</option>
+                  <option value="co-lead">co-lead</option>
+                </select>
+              </label>
+            )}
           <label>
             Name:
             <input
@@ -34,9 +70,11 @@ export default function MemberModel({ closeModal, handleSubmit, formData, handle
               required
             />
           </label>
+
           <label>
             Upload Image:
-            <input className="modal-img"
+            <input
+              className="modal-img"
               type="file"
               accept="image/*"
               name="image"
@@ -44,18 +82,38 @@ export default function MemberModel({ closeModal, handleSubmit, formData, handle
             />
           </label>
           <label>
-           Discription:
+            Description:
             <input
               type="text"
-              name="discription"
+              name="description"
               placeholder="Enter one line discript"
-              value={formData.discription}
+              value={formData.description}
               onChange={handleChange}
               required
             />
           </label>
-
-         
+          <label>
+            Mobile Number:
+            <input
+              type="text"
+              name="mobileNo"
+              placeholder="Enter mobile number..."
+              value={formData.mobileNo}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            email:
+            <input
+              type="text"
+              name="email"
+              placeholder="Enter email..."
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </label>
 
           <div className="modal-buttons">
             <button type="submit">Submit</button>

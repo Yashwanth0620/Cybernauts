@@ -54,8 +54,11 @@ const eventSchema = mongoose.Schema({
   cheifGuest: String,
   contributors: [
     {
-      contribution: { type: String },
-      roll: { type: String },
+      roll: { type: String,
+        required : true
+       },
+      description : String,
+      image:Buffer,
     },
   ],
 });

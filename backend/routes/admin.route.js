@@ -19,6 +19,8 @@ const {
   getMembers,
   deleteMember,
   addContributions,
+  getCurrentMembers,
+  getYears
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
 
@@ -37,9 +39,19 @@ router.post("/events/mail/:eventId", sendMail);
 router.post("/response/:contactId", sendResponse);
 
 //routes for members operations
-router.post("/members/add", upload.single("image"), addMember);
+router.post("/members/add/", addMember);
+router.get("/members/", getCurrentMembers);
 router.get("/members/:year", getMembers);
+router.get("/members/years", getYears);
 router.delete("/members/:id", deleteMember);
 router.patch("/members/:id", addContributions);
 
 module.exports = router;
+
+
+/* NOTE**********************
+  use addContribution method code from members controller in the updateEvent function 
+  in the event controller.
+  As we only
+
+*/

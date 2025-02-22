@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,9 +15,11 @@
   /* Modal box */
   .modal {
     background: white;
-    padding: 20px;
+    padding: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 350px;
     z-index: 1001;
     font-family: "roboto", sans-serif;
   }
@@ -33,13 +35,28 @@
     display: block;
     margin-bottom: 10px;
   }
+  .modal select{
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    margin-left: .9rem;
+    padding: .3rem;
+    font-family:  "roboto", sans-serif;
+    font-size: 15px;
+  }
+  .modal select {
+    position: relative;
+    z-index: 1;
+  }
+  .modal select option {
+    position: relative;
+    top: -20px; /* Adjust to move options up */
+  }
   .modal h3{
     margin: 1rem;
   }
   .modal input {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 6px;
+    margin-bottom: 6px;
     font-family:  "roboto", sans-serif;
     border-bottom: 1px solid rgba(0, 0, 0, 0.6) ;
   }

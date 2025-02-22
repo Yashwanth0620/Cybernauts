@@ -13,6 +13,7 @@ import AddEventForm from "./components/Admin/AddEventForm";
 import EditEventForm from "./components/Admin/EditEventForm";
 import AddBlogForm from "./components/Admin/AddBlogForm";
 import AddMember from "./components/Admin/AddMember";
+import ViewMembers from "./components/Admin/ViewMembers";
 function App() {
   const location = useLocation();
   return (
@@ -30,7 +31,8 @@ function App() {
         <Route path="/admin/add-event" element={<AddEventForm />}></Route>
         <Route path="/admin/edit-event" element={<EditEventForm />}></Route>
         <Route path="/admin/add-blog" element={<AddBlogForm />}></Route>
-         <Route path="/admin/add-member" element={<AddMember/>}></Route> 
+         <Route path="/admin/add-member" element={<AddMember/>}></Route>
+         <Route path="/admin/view-members" element={<ViewMembers/>}></Route>
       </Routes>
       <Footer />
     </div>
