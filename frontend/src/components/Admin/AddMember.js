@@ -1,28 +1,62 @@
-import React from "react";
-import "./styles/Members.css";
-import { useNavigate } from "react-router-dom";
-const pp = require("../assets/pp.jpg");
+import React, { useState } from "react";
+import "../styles/Addmember.css";
+import pp from "../../assets/pp.jpg";
+import MemberModel from "./MemberModel";
 
-export default function Members() {
-  const navigate=useNavigate();
-  const isAdmin = !!localStorage.getItem("token");
-  const openAddMember=()=>{
-     navigate("/admin/add-member")
-  }
+export default function AddMember() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [chairperson, setChairPerson] = useState([{name: "Vamshi",
+    rollNo: "x3",
+    designation: "",
+    description: "ghjj",
+    image: "",}]);
+  const [formData, setFormData] = useState({
+    name: "",
+    rollNo: "",
+    designation: "",
+    description: "",
+    image: "",
+  });
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
+    setFormData({
+      name: "",
+      rollNo: "",
+      designation: "",
+      description: "",
+      image: "",
+    });
+    setIsModalOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === "image" && files && files[0]) {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+    setFormData({
+      name: "",
+      rollNo: "",
+      designation: "",
+      description: "",
+      image: "",
+    });
+    closeModal();
+  };
   return (
     <div className="members">
       <div className="head">
-      <div className="head-container">
-        <div className="head-text">
         <h1>Our Team</h1>
         <h2>Meet the passionate minds of Cybernauts</h2>
-        </div>
-      
-         {isAdmin && ( 
-        <button className="head-btn" onClick={openAddMember}>Add Team</button>
-        
-      )}
-      </div>
       </div>
 
       <div className="search-bar">
@@ -54,23 +88,43 @@ export default function Members() {
         <div className="section-label">
           <span>Chariperson</span>
         </div>
-
+    {console.log(chairperson.length)}
+        {chairperson.length >0 && chairperson.map((member)=>(
         <div className="member-body">
           <div className="member">
             <div className="member-desc">
               <div className="member-img">
-                <img src={pp} alt="" />
+                <img src={(member.image) ? member.image : pp} alt="" />
               </div>
               <div className="desc-body">
-                <h2>Y.V.Sridhar</h2>
+                <h2>{member.name}</h2>
                 <p>
-                  This is desc... <br />
-                  This is phone...
+                {member.rollNo} <br />
+                {member.description}
                 </p>
               </div>
             </div>
           </div>
+        </div>))}
+        <div className="Addmember-container">
+          <div
+            className="Addmember-btn"
+            onClick={() => {
+              openModal();
+              formData.designation = "chairperson";
+            }}
+          >
+            Add+
+          </div>
         </div>
+        {isModalOpen && (
+          <MemberModel
+            closeModal={closeModal}
+            handleSubmit={handleSubmit}
+            formData={formData}
+            handleChange={handleChange}
+          />
+        )}
       </div>
 
       <div className="vice-chairperson">

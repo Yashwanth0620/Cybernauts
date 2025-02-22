@@ -22,6 +22,7 @@
   font-weight: bold;
 }
 
+
 .form-group input,
 .form-group textarea,
 .form-group select {
@@ -81,13 +82,11 @@ textarea {
 }
 
 .contributor-list {
+  list-style-type: none;
   padding: 10px;
 }
 
-.contributor-list li {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-}
+
 
 .popup {
   position: fixed;
@@ -136,4 +135,9 @@ textarea {
 .popup-actions button:last-child {
   background-color: #dc3545;
   color: white;
+}
+.btn-delete-contributor{
+  margin-right:.5rem;
+  opacity: .7;
+  color: #dc3545;
 }
