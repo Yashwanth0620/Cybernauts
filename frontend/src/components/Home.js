@@ -27,7 +27,9 @@ const App = () => {
           <h4>
             <i>"Innovating the future of Technology"</i>
           </h4>
-          <button><Link to="events">View Event Highlights</Link></button>
+          <div className="highlight-btn">
+          <button ><Link to="events">View Event Highlights</Link></button>
+          </div>
         </div>
       </section>
 
