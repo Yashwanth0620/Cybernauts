@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from "react";
-import "./styles/Members.css";
+import "../styles/Members.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const pp = require("../assets/pp.jpg");
+const pp = require("../../assets/pp.jpg");
 
 export default function Members() {
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
-  const standardDesignations = ["chairperson","vice-chairperson","secretary","vice-secretary","finance","documentation","technical","graphics","outreach","event-management", "executive-Boys","executive-Girls"];
+  const standardDesignations = [
+    "chairperson",
+    "vice-chairperson",
+    "secretary",
+    "vice-secretary",
+    "finance",
+    "documentation",
+    "technical",
+    "graphics",
+    "outreach",
+    "event-management",
+    "executive-Boys",
+    "executive-Girls",
+  ];
+  const openAddMember = () => {
+    navigate("/admin/add-member");
+  };
+
   useEffect(() => {
     const fetchMembers = async () => {
       try {
@@ -30,6 +47,11 @@ export default function Members() {
             <h1>Our Team</h1>
             <h2>Meet the passionate minds of Cybernauts</h2>
           </div>
+          
+            <button className="head-btn" onClick={openAddMember}>
+              Add Team
+            </button>
+          
         </div>
       </div>
 
@@ -320,7 +342,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -414,7 +436,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -508,7 +530,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -602,7 +624,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -696,7 +718,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -788,10 +810,12 @@ export default function Members() {
           <span> Additional Expertise Team</span>
         </div>
         <div className="member-body">
-        {members.length > 0 &&
-          members
-            .filter((member) => !standardDesignations.includes(member.designation))
-            .map((member) => (
+          {members.length > 0 &&
+            members
+              .filter(
+                (member) => !standardDesignations.includes(member.designation)
+              )
+              .map((member) => (
                 <div className="member">
                   <div className="member-desc">
                     <div className="member-img">
@@ -814,10 +838,9 @@ export default function Members() {
                     </div>
                   </div>
                 </div>
-            ))}
-            </div>
+              ))}
+        </div>
       </div>
-
     </div>
   );
 }
