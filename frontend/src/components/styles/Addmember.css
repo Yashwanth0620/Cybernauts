@@ -73,7 +73,26 @@
     flex-grow: 1;
     text-align: center;
 }
-
+.Addmember-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+    width: fit-content;
+     
+  }
+  .Addmember-container{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .Addmember-btn:hover {
+    background-color: #0056b3;
+  }
 
 .members .member h2 {
     text-align: center;

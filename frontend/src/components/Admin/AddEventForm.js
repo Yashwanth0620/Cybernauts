@@ -21,13 +21,16 @@ export default function AddEventForm({ closeForm }) {
       alert("Please fill in both fields!");
     }
   };
+  const handleDeleteContributor = (index) => {
+    setContributors((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData(); // Use FormData to handle file uploads
     const formElements = e.target.elements;
-  
+
     // Append basic form fields
     formData.append("title", formElements.title.value);
     formData.append("type", formElements.type.value);
@@ -40,16 +43,16 @@ export default function AddEventForm({ closeForm }) {
     formData.append("organizer", formElements.organizer.value);
     formData.append("faculty", formElements.faculty.value);
     formData.append("chiefGuest", formElements.chiefGuest.value);
-  
+
     // Append contributors as a JSON string
     formData.append("contributors", JSON.stringify(contributors));
-  
+
     // Append the poster file
     const posterFile = formElements.poster.files[0];
     if (posterFile) {
       formData.append("poster", posterFile);
     }
-  
+
     try {
       // Make the API call
       const response = await axios.post(
@@ -58,11 +61,11 @@ export default function AddEventForm({ closeForm }) {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Authorization": 'Bearer ' + localStorage.getItem("token")  
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );
-  
+
       console.log("Event added successfully:", response.data);
       navigate("/events");
     } catch (error) {
@@ -70,8 +73,6 @@ export default function AddEventForm({ closeForm }) {
       alert("Failed to add the event. Please try again.");
     }
   };
-  
-  
 
   return (
     <div className="add-event-form">
@@ -133,12 +134,7 @@ export default function AddEventForm({ closeForm }) {
 
         <div className="form-group">
           <label htmlFor="poster">Poster:</label>
-          <input
-            type="file"
-            id="poster"
-            name="poster"
-            accept="image/*"
-          />
+          <input type="file" id="poster" name="poster" accept="image/*" />
         </div>
 
         <div className="form-group">
@@ -208,8 +204,15 @@ export default function AddEventForm({ closeForm }) {
             </button>
           </div>
           <ul className="contributor-list">
-            {contributors.map((contributor) => (
-              <li>
+            {contributors.map((contributor, index) => (
+              <li key={index}>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteContributor(index)}
+                  className="btn-delete-contributor"
+                >
+                  ✖
+                </button>
                 {contributor.contribution}: {contributor.roll}
               </li>
             ))}
@@ -221,15 +224,6 @@ export default function AddEventForm({ closeForm }) {
             <div className="popup-content">
               <h3>Add Contributor</h3>
               <div className="form-group">
-                <label>Contribution:</label>
-                <input
-                  type="text"
-                  placeholder="Enter contribution"
-                  value={contribution}
-                  onChange={(e) => setContribution(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
                 <label>Roll Number:</label>
                 <input
                   type="text"
@@ -238,6 +232,20 @@ export default function AddEventForm({ closeForm }) {
                   onChange={(e) => setRoll(e.target.value)}
                 />
               </div>
+              <div className="form-group">
+                <label>Discription:</label>
+                <input
+                  type="text"
+                  placeholder="Enter Discription"
+                  value={contribution}
+                  onChange={(e) => setContribution(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label>Upload Image:</label>
+                <input type="file" accept="image/*" />
+              </div>
+
               <div className="popup-actions">
                 <button onClick={handleAddContributor} type="button">
                   Add
