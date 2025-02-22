@@ -1,0 +1,172 @@
+/* Global styles for all elements inside BorrowerForm */
+.AcademicYear * {
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'monospace';
+  align-items: center;
+}
+
+/* Main BorrowerForm styling */
+.AcademicYear .overlay.active ~ .navbar {
+  display: none;
+}
+
+.AcademicYear {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* FrndBorrowForm container styling */
+.AcademicYear .AskAcademic {
+  margin: 1.5rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -20px,
+              rgba(0, 0, 0, 0.3) 0px 20px 40px -30px,
+              rgba(10, 37, 64, 0.35) 0px -2px 4px 0px inset;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  width: 35%;
+  position: relative;
+}
+
+/* Form styles */
+.AcademicYear .Bform {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Item styling */
+.AcademicYear .item p {
+  font-size: 16px;
+  font-weight:bold;
+}
+
+.AcademicYear .item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Input field styling */
+.AcademicYear input[type='text'] {
+  font-family: 'monospace';
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  width:  17rem;
+  height: 2.5rem;
+  font-size: 18px;
+  border-radius: 12px;
+  padding: 0.7rem;
+}
+.AcademicYear input[type='text']:hover {
+  border: 3px solid black;
+}
+
+/* Button container styling */
+.AcademicYear .butn {
+  width: 100%;
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Button styling */
+.AcademicYear .butn button {
+  font-size: 18px;
+  width: 150px;
+  height: 2.2rem;
+  color: white;
+  background-color: #003366;
+  opacity: 0.8;
+  border-radius: 5px;
+}
+
+/* Button hover effect */
+.AcademicYear .butn button:hover {
+  opacity: 1;
+}
+
+/* Overlay background with blur */
+.AcademicYear .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Close button styling */
+.AcademicYear .close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  z-index: 1001;
+  transition: color 0.3s ease;
+}
+
+.AcademicYear .close-button:hover {
+  color: #ff4c4c;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 900px) {
+  .AcademicYear .AskAcademic {
+      width: 85%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .AcademicYear h1 {
+      font-size: 2.5rem;
+  }
+  .AcademicYear .butn button {
+      width: 130px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .AcademicYear .butn button {
+      width: 120px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .AcademicYear h1 {
+      font-size: 1.8rem;
+  }
+  .AcademicYear {
+      margin: 1.5rem;
+  }
+  .AcademicYear .butn button {
+      width: 90px;
+  }
+  .AcademicYear .item {
+      gap: 0.8rem;
+  }
+}

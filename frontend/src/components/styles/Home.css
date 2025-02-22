@@ -102,12 +102,20 @@ a {
   font-size: 20px;
 }
 
-.hero Button * {
+.hero .highlight-btn * {
   background-color: #5aa9e6;
   border-radius: 50px;
-  padding: 15px 40px;
+  
+  padding: 14px 40px;
   color: white;
-}
+  
+ 
+} 
+.hero .highlight-btn:hover{
+ opacity: .8;
+  
+} 
+
 
 
 /* About Section */
@@ -238,6 +246,7 @@ a {
     padding: 10px 30px;
   }
   
+  
   .about-content h4, .about-content p {
     margin-left: 0;
   }
@@ -283,5 +292,12 @@ a {
 
   .about {
     padding-bottom: 0;
+  }
+}
+@media (max-width: 500px){
+  .hero .highlight-btn *{
+    width: 100%;
+    font-size: 14px;
+    height: 3rem;
   }
 }

@@ -220,8 +220,16 @@ export default function AddEventForm() {
         {showPopup && (
           <div className="popup">
             <div className="popup-content">
-              <h3>Add Coibutor</h3>
-              
+              <h3>Add Contributor</h3>
+              <div className="form-group">
+                <label>Contribution:</label>
+                <input
+                  type="text"
+                  placeholder="Enter contribution"
+                  value={contribution}
+                  onChange={(e) => setContribution(e.target.value)}
+                />
+              </div>
               <div className="form-group">
                 <label>Roll Number:</label>
                 <input
@@ -229,22 +237,6 @@ export default function AddEventForm() {
                   placeholder="Enter roll number"
                   value={roll}
                   onChange={(e) => setRoll(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Discription:</label>
-                <input
-                  type="text"
-                  placeholder="Enter Discritpion"
-                  value={contribution}
-                  onChange={(e) => setContribution(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Upload Image:</label>
-                <input
-                  type="image"
-                 
                 />
               </div>
               <div className="popup-actions">

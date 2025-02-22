@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddMember() {
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [members, setMembers] = useState([]);
   const [formData, setFormData] = useState({
@@ -767,6 +768,25 @@ export default function AddMember() {
             />
           )}
         </div>
+          <div className="Addmember-container">
+          <div
+            className="Addmember-btn"
+            onClick={() => {
+              openModal();
+              formData.designation = "chairperson";
+            }}
+          >
+            Add+
+          </div>
+        </div>
+        {isModalOpen && (
+          <MemberModel
+            closeModal={closeModal}
+            handleSubmit={handleSubmit}
+            formData={formData}
+            handleChange={handleChange}
+          />
+        )}
       </div>
       <ToastContainer />
     </>

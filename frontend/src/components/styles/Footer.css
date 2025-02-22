@@ -2,7 +2,8 @@ footer {
   background-color: #dff4f3;
   padding: 40px 20px;
   position: relative;
-
+  width: 100%;
+  margin-top: auto; /* Push the footer down */
 }
 
 .footer-content {
@@ -57,10 +58,9 @@ footer {
   font-size: 14px;
 }
 
-
 .sidebar ul li a:hover {
-  color: #333; 
-  background-color: transparent; 
+  color: #333;
+  background-color: transparent;
 }
 
 .contact-info {
@@ -86,6 +86,7 @@ footer {
   display: inline-block;
   margin-right: 15px;
 }
+
 .social-icons {
   display: flex;
   justify-content: center;
@@ -108,7 +109,7 @@ footer {
   color: #25d366;
 }
 
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
