@@ -2,12 +2,28 @@ import React, { useState, useEffect } from "react";
 import "../styles/Members.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AcademicYearModal from "./AcademicYearModal";
+import NewAcademicModel from "./NewAcademicModel";
 
 const pp = require("../../assets/pp.jpg");
 
 export default function Members() {
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
+  const [originalMembers, setOriginalMembers] = useState([]);
+  const [newyear, setNewyear] = useState();
+  const [years, setYears] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const openNewModal = () => setIsNewModalOpen(true);
+  const closeNewModal = () => setIsNewModalOpen(false);
+
+  const [filterYear, setFilterYear] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+
   const standardDesignations = [
     "chairperson",
     "vice-chairperson",
@@ -23,15 +39,53 @@ export default function Members() {
     "executive-Girls",
   ];
   const openAddMember = () => {
-    navigate("/admin/add-member");
+    openModal();
+  };
+
+  const fetchYearMembers = async () => {
+    try {
+      console.log(filterYear);
+      const response = await axios.get(
+        `http://localhost:3001/members/${filterYear}`
+      );
+      setOriginalMembers(response.data);
+      setMembers(response.data);
+      // setYear(response.data.year);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (filterYear) {
+      fetchYearMembers();
+    }
+  }, [filterYear]);
+  const handleNewyear = (e) => {
+    const { value } = e.target;
+    setNewyear(value);
+  };
+
+  const handleYear = (e) => {
+    console.log(e.target.value);
+    setFilterYear(e.target.value);
   };
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get("http://localhost:3001/members");
+        setOriginalMembers(response.data.members);
         setMembers(response.data.members);
-        // console.log(response.data);
+        setFilterYear(response.data.year);
+        console.log(response.data);
+
+        const response2 = await axios.get(
+          "http://localhost:3001/members/years"
+        );
+        setYears(response2.data);
+        console.log(response2.data);
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -39,6 +93,44 @@ export default function Members() {
 
     fetchMembers();
   }, []);
+
+  const handleSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearchTerm(e.target.value);
+    const newMembers = originalMembers.filter((member) => {
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${
+        member.rollNo && member.rollNo.toLowerCase()
+      } ${member.designation && member.designation.toLowerCase()} ${
+        member.description && member.description.toLowerCase()
+      } ${member.position && member.position.toLowerCase()} ${
+        member.mobileNo
+      } ${member.email && member.email.toLowerCase()}`;
+      return memberDetails.includes(inputValue.toLowerCase());
+    });
+    console.log(inputValue);
+    setMembers(newMembers);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newMembers = originalMembers.filter((member) => {
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${
+        member.rollNo && member.rollNo.toLowerCase()
+      } ${member.designation && member.designation.toLowerCase()} ${
+        member.description && member.description.toLowerCase()
+      } ${member.position && member.position.toLowerCase()} ${
+        member.mobileNo
+      } ${member.email && member.email.toLowerCase()}`;
+      return memberDetails.includes(searchTerm.toLowerCase());
+    });
+    setMembers(newMembers);
+  };
+
+  const handleNavigate = (member,filterYear) => {
+    // console.log(member,filterYear)
+
+    navigate("profile/", { state: {member,filterYear} }); 
+  };
+
   return (
     <div className="members">
       <div className="head">
@@ -47,37 +139,58 @@ export default function Members() {
             <h1>Our Team</h1>
             <h2>Meet the passionate minds of Cybernauts</h2>
           </div>
-          
-            <button className="head-btn" onClick={openAddMember}>
-              Add Team
-            </button>
-          
+
+          <button className="head-btn" onClick={openAddMember}>
+            Add Team
+          </button>
+          {isModalOpen && (
+            <AcademicYearModal
+              closeModal={closeModal}
+              years={years}
+              newyear={newyear}
+              handleNewyear={handleNewyear}
+              setYears={setYears}
+              closeNewModal={closeNewModal}
+              openNewModal={openNewModal}
+            />
+          )}
+          {isNewModalOpen && (
+            <NewAcademicModel
+              years={years}
+              newyear={newyear}
+              handleNewyear={handleNewyear}
+              closeNewModal={closeNewModal}
+            />
+          )}
         </div>
       </div>
 
       <div className="search-bar">
-        <form>
+        <form onSubmit={handleSubmit}>
           <span className="search-icon">
             <i className="fas fa-search"></i>
           </span>
           <input
             type="text"
             id="search"
-            placeholder="Search by name, date, description etc"
+            placeholder="Search by name, designation etc"
+            value={searchTerm}
+            onChange={handleSearch}
           />
         </form>
-        <select>
-          <option value="" disabled selected hidden>
-            Filter
-          </option>
-          <option value="all">All</option>
-          <option value="hackathon">Hackathon</option>
-          <option value="seminar">Seminar</option>
-          <option value="workshop">Workshop</option>
-          <option value="webinar">Webinar</option>
-          <option value="tech-talk">Tech Talk</option>
+        <select value={filterYear} onChange={handleYear}>
+          {/* <option value={year} disabled selected hidden>
+            {year}
+          </option> */}
+          {years &&
+            years.length > 0 &&
+            years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          <i className="fas fa-chevron-down" type="filter"></i>
         </select>
-        <i className="fas fa-chevron-down" type="filter"></i>
       </div>
 
       <div className="chairperson">
@@ -89,11 +202,11 @@ export default function Members() {
             .filter((member) => member.designation === "chairperson")
             .map((member) => (
               <div className="member-body">
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -104,10 +217,6 @@ export default function Members() {
                     </div>
                     <div className="desc-body">
                       <h2>{member.name}</h2>
-                      {/* <p>
-                        {member.rollNo} <br />
-                        {member.description}
-                      </p> */}
                     </div>
                   </div>
                 </div>
@@ -124,11 +233,11 @@ export default function Members() {
             members
               .filter((member) => member.designation === "vice-chairperson")
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -156,11 +265,11 @@ export default function Members() {
             members
               .filter((member) => member.designation.includes("secretary"))
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -188,11 +297,11 @@ export default function Members() {
             members
               .filter((member) => member.designation === "finance")
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -220,11 +329,11 @@ export default function Members() {
             members
               .filter((member) => member.designation === "documentation")
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -256,11 +365,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -283,11 +392,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -311,11 +420,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -350,11 +459,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -377,11 +486,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -405,11 +514,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -444,11 +553,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -471,11 +580,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -499,11 +608,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -538,11 +647,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -565,11 +674,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -593,11 +702,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -632,11 +741,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -659,11 +768,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -687,11 +796,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -726,11 +835,11 @@ export default function Members() {
                   member.position === "lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -753,11 +862,11 @@ export default function Members() {
                   member.position === "co-lead"
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">
@@ -781,11 +890,11 @@ export default function Members() {
                     member.position === "member"
                 )
                 .map((member) => (
-                  <div className="member">
+                  <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                     <div className="member-desc">
                       <div className="member-img">
                         <img
-                          src={member.image == "url" ? pp : member.image}
+                          src={member.image === "url" ? pp : member.image}
                           alt=""
                         />
                         <div className="personal-details">
@@ -816,11 +925,11 @@ export default function Members() {
                 (member) => !standardDesignations.includes(member.designation)
               )
               .map((member) => (
-                <div className="member">
+                <div className="member"  onClick={()=>handleNavigate(member,filterYear)}>
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image == "url" ? pp : member.image}
+                        src={member.image === "url" ? pp : member.image}
                         alt=""
                       />
                       <div className="personal-details">

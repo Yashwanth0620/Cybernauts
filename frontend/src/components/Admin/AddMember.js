@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../styles/Addmember.css";
 import pp from "../../assets/pp.jpg";
 import MemberModel from "./MemberModel";
@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSearchParams } from "react-router-dom";
 
 export default function AddMember() {
   
@@ -21,7 +22,9 @@ export default function AddMember() {
     position: "member",
     image: "",
   });
-
+  const [searchParams] = useSearchParams();
+  const year = searchParams.get("year");
+  console.log(year)
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setFormData({
@@ -49,11 +52,25 @@ export default function AddMember() {
     }
   };
 
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/members/${year}`);
+        setMembers(response.data);
+        console.log(response.data);
+
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      }
+    };
+
+    fetchMembers();
+  }, []);
+
   const standardDesignations = ["chairperson","vice-chairperson","secretary","vice-secretary","finance","documentation","technical","graphics","outreach","event-management", "executive-Boys","executive-Girls"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const year = "2024";
     formData.year = year;
 
     // const form = new FormData();
@@ -108,13 +125,13 @@ export default function AddMember() {
           <h1>Our Team</h1>
           <h2>Meet the passionate minds of Cybernauts</h2>
         </div>
-
+        {console.log(members)}
         <div className="chairperson">
           <div className="section-label">
             <span>Chariperson</span>
           </div>
           <div className="member-body">
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "chairperson")
               .map((member) => (
@@ -163,7 +180,7 @@ export default function AddMember() {
             <span>Vice Chairperson</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members && members.length > 0 &&
             members
               .filter((member) => member.designation === "vice-chairperson")
               .map((member) => (
@@ -213,7 +230,7 @@ export default function AddMember() {
             <span>Secretary</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "secretary")
               .map((member) => (
@@ -262,7 +279,7 @@ export default function AddMember() {
             <span>Vice Secretary</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "vice-secretary")
               .map((member) => (
@@ -312,7 +329,7 @@ export default function AddMember() {
             <span>Finance</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "finance")
               .map((member) => (
@@ -364,7 +381,7 @@ export default function AddMember() {
             <span>Documentation</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "documentation")
               .map((member) => (
@@ -415,7 +432,7 @@ export default function AddMember() {
           <div className="section-label">
             <span>Technical</span>
           </div>
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "technical")
               .map((member) => (
@@ -466,7 +483,7 @@ export default function AddMember() {
           <div className="section-label">
             <span>Graphics</span>
           </div>
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "graphics")
               .map((member) => (
@@ -517,7 +534,7 @@ export default function AddMember() {
           <div className="section-label">
             <span>Outreach</span>
           </div>
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "outreach")
               .map((member) => (
@@ -568,7 +585,7 @@ export default function AddMember() {
           <div className="section-label">
             <span>Event Management</span>
           </div>
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "event-management")
               .map((member) => (
@@ -619,7 +636,7 @@ export default function AddMember() {
           <div className="section-label">
             <span>Executive-Boys</span>
           </div>
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "executive-Boys")
               .map((member) => (
@@ -671,7 +688,7 @@ export default function AddMember() {
             <span>Executive-Girls</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => member.designation === "executive-Girls")
               .map((member) => (
@@ -722,7 +739,7 @@ export default function AddMember() {
             <span>Additional-Expertise Team</span>
           </div>
 
-          {members.length > 0 &&
+          {members && members.length > 0 &&
             members
               .filter((member) => !standardDesignations.includes(member.designation))
               .map((member) => (

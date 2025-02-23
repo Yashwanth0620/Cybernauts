@@ -40,7 +40,8 @@ const memberSchema = mongoose.Schema({
         contributions :[{
             description : String,
             image: String,
-            eventId : String
+            eventId : String,
+            eventName : String,
         }],
         // active: {
         //     type: Boolean,

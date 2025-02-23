@@ -36,6 +36,7 @@
     right: 0;
     transition: all ease-in 0.2s;
     border-radius: 10px;
+
 }
 
 .member-img:hover .personal-details {
@@ -57,6 +58,7 @@
 
 .members .member {
     flex-grow: 1;
+    cursor: pointer;
 }
 
 .chairperson .member-desc {

@@ -8,13 +8,68 @@ const pp = require("../assets/pp.jpg");
 export default function Members() {
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
-  const standardDesignations = ["chairperson","vice-chairperson","secretary","vice-secretary","finance","documentation","technical","graphics","outreach","event-management", "executive-Boys","executive-Girls"];
+  const [originalMembers, setOriginalMembers] = useState([]);
+  const [years, setYears] = useState([]);
+  const [year, setYear] = useState();
+  const [filterYear, setFilterYear] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+  const standardDesignations = [
+    "chairperson",
+    "vice-chairperson",
+    "secretary",
+    "vice-secretary",
+    "finance",
+    "documentation",
+    "technical",
+    "graphics",
+    "outreach",
+    "event-management",
+    "executive-Boys",
+    "executive-Girls",
+  ];
+  
+  
+  
+  const fetchYearMembers = async () => {
+    try {
+      console.log(filterYear)
+      const response = await axios.get(`http://localhost:3001/members/${filterYear}`);
+      setOriginalMembers(response.data);
+      setMembers(response.data);
+      // setYear(response.data.year);
+      console.log(response.data);
+      
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (filterYear) {
+      fetchYearMembers();
+    }
+  }, [filterYear]);
+  
+  const handleYear = (e) => {
+    console.log(e.target.value);
+    setFilterYear(e.target.value);
+  };
+
   useEffect(() => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get("http://localhost:3001/members");
+        setOriginalMembers(response.data.members);
         setMembers(response.data.members);
-        // console.log(response.data);
+        setYear(response.data.year);
+        setFilterYear(response.data.year);
+        console.log(response.data);
+
+        const response2 = await axios.get(
+          "http://localhost:3001/members/years"
+        );
+        setYears(response2.data);
+        console.log(response2.data);
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -22,6 +77,28 @@ export default function Members() {
 
     fetchMembers();
   }, []);
+
+  const handleSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearchTerm(e.target.value);
+    const newMembers = originalMembers.filter((member) => {
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()} ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()} ${member.position && member.position.toLowerCase()} ${member.mobileNo} ${member.email && member.email.toLowerCase()}`;
+      return memberDetails.includes(inputValue.toLowerCase());
+    });
+    console.log(inputValue)
+    setMembers(newMembers)
+
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newMembers = originalMembers.filter((member) => {
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()} ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()} ${member.position && member.position.toLowerCase()} ${member.mobileNo} ${member.email && member.email.toLowerCase()}`;
+      return memberDetails.includes(searchTerm.toLowerCase());
+    });
+    setMembers(newMembers)
+  };
+
+
   return (
     <div className="members">
       <div className="head">
@@ -34,28 +111,31 @@ export default function Members() {
       </div>
 
       <div className="search-bar">
-        <form>
+      <form onSubmit={handleSubmit}>
           <span className="search-icon">
             <i className="fas fa-search"></i>
           </span>
           <input
             type="text"
             id="search"
-            placeholder="Search by name, date, description etc"
+            placeholder="Search by name, designation etc"
+            value={searchTerm}
+            onChange={handleSearch}
           />
         </form>
-        <select>
-          <option value="" disabled selected hidden>
-            Filter
-          </option>
-          <option value="all">All</option>
-          <option value="hackathon">Hackathon</option>
-          <option value="seminar">Seminar</option>
-          <option value="workshop">Workshop</option>
-          <option value="webinar">Webinar</option>
-          <option value="tech-talk">Tech Talk</option>
+        <select value={filterYear} onChange={handleYear}>
+          {/* <option value={year} disabled selected hidden>
+            {year}
+          </option> */}
+          {years &&
+            years.length > 0 &&
+            years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          <i className="fas fa-chevron-down" type="filter"></i>
         </select>
-        <i className="fas fa-chevron-down" type="filter"></i>
       </div>
 
       <div className="chairperson">
@@ -320,7 +400,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -414,7 +494,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -508,7 +588,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -602,7 +682,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -696,7 +776,7 @@ export default function Members() {
         </div>
 
         <div className="member-body">
-        {members.length > 0 &&
+          {members.length > 0 &&
             members
               .filter(
                 (member) =>
@@ -788,10 +868,12 @@ export default function Members() {
           <span> Additional Expertise Team</span>
         </div>
         <div className="member-body">
-        {members.length > 0 &&
-          members
-            .filter((member) => !standardDesignations.includes(member.designation))
-            .map((member) => (
+          {members.length > 0 &&
+            members
+              .filter(
+                (member) => !standardDesignations.includes(member.designation)
+              )
+              .map((member) => (
                 <div className="member">
                   <div className="member-desc">
                     <div className="member-img">
@@ -814,10 +896,9 @@ export default function Members() {
                     </div>
                   </div>
                 </div>
-            ))}
-            </div>
+              ))}
+        </div>
       </div>
-
     </div>
   );
 }
