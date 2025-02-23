@@ -17,6 +17,14 @@
   flex-direction: column;
   justify-content: center;
 }
+.AcademicYear select{
+  border : 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  font-size: 15px;
+  padding: .3rem;
+  width :200px;
+  height :2rem
+}
 
 /* FrndBorrowForm container styling */
 .AcademicYear .AskAcademic {
@@ -99,6 +107,10 @@
 /* Button hover effect */
 .AcademicYear .butn button:hover {
   opacity: 1;
+}
+.AcademicYear .butn button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 /* Overlay background with blur */

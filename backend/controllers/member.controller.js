@@ -68,6 +68,7 @@ const addMember = errorHandler(async (req, res) => {
   let yearDocument = await MemberModel.findOne({ year });
   const present=true;
   if (!yearDocument) {
+    await MemberModel.updateMany({}, { $set: { present: false } });
     yearDocument = new MemberModel({ year,present,members: [] });
   }
 

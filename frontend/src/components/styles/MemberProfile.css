@@ -4,6 +4,16 @@
     flex-direction: column;
     min-height: 100vh;
   }
+.MemberProfile .description{
+    word-wrap: break-word;
+    width: 30%;
+    height: auto;
+  }
+.MemberProfile .no-contribution{
+    align-items: center;
+    margin: 13%;
+    margin-left: 35%;
+  }
   
   .MemberProfile-container {
     display: flex;
@@ -124,4 +134,104 @@
     background-color: white;
   }
   
+
+  @media (max-width: 1300px) {
+    .MemberProfile-main {
+      width: 25%;
+      height: 100vh;
+      position: sticky;
+      top: 80px;
+    }
   
+  }
+  @media (max-width: 1210px) {
+    .MemberProfile-main {
+      width: 30%;
+      height: 100vh;
+      position: sticky;
+      top: 80px;
+    }
+    .MemberProfile-body{
+      width: 80%;
+    }
+  
+  }
+  @media (max-width: 1160) {
+    .MemberProfile-main {
+      width: 28%;
+      height: 100vh;
+      position: sticky;
+      top: 80px;
+    }
+    
+    .contribut-container{
+      width: 100%;
+      padding: 20px;
+    }
+  
+  }
+  @media (max-width: 1090px) {
+    .MemberProfile-main {
+       width: 32%;
+       
+    }
+    .MemberProfile-body{
+      width: 50%;
+    } 
+    .contribut-container{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 940px) {
+    
+    .MemberProfile-main {
+      width: 35%;
+      
+   }
+   .MemberProfile-body{
+     width: 40%;
+   } 
+   
+  
+  }
+  @media (max-width: 840px) {
+    
+    .MemberProfile-main {
+      width: 38%;
+      
+   }
+   .MemberProfile-body{
+     width: 40%;
+   } 
+   
+  
+  }
+  @media screen and (max-width: 780px) {
+    .MemberProfile {
+      display: flex;
+      flex-direction: row;
+      
+        /* Keeps main and body side by side */
+    }
+  
+    .MemberProfile-main {
+      margin-top: -2rem;
+      width: 40%; /* Adjust width as needed */
+      height:  3rem; 
+      position: absolute; 
+      padding: 1.5rem;
+      top: 0;
+    }
+  
+    .MemberProfile-body {
+      width: 60%; /* Adjust width to balance with main */
+      margin-left: 0;
+      padding: 1rem;
+      overflow: auto; /* Allow content scrolling */
+    }
+    .MemberProfile-main img {
+      width: 200px;
+      height: 200px;
+    }
+  }

@@ -35,8 +35,8 @@ function App() {
         <Route path="/admin/add-blog" element={<AddBlogForm />}></Route>
          <Route path="/admin/add-member" element={<AddMember/>}></Route> 
          <Route path="/admin/academicyearmodal" element={<AcademicYearModal/>} />
-         <Route path="/admin/Member-Profile" element={<MemberProfile/>} />
          <Route path="/admin/view-members" element={<ViewMembers/>}></Route>
+         <Route path="/admin/view-members/profile" element={<MemberProfile/>} />
       </Routes>
       <Footer />
     </div>
