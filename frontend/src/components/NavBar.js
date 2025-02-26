@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles/NavBar.css";
+import { useAuth } from "../AuthContext";
 
 export default function NavBar() {
 
   const [links, setLinks] = useState();
+
+  const {role} = useAuth();
   
   useEffect(() => {
     const sm = window.innerWidth > 670;
@@ -22,7 +25,7 @@ export default function NavBar() {
         <p href="#">|</p>
         <Link to="/events" className="link" href="events.js">Events</Link>
         <p href="#">|</p>
-        <Link to="/members" className="link" href="Members.js">Members</Link>
+        <Link to={role === "admin" ? "/admin/view-members" : "/members"} className="link" href="Members.js">Members</Link>
         <p href="#">|</p>
         <Link to="/blog" className="link">Blog</Link>
         <p href="#">|</p>

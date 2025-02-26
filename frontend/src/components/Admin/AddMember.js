@@ -1,15 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Addmember.css";
 import pp from "../../assets/pp.jpg";
 import MemberModel from "./MemberModel";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "react-router-dom";
 
 export default function AddMember() {
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [members, setMembers] = useState([]);
   const [formData, setFormData] = useState({
@@ -19,12 +17,11 @@ export default function AddMember() {
     description: "",
     mobileNo: "",
     email: "",
-    position: "member",
-    image: "",
+    position: "member"
   });
   const [searchParams] = useSearchParams();
   const year = searchParams.get("year");
-  console.log(year)
+  console.log(year);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setFormData({
@@ -40,13 +37,12 @@ export default function AddMember() {
     setIsModalOpen(false);
   };
 
-  const navigate = useNavigate();
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
+
     if (name === "image" && files && files[0]) {
-      setFormData({ ...formData, [name]: files[0] });
+      setFormData({ ...formData, image: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -55,10 +51,15 @@ export default function AddMember() {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/members/${year}`);
+        const response = await axios.get(
+          `http://localhost:3001/members/${year}`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token")
+            }
+          }
+        );
         setMembers(response.data);
         console.log(response.data);
-
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -67,7 +68,20 @@ export default function AddMember() {
     fetchMembers();
   }, []);
 
-  const standardDesignations = ["chairperson","vice-chairperson","secretary","vice-secretary","finance","documentation","technical","graphics","outreach","event-management", "executive-Boys","executive-Girls"];
+  const standardDesignations = [
+    "chairperson",
+    "vice-chairperson",
+    "secretary",
+    "vice-secretary",
+    "finance",
+    "documentation",
+    "technical",
+    "graphics",
+    "outreach",
+    "event-management",
+    "executive-Boys",
+    "executive-Girls",
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,7 +106,7 @@ export default function AddMember() {
         {
           headers: {
             "Content-Type": "application/json",
-            // Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );
@@ -131,17 +145,15 @@ export default function AddMember() {
             <span>Chariperson</span>
           </div>
           <div className="member-body">
-          {members && members.length > 0 &&
-            members
-              .filter((member) => member.designation === "chairperson")
-              .map((member) => (
+            {members &&
+              members.length > 0 &&
+              members
+                .filter((member) => member.designation === "chairperson")
+                .map((member) => (
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -152,8 +164,8 @@ export default function AddMember() {
                       </div>
                     </div>
                   </div>
-              ))}
-              </div>
+                ))}
+          </div>
           <div className="Addmember-container">
             <div
               className="Addmember-btn"
@@ -180,7 +192,9 @@ export default function AddMember() {
             <span>Vice Chairperson</span>
           </div>
 
-          {members && members && members.length > 0 &&
+          {members &&
+            members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "vice-chairperson")
               .map((member) => (
@@ -188,10 +202,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -230,7 +241,8 @@ export default function AddMember() {
             <span>Secretary</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "secretary")
               .map((member) => (
@@ -238,10 +250,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -279,7 +288,8 @@ export default function AddMember() {
             <span>Vice Secretary</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "vice-secretary")
               .map((member) => (
@@ -287,10 +297,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -329,7 +336,8 @@ export default function AddMember() {
             <span>Finance</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "finance")
               .map((member) => (
@@ -337,10 +345,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -381,7 +386,8 @@ export default function AddMember() {
             <span>Documentation</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "documentation")
               .map((member) => (
@@ -389,10 +395,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -432,7 +435,8 @@ export default function AddMember() {
           <div className="section-label">
             <span>Technical</span>
           </div>
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "technical")
               .map((member) => (
@@ -440,10 +444,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -483,7 +484,8 @@ export default function AddMember() {
           <div className="section-label">
             <span>Graphics</span>
           </div>
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "graphics")
               .map((member) => (
@@ -491,10 +493,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -534,7 +533,8 @@ export default function AddMember() {
           <div className="section-label">
             <span>Outreach</span>
           </div>
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "outreach")
               .map((member) => (
@@ -542,10 +542,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -585,7 +582,8 @@ export default function AddMember() {
           <div className="section-label">
             <span>Event Management</span>
           </div>
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "event-management")
               .map((member) => (
@@ -593,10 +591,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -636,7 +631,8 @@ export default function AddMember() {
           <div className="section-label">
             <span>Executive-Boys</span>
           </div>
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "executive-Boys")
               .map((member) => (
@@ -644,10 +640,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -688,7 +681,8 @@ export default function AddMember() {
             <span>Executive-Girls</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
               .filter((member) => member.designation === "executive-Girls")
               .map((member) => (
@@ -696,10 +690,7 @@ export default function AddMember() {
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -739,18 +730,18 @@ export default function AddMember() {
             <span>Additional-Expertise Team</span>
           </div>
 
-          {members && members.length > 0 &&
+          {members &&
+            members.length > 0 &&
             members
-              .filter((member) => !standardDesignations.includes(member.designation))
+              .filter(
+                (member) => !standardDesignations.includes(member.designation)
+              )
               .map((member) => (
                 <div className="member-body">
                   <div className="member">
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image == "url" ? pp : member.image}
-                          alt=""
-                        />
+                        <img src={member.image ? pp : member.image} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -765,17 +756,6 @@ export default function AddMember() {
                   </div>
                 </div>
               ))}
-          <div className="Addmember-container">
-            <div
-              className="Addmember-btn"
-              onClick={() => {
-                openModal();
-                formData.desig = "additional-expertise";
-              }}
-            >
-              Add+
-            </div>
-          </div>
           {isModalOpen && (
             <MemberModel
               closeModal={closeModal}
@@ -785,7 +765,7 @@ export default function AddMember() {
             />
           )}
         </div>
-          <div className="Addmember-container">
+        <div className="Addmember-container">
           <div
             className="Addmember-btn"
             onClick={() => {

@@ -73,7 +73,7 @@ export default function RegisterEvent({ event, isAdmin }) {
 
         <div className="register-button">
           {!isAdmin ? (
-            <button  onClick={(e) => openGoogleForm(event, e)}>Register</button>
+            <button className="register-btn" onClick={(e) => openGoogleForm(event, e)}>Register</button>
           ) : (
             <>
               <button onClick={openEventEditForm} className="admin-btn edit">

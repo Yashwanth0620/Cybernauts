@@ -51,11 +51,17 @@ export default function AddEventForm() {
     if (posterFile) {
       formData.append("poster", posterFile);
     }
+    const images = formElements.images.files;
+    if (images.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+    }
 
     try {
       // Make the API call
       const response = await axios.put(
-        "http://localhost:3001/admin/events",
+        "http://localhost:3001/admin/events/" + event._id,
         formData,
         {
           headers: {
@@ -75,7 +81,7 @@ export default function AddEventForm() {
 
   return (
     <div className="add-event-form">
-      <h2>Add New Event</h2>
+      <h2>Edit Event: {event.title}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title:</label>
@@ -83,15 +89,13 @@ export default function AddEventForm() {
             type="text"
             id="title"
             name="title"
-            value={event.title}
             placeholder="Enter event title"
-            required
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="type">Event Type:</label>
-          <select id="type" name="type" required>
+          <select id="type" name="type">
             <option value="" disabled>
               Select type
             </option>
@@ -104,12 +108,12 @@ export default function AddEventForm() {
 
         <div className="form-group">
           <label htmlFor="startDate">Start Date:</label>
-          <input type="date" id="startDate" name="startDate" value={event.startDate} required />
+          <input type="date" id="startDate" name="startDate" />
         </div>
 
         <div className="form-group">
           <label htmlFor="endDate">End Date:</label>
-          <input type="date" id="endDate" name="endDate" value={event.endDate} required />
+          <input type="date" id="endDate" name="endDate" />
         </div>
 
         <div className="form-group">
@@ -118,19 +122,17 @@ export default function AddEventForm() {
             id="description"
             name="description"
             placeholder="Enter event description"
-            value={event.desc}
-            required
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="startTime">Start Time:</label>
-          <input type="time" id="startTime" name="startTime" value={event.startTime} required />
+          <input type="time" id="startTime" name="startTime" />
         </div>
 
         <div className="form-group">
           <label htmlFor="endTime">End Time:</label>
-          <input type="time" id="endTime" name="endTime" value={event.endTime} required />
+          <input type="time" id="endTime" name="endTime" />
         </div>
 
         <div className="form-group">
@@ -151,14 +153,7 @@ export default function AddEventForm() {
 
         <div className="form-group">
           <label htmlFor="form">Form:</label>
-          <input
-            type="text"
-            id="form"
-            name="form"
-            placeholder="Form URL"
-            value={event.form}
-            required
-          />
+          <input type="text" id="form" name="form" placeholder="Form URL" />
         </div>
 
         <div className="form-group">
@@ -167,9 +162,7 @@ export default function AddEventForm() {
             type="text"
             id="organizer"
             name="organizer"
-            value={event.organizer}
             placeholder="Enter Organizer Name"
-            required
           />
         </div>
 
@@ -179,9 +172,7 @@ export default function AddEventForm() {
             type="text"
             id="faculty"
             name="faculty"
-            value={event.faculty}
             placeholder="Enter Faculty Name"
-            required
           />
         </div>
 
@@ -191,9 +182,7 @@ export default function AddEventForm() {
             type="text"
             id="chiefGuest"
             name="chiefGuest"
-            value={event.chiefGuest}
             placeholder="Enter Chief Guest Name"
-            required
           />
         </div>
 
@@ -210,7 +199,7 @@ export default function AddEventForm() {
           </div>
           <ul className="contributor-list">
             {contributors.map((contributor) => (
-              <li>
+              <li key={contributor.roll}>
                 {contributor.contribution}: {contributor.roll}
               </li>
             ))}

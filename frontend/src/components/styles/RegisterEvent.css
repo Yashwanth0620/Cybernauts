@@ -74,6 +74,17 @@
   cursor: pointer;
 }
 
+.register-button .register-btn {
+  background-color: #2d2b2d;
+  margin: 5px;
+  padding: 20px 40px;
+  max-width: 300px;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 .admin-btn.edit {
   background-color: #3B71CA;
 }

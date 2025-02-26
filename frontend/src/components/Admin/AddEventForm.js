@@ -137,7 +137,7 @@ export default function AddEventForm({ closeForm }) {
           <input type="file" id="poster" name="poster" accept="image/*" />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="images">Images:</label>
           <input
             type="file"
@@ -146,7 +146,7 @@ export default function AddEventForm({ closeForm }) {
             accept="image/*"
             multiple
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label htmlFor="form">Form:</label>

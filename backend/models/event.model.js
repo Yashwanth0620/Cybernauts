@@ -30,18 +30,17 @@ const eventSchema = mongoose.Schema({
     required: true,
   },
   poster: {
-    type: Buffer,
+    type: String,
   },
   images: [
     {
-      type: Buffer,
+      type: String,
     },
   ],
   form: {
     type: String,
     required: true,
   },
-  participants: [String], // not needed for the frontend form
   organizer: String,
   faculty: [String],
   winners: [
@@ -54,11 +53,9 @@ const eventSchema = mongoose.Schema({
   cheifGuest: String,
   contributors: [
     {
-      roll: { type: String,
-        required : true
-       },
-      description : String,
-      image:Buffer,
+      roll: { type: String, required: true },
+      contribution: { type: String, required: true },
+      image: Buffer,
     },
   ],
 });

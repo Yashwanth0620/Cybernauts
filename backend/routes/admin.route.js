@@ -13,6 +13,7 @@ const {
   sendMail,
   removeParticipant,
   sendResponse,
+  validateAdmin
 } = require("../controllers/admin.controller");
 const {
   addMember,
@@ -24,10 +25,21 @@ const {
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
 
+router.route("/validate").get(validateAdmin);
+
 //routes for event operations
 router.route("/events").get(getEvents).post(upload.single("poster"), addEvent);
 
-router.route("/events/:id").patch(updateEvent).delete(deleteEvent);
+router
+  .route("/events/:id")
+  .put(
+    upload.fields([
+      { name: "poster", maxCount: 1 }, // Single file
+      { name: "images", maxCount: 20 }, // Multiple files (adjust maxCount as needed)
+    ]),
+    updateEvent
+  )
+  .delete(deleteEvent);
 
 // router.route("/blog").post(addBlog);
 
@@ -39,7 +51,7 @@ router.post("/events/mail/:eventId", sendMail);
 router.post("/response/:contactId", sendResponse);
 
 //routes for members operations
-router.post("/members/add/", addMember);
+router.route("/members/add/").post(upload.single("image"), addMember);
 router.get("/members/", getCurrentMembers);
 router.get("/members/:year", getMembers);
 router.get("/members/years", getYears);

@@ -1,6 +1,5 @@
 import React from "react";
 // This file has the same CSS as RegisterEvent, (same class definitions)
-import { Carousel } from "react-responsive-carousel";
 import { useNavigate } from "react-router-dom";
 import "./styles/EventDetails.css";
 
@@ -11,35 +10,39 @@ export default function EventDetails({ event, isAdmin }) {
   };
 
   const deleteEvent = async () => {
-  
     const confirmation = window.confirm(
       `Are you sure you want to delete the event "${event.title}"?`
     );
     if (!confirmation) return;
-  
+
     try {
-      const response = await fetch(`http://localhost:3001/admin/events/${event._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-      });
-  
+      const response = await fetch(
+        `http://localhost:3001/admin/events/${event._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
       if (response.ok) {
         alert("Event deleted successfully.");
         // Optionally refresh the list or navigate to another page
         window.location.reload();
       } else {
         const errorData = await response.json();
-        alert(`Failed to delete event: ${errorData.message || "Unknown error"}`);
+        alert(
+          `Failed to delete event: ${errorData.message || "Unknown error"}`
+        );
       }
     } catch (error) {
       console.error("Error deleting the event:", error);
       alert("An error occurred while deleting the event. Please try again.");
     }
   };
-  
+
   return (
     <div>
       {/* <div className="overlay"></div> */}
@@ -56,7 +59,7 @@ export default function EventDetails({ event, isAdmin }) {
           {event.faculty[0] || "--"} <br />
           <b>Chief guest(s): &nbsp;&nbsp;&nbsp;&nbsp;</b>
           {event.chiefGuests
-            ? event.chiefGuests.array.map((element) => element.name).join(", ")
+            ? event.chiefGuests.map((element) => element.name).join(", ")
             : "--"}
         </p>
 
@@ -66,34 +69,33 @@ export default function EventDetails({ event, isAdmin }) {
           {event.participants ? event.participants.length : 0}
         </p>
 
-        {/* Image Carousel */}
-        <div className="image-carousel">
-          {/* <Carousel
-            showThumbs={false}
-            autoPlay
-            infiniteLoop
-            showStatus={false}
-            dynamicHeight
-          >
-            {event.images && event.images.length > 0 ? (
-              event.images.map((image, index) => (
-                <div key={index}>
-                  <img src={image} alt={`Event image ${index + 1}`} />
-                </div>
-              ))
-            ) : (
-              <p>No images available</p>
-            )}
-            <div><img src={banner} alt="" /></div>
-            <div><img src={banner} alt="" /></div>
-            <div><img src={banner} alt="" /></div>
-          </Carousel> */}
+        {/* Image Grid */}
+        <div className="image-grid">
+          {event.images && event.images.length > 0 ? (
+            event.images.map((url, index) => (
+              <div className="image-container">
+                <img
+                  key={index}
+                  src={url}
+                  alt={`Event Image ${index + 1}`}
+                  className="grid-image"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            ))
+          ) : (
+            <p>No images available</p>
+          )}
         </div>
 
         {isAdmin && (
           <div className="btn-wrap">
-            <button onClick={openEventEditForm} className="admin-btn edit">Edit Event</button>
-            <button onClick={deleteEvent} className="admin-btn delete">Delete Event</button>
+            <button onClick={openEventEditForm} className="admin-btn edit">
+              Edit Event
+            </button>
+            <button onClick={deleteEvent} className="admin-btn delete">
+              Delete Event
+            </button>
           </div>
         )}
       </div>

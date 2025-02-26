@@ -5,7 +5,10 @@ import "./styles/Events.css";
 import RegisterEvent from "./RegisterEvent";
 import EventDetails from "./EventDetails";
 
+import { useAuth } from "../AuthContext";
+
 export default function Events() {
+  const { role } = useAuth();
   const navigate = useNavigate();
 
   const [registerPage, setRegisterPage] = useState(false);
@@ -16,7 +19,7 @@ export default function Events() {
   const [completedEvents, setCompletedEvents] = useState([]);
   const [filteredUpcomingEvents, setFilteredUpcomingEvents] = useState([]);
   const [filteredCompletedEvents, setFilteredCompletedEvents] = useState([]);
-  const isAdmin = !!localStorage.getItem("token");
+  const isAdmin = role === "admin";
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -93,7 +96,7 @@ export default function Events() {
             onChange={handleSearch}
           />
         </form>
-        <select onChange={handleSearch}>
+        <select defaultValue={searchQuery} onChange={handleSearch}>
           <option value="">All</option>
           <option value="hackathon">Hackathon</option>
           <option value="seminar">Seminar</option>
@@ -101,6 +104,7 @@ export default function Events() {
           <option value="webinar">Webinar</option>
           <option value="tech-talk">Tech Talk</option>
         </select>
+
         <i className="fas fa-chevron-down" type="filter"></i>
       </div>
 
@@ -112,18 +116,12 @@ export default function Events() {
         {filteredUpcomingEvents.map((event, index) => (
           <div className="card" key={index}>
             <div className="im-parent">
-            <img
+              <img
+                src={event.poster}
                 className="im"
-                src={
-                  event.poster
-                    ? URL.createObjectURL(
-                        new Blob([new Uint8Array(event.poster.data)], {
-                          type: "image/jpeg",
-                        })
-                      )
-                    : ""
-                }
                 alt={<p>{event.title}</p>}
+                referrerPolicy="no-referrer"
+                style={{ width: "auto", height: "100%" }}
               />
             </div>
             <div className="card-body">
@@ -156,16 +154,10 @@ export default function Events() {
             <div className="im-parent">
               <img
                 className="im"
-                src={
-                  event.poster
-                    ? URL.createObjectURL(
-                        new Blob([new Uint8Array(event.poster.data)], {
-                          type: "image/jpeg",
-                        })
-                      )
-                    : ""
-                }
+                src={event.poster}
+                referrerPolicy="no-referrer"
                 alt={<p>{event.title}</p>}
+                style={{ width: "auto", height: "100%" }}
               />
             </div>
             <div className="card-body">

@@ -1,9 +1,9 @@
 .event-details-page {
   position: fixed;
-  top: 20%;
-  left: 20%;
-  right: 20%;
-  max-height: 60%;
+  top: 10%;
+  left: 15%;
+  right: 15%;
+  max-height: 85%;
   z-index: 999;
   background-color: white;
   padding: 50px 60px;
@@ -67,11 +67,51 @@
 }
 
 .admin-btn.edit {
-  background-color: #3B71CA;
+  background-color: #3b71ca;
 }
 
 .admin-btn.delete {
-  background-color: #DC4C64;
+  background-color: #dc4c64;
+}
+
+.image-grid {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Align items to the start */
+  gap: 2%; /* Adds spacing between images */
+}
+
+.image-container {
+  width: 32%;
+  margin-bottom: 10px;
+}
+
+.grid-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+@media (max-width: 1000px) {
+  .image-container {
+    width: 49%;
+  }
+}
+
+@media (max-width: 750px) {
+  .image-container {
+    width: 100%;
+    max-height: 250px;
+  }
+  .grid-image {
+    height: 100%;
+    width: auto;
+  }
+  .image-grid {
+    text-align: center;
+  }
 }
 
 @media (max-width: 1800px) {
@@ -87,15 +127,15 @@
 }
 
 @media (max-width: 1200px) {
-    .event-details-page .image-carousel {
-        width: 80%;
-    }
+  .event-details-page .image-carousel {
+    width: 80%;
+  }
 }
 
 @media (max-width: 900px) {
-    .event-details-page .image-carousel {
-        width: 100%;
-    }
+  .event-details-page .image-carousel {
+    width: 100%;
+  }
 }
 
 @media (max-width: 670px) {
@@ -108,7 +148,7 @@
 }
 
 @media (max-width: 500px) {
-    .event-details-page {
-        padding: 30px 30px;
-    }
+  .event-details-page {
+    padding: 30px 30px;
+  }
 }

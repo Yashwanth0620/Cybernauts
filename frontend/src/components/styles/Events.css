@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sanchez:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Sanchez:ital@0;1&display=swap");
 
 .events {
-    padding: 0 70px;
+  padding: 0 70px;
 }
 .head {
   padding: 5px 55px;
-  font-family: 'Playfair Display', sans-serif;
+  font-family: "Playfair Display", sans-serif;
 }
 .head-container {
   display: flex;
@@ -20,7 +20,7 @@
 }
 
 .head-btn {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
   padding: 10px 20px;
   font-size: 16px;
@@ -103,8 +103,8 @@ form {
   width: 100%;
 }
 .section-label {
-font-family: 'Sanchez', sans-serif;
-color: black;
+  font-family: "Sanchez", sans-serif;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -112,7 +112,8 @@ color: black;
   padding-left: 20px;
   padding-right: 30px;
 }
-.section-label::after, .section-label::before {
+.section-label::after,
+.section-label::before {
   content: "";
   flex-grow: 5;
   flex-shrink: 5;
@@ -130,79 +131,78 @@ color: black;
 }
 
 .events .section-label::after {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .section-label span {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 .card-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0 20px;
-    margin: 40px 55px;
-    row-gap: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  margin: 40px 55px;
+  row-gap: 30px;
 }
 .card {
-    width: 33.33%;
+  width: 33.33%;
 }
 .im-parent {
-    width: 95%;
-    aspect-ratio: 1.5 / 1;
-    /* height: 250px; */
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
+  width: 95%;
+  aspect-ratio: 1.5 / 1;
+  /* height: 250px; */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 .im {
   width: 100%;
 }
 .item1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
-    width: 50%;
-    flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 50%;
+  flex-shrink: 1;
 }
 .item1 h1 {
-    font-size: 23px;
-    flex-grow: 1;
+  font-size: 23px;
+  flex-grow: 1;
 }
 .item1 h2 {
-    font-size: 15px;
-    flex-grow: 1;
+  font-size: 15px;
+  flex-grow: 1;
 }
 .item1 h3 {
-    font-size: 18px;
-    text-transform: uppercase;
-    flex-grow: 1;
+  font-size: 18px;
+  text-transform: uppercase;
+  flex-grow: 1;
 }
 .card-body {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 .btn {
-    flex-shrink: 1;
-    transform: translateY(-20%);
-    background-color: #2d2b2d;
-    color: white;
-    width: 40%;
-    height: 50px;
-    margin: 0px 5px;
-    margin-top: 30px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 30px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
+  flex-shrink: 1;
+  transform: translateY(-20%);
+  background-color: #2d2b2d;
+  color: white;
+  width: 40%;
+  height: 50px;
+  margin: 0px 5px;
+  margin-top: 30px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
 }
 .btn:hover {
   background-color: black;
@@ -331,24 +331,24 @@ color: black;
 }
 
 @media (max-width: 1090px) {
-    .card {
-        width: 50%;
-    }
+  .card {
+    width: 50%;
+  }
 }
 
 @media (max-width: 910px) {
-    .card {
-        width: 100%;
-        text-align: center;
-    }
-    .card img {
-        width: 90%;
-        height: auto;
-    }
+  .card {
+    width: 100%;
+    text-align: center;
+  }
+  .card img {
+    width: 90%;
+    height: auto;
+  }
 }
 
 @media (max-width: 800px) {
-    .events {
-        padding: 0 10px;
-    }
+  .events {
+    padding: 0 10px;
+  }
 }

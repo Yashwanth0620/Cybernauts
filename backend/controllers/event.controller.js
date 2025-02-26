@@ -26,6 +26,30 @@ const getEvents = errorHandler(async (req, res) => {
   }
 });
 
+// @desc to get all the events
+// @API GET /events/recent
+// @access PUBLIC
+const getRecentEvent = errorHandler(async (req, res) => {
+  try {
+    const currentDate = new Date();
+
+    // Fetch events whose endDate is in the past
+    const events = await eventModel
+      .find({ endDate: { $lt: currentDate } })
+      .sort({ endDate: -1 })
+      .limit(1);
+
+    if (events.length === 0) {
+      return res.status(404).json({ message: "No recent events found" });
+    }
+
+    res.status(200).json(events[0]);
+  } catch (error) {
+    console.error("Error fetching recent event:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // @desc to add a participant for an event
 // @API PATCH /events/:id
 // @access PUBLIC
@@ -47,4 +71,4 @@ const addParticipant = errorHandler(async (req, res) => {
   res.status(200).json({ message: "Member added successfully" });
 });
 
-module.exports = { getEvents, addParticipant };
+module.exports = { getEvents, addParticipant, getRecentEvent };

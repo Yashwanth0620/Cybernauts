@@ -1,11 +1,13 @@
 import React from "react";
 import "./styles/Blog.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const BlogPage = () => {
   const navigate = useNavigate();
 
-  
+  const {role} = useAuth();
+  const isAdmin = role === "admin";
 
   const blogPosts = [
     {
@@ -45,9 +47,9 @@ const BlogPage = () => {
             <h2>Blog</h2>
             <p>Stay informed with what we do...</p>
           </div>
-          <button className="head-btn" onClick={openBlogForm}>
+          {isAdmin && (<button className="head-btn" onClick={openBlogForm}>
             Add Blog
-          </button>
+          </button>)}
         </div>
         {/* Blog Posts */}
         {blogPosts.map((post, index) => (

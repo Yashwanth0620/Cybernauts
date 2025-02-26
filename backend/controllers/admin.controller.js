@@ -1,6 +1,11 @@
+const { google } = require("googleapis");
+const path = require("path");
+const fs = require("fs");
+const mongoose = require("mongoose");
 const errorHandler = require("express-async-handler");
 const updatesModel = require("../models/updates.model");
 const eventModel = require("../models/event.model");
+const jwt = require("jsonwebtoken");
 
 const {
   eventUpdateMail,
@@ -8,6 +13,75 @@ const {
   sendMailResponse,
 } = require("./mail.controller");
 const contactModel = require("../models/contact.model");
+const { log } = require("console");
+
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
+
+const oauth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+// initializing drive
+const drive = google.drive({
+  version: "v3",
+  auth: oauth2Client,
+});
+
+const uploadFileAndGetUrl = async (filePath, type = "image") => {
+  try {
+    // Upload the file to Google Drive
+    const response = await drive.files.create({
+      requestBody: {
+        name: `$${type}.jpg`,
+        mimeType: "image/jpg",
+      },
+      media: {
+        mimeType: "image/jpg",
+        body: fs.createReadStream(filePath),
+      },
+    });
+
+    const fileId = response.data.id;
+
+    // Make the file publicly accessible
+    await drive.permissions.create({
+      fileId: fileId,
+      requestBody: {
+        role: "reader",
+        type: "anyone",
+      },
+    });
+
+    // Get the public URL
+    // const fileUrl = `https://drive.google.com/uc?id=${fileId}`;
+    const fileUrl = `https://drive.google.com/thumbnail?id=${fileId}`;
+
+    return fileUrl;
+  } catch (error) {
+    console.error("Error uploading file to Google Drive:", error);
+    throw new Error("Failed to upload photos to google drive");
+  }
+};
+
+const deleteFileFromUrl = async (fileUrl) => {
+  try {
+    // Extract file ID from the given URL
+    const fileIdMatch = fileUrl.match(/id=([a-zA-Z0-9_-]+)/);
+    if (!fileIdMatch) {
+      throw new Error("Invalid Google Drive file URL");
+    }
+
+    const fileId = fileIdMatch[1];
+
+    // Delete the file
+    await drive.files.delete({ fileId });
+  } catch (error) {
+    console.error("Error deleting file:", error.message);
+  }
+};
 
 // @desc to get all the core body members of particular year
 // @API GET /admin/events
@@ -18,56 +92,158 @@ const getEvents = errorHandler(async (req, res) => {
 
 // @desc to add a new event
 // @API POST /admin/events
+
 const addEvent = errorHandler(async (req, res) => {
   const event = req.body;
 
-  // Validate required fields (basic validation, you can expand as needed)
+  // Validate required fields
   if (!event.title || !event.startDate || !event.endDate || !event.desc) {
-    return res.status(400).json({ message: "Missing required fields" });
+    res.status(400);
+    throw new Error("Missing required fields");
   }
 
   // Validate contributors if they exist
   let contributors = [];
-  try {
-    if (event.contributors) {
-      contributors = JSON.parse(event.contributors); // Parse the contributors if it's a string
+  if (event.contributors) {
+    try {
+      contributors = JSON.parse(event.contributors);
       if (!Array.isArray(contributors)) {
-        throw new Error("Contributors should be an array");
+        res.status(400);
+        throw new Error("Invalid contributors format");
       }
+    } catch {
+      res.status(400);
+      throw new Error("Invalid contributors format");
     }
-  } catch (err) {
-    return res.status(400).json({ message: "Invalid contributors format" });
   }
 
-  // Handle optional poster (it will be a buffer if uploaded)
-  const imageBuffer = req.file ? req.file.buffer : null;
+  // Handle optional poster upload
+  let posterFile = null;
+  if (req.file) {
+    try {
+      const tempPath = path.join(__dirname, "tempPoster.jpg");
+      fs.writeFileSync(tempPath, req.file.buffer);
+
+      // Upload using event ID instead of title
+      posterFile = await uploadFileAndGetUrl(tempPath, "poster");
+
+      fs.unlinkSync(tempPath);
+    } catch (error) {
+      res.status(500);
+      throw new Error("Failed to upload event poster");
+    }
+  }
+
+  faculty = event.faculty.split(",");
+
+  // Create event object
 
   const newEvent = {
     ...event,
-    contributors, // Use the parsed contributors array
-    poster: imageBuffer, // Add poster if available
+    faculty,
+    contributors,
+    poster: posterFile,
   };
 
-  // Save event to the database
+  // Save event to database
+
   try {
-    await eventModel.create(newEvent);
-    res.status(200).json({ message: "Event added successfully" });
+    const createdEvent = await eventModel.create(newEvent);
+    res
+      .status(200)
+      .json({ message: "Event added successfully", eventId: createdEvent._id });
   } catch (err) {
-    console.error("Error adding event:", err);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
   }
 });
 
 // @desc To update the event details
-// @API PATCH /admin/events/:id
+// @API PUT /admin/events/:id
 const updateEvent = errorHandler(async (req, res) => {
   const id = req.params.id;
-  const event = req.body;
-  const updatedEvent = await eventModel.findByIdAndReplace(id, event);
-  if (!updatedEvent) {
+  const event = await eventModel.findById(id);
+
+  if (!event) {
     res.status(404);
     throw new Error("Event not found");
-  } else res.status(200).json({ message: "Event Deleted Successfully" });
+  }
+
+  // Extract form data from req.body
+  const updatedData = { ...req.body };
+
+  try {
+    // Handle poster update (if provided)
+    if (req.files && req.files.poster) {
+      if (event.poster) {
+        await deleteFileFromUrl(event.poster); // Delete previous poster
+      }
+
+      const tempPath = path.join(__dirname, "tempPoster.jpg");
+      fs.writeFileSync(tempPath, req.files.poster[0].buffer); // Save new poster temporarily
+
+      updatedData.poster = await uploadFileAndGetUrl(id.toString(), tempPath); // Upload new poster
+      fs.unlinkSync(tempPath); // Remove temp file
+    }
+
+    // Handle images update (if provided)
+    if (req.files && req.files.images) {
+      if (event.images && event.images.length > 0) {
+        await Promise.all(
+          event.images.map((imageUrl) => deleteFileFromUrl(imageUrl))
+        ); // Delete old images
+      }
+
+      const newImageUrls = [];
+      for (const image of req.files.images) {
+        const tempPath = path.join(__dirname, image.originalname);
+        fs.writeFileSync(tempPath, image.buffer); // Save image temporarily
+
+        const uploadedImageUrl = await uploadFileAndGetUrl(tempPath); // Upload image
+        newImageUrls.push(uploadedImageUrl);
+
+        fs.unlinkSync(tempPath); // Remove temp file
+      }
+
+      updatedData.images = newImageUrls; // Update images in event
+    }
+
+    // Convert contributors from string to array if necessary
+    if (typeof updatedData.contributors === "string") {
+      try {
+        updatedData.contributors = JSON.parse(req.body.contributors);
+      } catch (error) {
+        return res.status(400).json({ message: "Invalid contributors format" });
+      }
+    }
+
+    // Update only fields that are not null/undefined
+    Object.keys(updatedData).forEach((key) => {
+      if (
+        updatedData[key] === null ||
+        updatedData[key] === undefined ||
+        updatedData[key] === "" ||
+        updatedData[key].length == 0
+      ) {
+        delete updatedData[key];
+      }
+    });
+
+    // Update event in DB
+    const updatedEvent = await eventModel.findByIdAndUpdate(id, updatedData, {
+      new: true, // Returns updated document
+      runValidators: true, // Ensures validation rules are applied
+    });
+
+    res
+      .status(200)
+      .json({ message: "Event Updated Successfully", updatedEvent });
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500);
+    throw new Error("Failed to update event");
+  }
 });
 
 // @desc To delete an event
@@ -160,6 +336,13 @@ const sendResponse = errorHandler(async (req, res) => {
   }
 });
 
+const validateAdmin = errorHandler(async (req, res) => {
+  if (req.user) {
+    return res.json({ role: "admin" });
+  }
+  res.json({ role: null });
+});
+
 // also add controllers for members functionality
 
 module.exports = {
@@ -171,4 +354,5 @@ module.exports = {
   sendMail,
   removeParticipant,
   sendResponse,
+  validateAdmin,
 };

@@ -27,7 +27,9 @@ const getAllYearsMembers = errorHandler(async (req, res) => {
     return res.status(404).json({ message: "No members found for any year" });
   }
 
-  const allMembers = yearDocuments.flatMap((yearDocument) => yearDocument.members);
+  const allMembers = yearDocuments.flatMap(
+    (yearDocument) => yearDocument.members
+  );
 
   res.status(200).json(allMembers);
 });
@@ -45,7 +47,7 @@ const getYears = errorHandler(async (req, res) => {
 // @desc Get all current core body members
 // @route GET /members
 const getCurrentMembers = errorHandler(async (req, res) => {
-  const yearDocument = await MemberModel.findOne({present:true});
+  const yearDocument = await MemberModel.findOne({ present: true });
 
   if (yearDocument.length === 0) {
     return res.status(404).json({ message: "No members found for any year" });
@@ -56,23 +58,82 @@ const getCurrentMembers = errorHandler(async (req, res) => {
   res.status(200).json(yearDocument);
 });
 
+const uploadFileAndGetUrl = async (filePath, type = "member") => {
+  try {
+    // Upload the file to Google Drive
+    const response = await drive.files.create({
+      requestBody: {
+        name: `$${type}.jpg`,
+        mimeType: "image/jpg",
+      },
+      media: {
+        mimeType: "image/jpg",
+        body: fs.createReadStream(filePath),
+      },
+    });
+
+    const fileId = response.data.id;
+
+    // Make the file publicly accessible
+    await drive.permissions.create({
+      fileId: fileId,
+      requestBody: {
+        role: "reader",
+        type: "anyone",
+      },
+    });
+
+    // Get the public URL
+    // const fileUrl = `https://drive.google.com/uc?id=${fileId}`;
+    const fileUrl = `https://drive.google.com/thumbnail?id=${fileId}`;
+
+    return fileUrl;
+  } catch (error) {
+    console.error("Error uploading file to Google Drive:", error);
+    throw new Error("Failed to upload photos to google drive");
+  }
+};
 
 // @desc to add members to the team
 // @API POST /members/add
 const addMember = errorHandler(async (req, res) => {
-  console.log("Hii")
-  console.log(req.body)
-  // console.log(req)
-  const { rollNo, name, designation,description,year,position,mobileNo,email } = req.body;
-  const image = req.file ? req.file.path : "";
+  
+  const {
+    rollNo,
+    name,
+    designation,
+    description,
+    year,
+    position,
+    mobileNo,
+    email,
+  } = req.body;
   let yearDocument = await MemberModel.findOne({ year });
-  const present=true;
+  const present = true;
   if (!yearDocument) {
     await MemberModel.updateMany({}, { $set: { present: false } });
-    yearDocument = new MemberModel({ year,present,members: [] });
+    yearDocument = new MemberModel({ year, present, members: [] });
   }
 
-  yearDocument.members.push({
+  let image;
+  if (req.file) {
+    console.log("has a file");
+    
+    try {
+      const tempPath = path.join(__dirname, "tempPoster.jpg");
+      fs.writeFileSync(tempPath, req.file.buffer);
+
+      // Upload using event ID instead of title
+      image = await uploadFileAndGetUrl(tempPath);
+
+      fs.unlinkSync(tempPath);
+    } catch (error) {
+      res.status(500);
+      throw new Error("Failed to upload event poster");
+    }
+  }
+
+  const member = {
     rollNo,
     name,
     designation,
@@ -80,14 +141,15 @@ const addMember = errorHandler(async (req, res) => {
     position,
     mobileNo,
     email,
-    image:"url",
-    contributions:[],
-  });
+    image,
+    contributions: [],
+  };
+  
+  yearDocument.members.push(member);
 
   await yearDocument.save();
   res.status(200).json(yearDocument.members);
 });
-
 
 // @desc To add contributions to a member
 // @route PUT /members/contributions/:year/:id/
@@ -109,7 +171,7 @@ const addContributions = errorHandler(async (req, res) => {
 
   const newContribution = {
     description,
-    image, 
+    image,
     eventId,
   };
 
@@ -121,8 +183,6 @@ const addContributions = errorHandler(async (req, res) => {
   res.status(200).json({ message: "Contributions added successfully", member });
 });
 
-
-
 // @desc To delete a member of a specific year
 // @route DELETE /members/:year/:id
 const deleteMember = errorHandler(async (req, res) => {
@@ -130,7 +190,7 @@ const deleteMember = errorHandler(async (req, res) => {
 
   const yearDocument = await MemberModel.findOneAndUpdate(
     { year: year, "members._id": id },
-    { $pull: { members: { _id: id } } }, 
+    { $pull: { members: { _id: id } } },
     { new: true }
   );
 
@@ -141,5 +201,12 @@ const deleteMember = errorHandler(async (req, res) => {
   res.status(200).json({ message: "Member Deleted Successfully" });
 });
 
-
-module.exports = { getMembers, addMember, getCurrentMembers, deleteMember,addContributions,getAllYearsMembers,getYears };
+module.exports = {
+  getMembers,
+  addMember,
+  getCurrentMembers,
+  deleteMember,
+  addContributions,
+  getAllYearsMembers,
+  getYears,
+};
