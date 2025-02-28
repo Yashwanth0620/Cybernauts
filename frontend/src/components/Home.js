@@ -40,6 +40,7 @@ const App = () => {
         >
           CVR College of Engineering
         </a>
+        {console.log(role)}
         {role !== "admin" && (
           <Link to="/admin/login" className="link admin-link">
             Admin?
