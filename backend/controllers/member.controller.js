@@ -3,6 +3,10 @@ const multer = require("multer");
 const MemberModel = require("../models/member.model");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const path = require("path");
+const fs = require("fs");
+const { google } = require("googleapis");
+const {uploadFileAndGetUrl} = require("./admin.controller")
 
 // @desc to get all the core body members of particular year
 // @API GET /members/:year
@@ -58,41 +62,7 @@ const getCurrentMembers = errorHandler(async (req, res) => {
   res.status(200).json(yearDocument);
 });
 
-const uploadFileAndGetUrl = async (filePath, type = "member") => {
-  try {
-    // Upload the file to Google Drive
-    const response = await drive.files.create({
-      requestBody: {
-        name: `$${type}.jpg`,
-        mimeType: "image/jpg",
-      },
-      media: {
-        mimeType: "image/jpg",
-        body: fs.createReadStream(filePath),
-      },
-    });
 
-    const fileId = response.data.id;
-
-    // Make the file publicly accessible
-    await drive.permissions.create({
-      fileId: fileId,
-      requestBody: {
-        role: "reader",
-        type: "anyone",
-      },
-    });
-
-    // Get the public URL
-    // const fileUrl = `https://drive.google.com/uc?id=${fileId}`;
-    const fileUrl = `https://drive.google.com/thumbnail?id=${fileId}`;
-
-    return fileUrl;
-  } catch (error) {
-    console.error("Error uploading file to Google Drive:", error);
-    throw new Error("Failed to upload photos to google drive");
-  }
-};
 
 // @desc to add members to the team
 // @API POST /members/add
@@ -108,6 +78,7 @@ const addMember = errorHandler(async (req, res) => {
     mobileNo,
     email,
   } = req.body;
+  console.log(req.body)
   let yearDocument = await MemberModel.findOne({ year });
   const present = true;
   if (!yearDocument) {
@@ -120,8 +91,12 @@ const addMember = errorHandler(async (req, res) => {
     console.log("has a file");
     
     try {
-      const tempPath = path.join(__dirname, "tempPoster.jpg");
+      console.log("hiihhhh    1")
+      console.log(__dirname)
+      const tempPath = path.join(__dirname, "memberPhoto.jpg");
+      console.log("hiihhhh   2")
       fs.writeFileSync(tempPath, req.file.buffer);
+      console.log("hiihhhh    3")
 
       // Upload using event ID instead of title
       image = await uploadFileAndGetUrl(tempPath);
@@ -129,7 +104,8 @@ const addMember = errorHandler(async (req, res) => {
       fs.unlinkSync(tempPath);
     } catch (error) {
       res.status(500);
-      throw new Error("Failed to upload event poster");
+      console.log(error)
+      throw new Error("Failed to upload image");
     }
   }
 
@@ -146,7 +122,6 @@ const addMember = errorHandler(async (req, res) => {
   };
   
   yearDocument.members.push(member);
-
   await yearDocument.save();
   res.status(200).json(yearDocument.members);
 });

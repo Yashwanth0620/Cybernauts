@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AddMember() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,11 +18,11 @@ export default function AddMember() {
     description: "",
     mobileNo: "",
     email: "",
-    position: "member"
+    position: "member",
   });
   const [searchParams] = useSearchParams();
   const year = searchParams.get("year");
-  console.log(year);
+  const navigate=useNavigate()
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setFormData({
@@ -40,7 +41,6 @@ export default function AddMember() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-
     if (name === "image" && files && files[0]) {
       setFormData({ ...formData, image: files[0] });
     } else {
@@ -52,10 +52,11 @@ export default function AddMember() {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/members/${year}`, {
+          `http://localhost:3001/members/${year}`,
+          {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("token")
-            }
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
           }
         );
         setMembers(response.data);
@@ -87,25 +88,28 @@ export default function AddMember() {
     e.preventDefault();
     formData.year = year;
 
-    // const form = new FormData();
-    // form.append("name", formData.name);
-    // form.append("rollNo", formData.rollNo);
-    // form.append("designation", formData.designation);
-    // form.append("description", formData.description);
-    // form.append("year", year);
-    // if (formData.image) {
-    //     form.append("image", formData.image);
-    //   }
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("rollNo", formData.rollNo);
+    form.append("designation", formData.designation);
+    form.append("description", formData.description);
+    form.append("position", formData.position);
+    form.append("mobileNo", formData.mobileNo);
+    form.append("email", formData.email);
+    form.append("year", year);
+    if (formData.image) {
+      form.append("image", formData.image);
+    }
 
     try {
       // Make the API call
       console.log("Form Data:", formData);
       const response = await axios.post(
         `http://localhost:3001/admin/members/add/`,
-        formData,
+        form,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
@@ -129,9 +133,16 @@ export default function AddMember() {
     } catch (error) {
       console.log(error);
       toast.error("Failed to add member..!");
-      alert("Failed to add the event. Please try again.");
+      // alert("Failed to add the event. Please try again.");
     }
   };
+
+  const handleNavigate = (member,year) => {
+    // console.log(member,year)
+
+    navigate("/admin/view-members/profile", { state: {member,year} }); 
+  };
+
   return (
     <>
       <div className="members">
@@ -150,10 +161,10 @@ export default function AddMember() {
               members
                 .filter((member) => member.designation === "chairperson")
                 .map((member) => (
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -199,10 +210,11 @@ export default function AddMember() {
               .filter((member) => member.designation === "vice-chairperson")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        {console.log(member.image)}
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -247,10 +259,17 @@ export default function AddMember() {
               .filter((member) => member.designation === "secretary")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        {console.log(member.image)}
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt="image"
+                          referrerPolicy="no-referrer"
+                          loading="lazy"
+                          
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -294,10 +313,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "vice-secretary")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -342,10 +361,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "finance")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -392,10 +411,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "documentation")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -441,10 +460,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "technical")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -490,10 +509,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "graphics")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -539,10 +558,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "outreach")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -588,10 +607,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "event-management")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -637,10 +656,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "executive-Boys")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -687,10 +706,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "executive-Girls")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -738,10 +757,10 @@ export default function AddMember() {
               )
               .map((member) => (
                 <div className="member-body">
-                  <div className="member">
+                  <div className="member" onClick={()=>handleNavigate(member,year)}>
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? pp : member.image} alt="" />
+                        <img src={member.image ? member.image : pp} alt="" />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>

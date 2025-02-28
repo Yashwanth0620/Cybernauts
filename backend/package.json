@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "kill -9 $(lsof -t -i :3001); nodemon server.js"
+    "dev": " nodemon server.js"
   },
   "keywords": [],
   "author": "",

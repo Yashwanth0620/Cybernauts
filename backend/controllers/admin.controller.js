@@ -355,4 +355,5 @@ module.exports = {
   removeParticipant,
   sendResponse,
   validateAdmin,
+  uploadFileAndGetUrl
 };

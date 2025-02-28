@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         const data = response.data;
 
         setRole(data.role); // Assuming API returns { role: "admin" or "user" }
+        console.log(data); // Assuming API returns { role: "admin" or "user" }
       } catch (error) {
         console.error("Error fetching user role:", error);
         setRole(null);
