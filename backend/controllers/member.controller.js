@@ -162,12 +162,15 @@ const addContributions = errorHandler(async (req, res) => {
 // @route DELETE /members/:year/:id
 const deleteMember = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-
+  console.log("Hii")
+  console.log(year)
+  console.log(id)
   const yearDocument = await MemberModel.findOneAndUpdate(
-    { year: year, "members._id": id },
-    { $pull: { members: { _id: id } } },
+    { year: year},
+    { $pull: { members: { _id: id } } }, 
     { new: true }
   );
+  console.log(yearDocument)
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });

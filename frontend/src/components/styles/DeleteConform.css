@@ -1,0 +1,108 @@
+/* Overlay */
+.DeleteModel .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal container */
+  .DeleteModel   .Wrongdel {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Close button */
+  .DeleteModel  .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #333;
+  }
+  .DeleteModel .item  .w{
+      color: #c9302c;
+     
+      font-size: 4rem;
+      
+  }
+  /* Message section */
+  .DeleteModel  .Delmsg h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .DeleteModel  .Delmsg p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  /* Buttons */
+  .DeleteModel   .butn {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .DeleteModel  .bnt2  button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    
+  }
+  
+  .DeleteModel  .bnt2 button:first-child {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .DeleteModel  .bnt2 button:first-child:hover {
+    background-color: #bbb;
+  }
+  
+  .DeleteModel  .bnt1 button {
+    background-color: #d9534f;
+    color: white;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .DeleteModel  .bnt1 button:hover {
+    background-color: #c9302c;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

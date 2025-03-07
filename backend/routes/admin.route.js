@@ -55,7 +55,7 @@ router.route("/members/add/").post(upload.single("image"), addMember);
 router.get("/members/", getCurrentMembers);
 router.get("/members/:year", getMembers);
 router.get("/members/years", getYears);
-router.delete("/members/:id", deleteMember);
+router.delete("/members/:year/:id", deleteMember);
 router.patch("/members/:id", addContributions);
 
 module.exports = router;

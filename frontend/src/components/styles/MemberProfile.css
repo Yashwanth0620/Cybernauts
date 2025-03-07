@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    align-items: center;
   }
 .MemberProfile .description{
     word-wrap: break-word;
@@ -22,27 +23,74 @@
   }
   
   .MemberProfile-main {
-    margin-top: -2rem;
+    margin-top: -3rem;
    
     align-items: center;
     background-color: #f4f4f4;
     padding: 1.5rem;
     border-right: 2px solid #ccc;
-    padding-left: 40px;
+    padding-left: 50px;
+    
     position: static;
     height: 100vh;
     overflow-y: auto;
     width: 23%;
     font-family: sans-serif;
     position: sticky;
-    top: 80px;
+    top: 45px;
+  }
+  .MemberProfile .MemberProfile-main .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color:#f4f4f4;
+    border-radius: 8px;
+   
+    
+  }
+  
+  .MemberProfile .MemberProfile-main .buttons button {
+    background-color: #003366;
+    color: white;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .MemberProfile .MemberProfile-main .buttons button:hover {
+    background-color: #294361;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  }
+  
+  .MemberProfile .MemberProfile-main .buttons .but {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .MemberProfile .MemberProfile-main .buttons .but .del {
+    background-color: rgb(216, 58, 58);
+  }
+  
+  .MemberProfile .MemberProfile-main .buttons .but .del:hover {
+    background-color: rgb(180, 40, 40);
+    transform: translateY(-3px);
   }
   
   .MemberProfile-main img {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     margin-bottom: 1rem;
+    
   }
   
   .MemberProfile-main h1,
@@ -54,6 +102,7 @@
     margin-left: 5%;
     width: 70%;
     overflow-y: auto;
+    
     height: auto; /* Adjust to push content with footer */
     padding-bottom: 3rem; /* Add space for footer */
   }
@@ -123,6 +172,7 @@
   
   .icon-button.delete {
     background-color: white;
+    color: red;
   }
   
   .icon-button:hover {
@@ -140,16 +190,16 @@
       width: 25%;
       height: 100vh;
       position: sticky;
-      top: 80px;
+      top: 40px;
     }
   
   }
   @media (max-width: 1210px) {
     .MemberProfile-main {
-      width: 30%;
+      width: 40%;
       height: 100vh;
       position: sticky;
-      top: 80px;
+      top: 40px;
     }
     .MemberProfile-body{
       width: 80%;
@@ -175,6 +225,11 @@
        width: 32%;
        
     }
+    .MemberProfile .description{
+      word-wrap: break-word;
+      width: 50%;
+      height: auto;
+    }
     .MemberProfile-body{
       width: 50%;
     } 
@@ -189,6 +244,11 @@
       width: 35%;
       
    }
+   .MemberProfile .description{
+    word-wrap: break-word;
+    width: 70%;
+    height: auto;
+  }
    .MemberProfile-body{
      width: 40%;
    } 
@@ -200,38 +260,127 @@
     .MemberProfile-main {
       width: 38%;
       
+
    }
+   .MemberProfile .description{
+    word-wrap: break-word;
+    width: 80%;
+    height: auto;
+  }
    .MemberProfile-body{
      width: 40%;
    } 
    
   
   }
-  @media screen and (max-width: 780px) {
+  @media (max-width: 780px) {
     .MemberProfile {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      width: 100%;
+      position: relative;
+      top: -1px; /* Ensure stacking context */
+      height: auto;
+  
+
       
-        /* Keeps main and body side by side */
+    }
+    .MemberProfile .MemberProfile-main .items{
+      height: 200px;
+    }
+  
+    .MemberProfile .description {
+      word-wrap: break-word;
+      width: 90%;
+      height: auto;
+    }
+  
+    .MemberProfile .no-contribution {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 13% auto;
+    }
+  
+    .MemberProfile-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
   
     .MemberProfile-main {
-      margin-top: -2rem;
-      width: 40%; /* Adjust width as needed */
-      height:  3rem; 
-      position: absolute; 
+      display: flex;
+      flex-direction: column;
+      /* position: fixed; */
+      width: 100%;
+      align-items: center;
+      font-size: 15px;
       padding: 1.5rem;
-      top: 0;
+      font-family: sans-serif;
+      z-index: 2;
+      height: 550px;
+      position: relative;
+      top: 8px;
+      margin-bottom: 2rem;
+       
+    }
+  
+    .MemberProfile-main img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+  
+    .MemberProfile-main h1,
+    .MemberProfile-main h3 {
+      margin-bottom: 1rem;
     }
   
     .MemberProfile-body {
-      width: 60%; /* Adjust width to balance with main */
-      margin-left: 0;
-      padding: 1rem;
-      overflow: auto; /* Allow content scrolling */
+      height: 1000px;
+      display: flex;
+      flex-direction: column;
+      width: 95%;
+      
+      padding: 2rem;
+      color: white;
+      position: relative; /* Allow z-index to work */
+      z-index: 2; /* Higher than .MemberProfile */
+      margin-right: 5rem;
+      margin:.5rem; 
+      margin-left: .2rem;
+      /* Remove extreme margin */
     }
-    .MemberProfile-main img {
-      width: 200px;
-      height: 200px;
+   
+    
+    .MemberProfile .MemberProfile-main .buttons .but  {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+       
+      
+        flex-wrap: nowrap;
+        
+    }
+    .MemberProfile .MemberProfile-main .buttons button  {
+      font-size: 12px;
+      height: 2rem;
+      width: 100%;
+      align-items: center;
+      padding: .5rem;
+
+     
+    }
+    .MemberProfile .MemberProfile-main .buttons  {
+       display: flex;
+       flex-direction: column;
+       text-align: center;
+    }
+    
+    .contribut-container {
+      display: flex;
+      flex-direction: column;
     }
   }
+  
