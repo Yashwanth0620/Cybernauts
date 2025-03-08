@@ -9,7 +9,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 4;
+   
   }
   
   /* Modal container */
@@ -103,6 +104,12 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  @media  (max-width:450px) {
+    .DeleteModel .overlay {
+      width:100%;
+      z-index: 400;
     }
   }
   

@@ -7,18 +7,23 @@ import DeleteComformModal from "./DeleteComformModal";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MemberModel from "./MemberModel";
 
 export default function MemberProfile() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setEditIsModalOpen] = useState(false);
   const { member, filterYear } = location.state || {
     member: {},
     filterYear: "",
   };
+  
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const openEditModal = () => setEditIsModalOpen(true);
+  const closeEditModal = () => setEditIsModalOpen(false);
 
   // console.log(member,filterYear)
   member.contributions = [
@@ -115,12 +120,19 @@ export default function MemberProfile() {
     }
     
   };
+  const handleEdit =async  () => {
+    
+  };
+  const handleEditChange = (e) => {
+    
+  };
   return (
     <>
       <div className="MemberProfile">
         <div className="MemberProfile-container">
           <div className="MemberProfile-main">
-            <h1>ViceChairman {filterYear}</h1>
+            {console.log(member.position)}
+            <h1>{member.designation.toUpperCase()} {member.position ? member.position.toUpperCase() : " "} {filterYear}</h1>
             <img src={pp} alt="photo"></img>
             <div className="items">
               <h3>{member?.name?.toUpperCase() || "No Name"}</h3>
@@ -133,7 +145,7 @@ export default function MemberProfile() {
             <div className="buttons">
               <button>Add Contribution</button>
               <div className="but">
-                <button>Edit</button>
+                <button onClick={openEditModal}>Edit</button>
                 <button className="del" onClick={openModal}>
                   Delete
                 </button>
@@ -144,6 +156,14 @@ export default function MemberProfile() {
               <DeleteComformModal
                 closeModal={closeModal}
                 handleDelete={handleDelete}
+              />
+            )}
+            {isEditModalOpen && (
+              <MemberModel
+                closeModal={closeEditModal}
+                handleSubmit={handleEdit}
+                formData={member}
+                handleChange={handleEditChange}
               />
             )}
           </div>

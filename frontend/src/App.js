@@ -26,6 +26,7 @@ import MemberProfile from "./components/Admin/MemberProfile";
 import ViewMembers from "./components/Admin/ViewMembers";
 
 import PrivateRoute from "./components/Admin/PrivateRoute";
+import SuperAdminProfile from "./components/Admin/SuperAdminProfile";
 
 function App() {
   const location = useLocation();
@@ -71,6 +72,10 @@ function App() {
           path="/admin/view-members/profile"
           element={<PrivateRoute element={<MemberProfile />} />}
         />
+        <Route
+          path="/superadmin"
+          element={< SuperAdminProfile/>} />
+       
       </Routes>
       <Footer />
     </div>

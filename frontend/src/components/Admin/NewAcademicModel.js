@@ -21,11 +21,11 @@ export default function NewAcademicModel({
 
   const handleAddMember = () => {
       if(years.includes(newyear)){
-          toast.error("Year already existed...!")
+          toast.warn("Year already existed...!")
           return ;
         }
         if(!(/^20\d{2}-20\d{2}$/.test(newyear))){
-            toast.error("Format Not Matched")
+            toast.warn("Format Not Matched")
             return ;
         }
     handleClose();

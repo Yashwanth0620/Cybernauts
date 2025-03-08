@@ -346,7 +346,7 @@
       padding: 2rem;
       color: white;
       position: relative; /* Allow z-index to work */
-      z-index: 2; /* Higher than .MemberProfile */
+      z-index: 1; /* Higher than .MemberProfile */
       margin-right: 5rem;
       margin:.5rem; 
       margin-left: .2rem;
