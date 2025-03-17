@@ -1,0 +1,224 @@
+/* Container styling */
+.SuperAdmin {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    margin-top: -50px;
+}
+/* Container styling */
+.Addbut {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Add buttons */
+  .Addbut button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .Addbut button:hover {
+    opacity: .8; /* Slightly darker green */
+    transform: scale(1.05); /* Slight pop effect */
+  }
+  
+ 
+  
+  /* Headings */
+  .Addbut h1 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Additional styling for layout */
+  .SuperAdminsManage,
+  .AdminsManage {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+
+.SuperAdminContainer {
+    width: 80%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Main profile section */
+.SuperAdmin-Main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.SuperAdminImg img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #162978;
+}
+
+.SuperAdminDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.SuperAdminDetails .item {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Body styling */
+.SuperAdmin-Body {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+/* SuperAdmin and Admin Lists */
+.SuperAdminsManage, .AdminsManage {
+    flex: 1;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-height: 400px; /* Set max height for scrollable area */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.SuperAdminsManage h1, .AdminsManage h1 {
+    font-size: 22px;
+    color: #162978;
+    margin-bottom: 20px;
+}
+
+/* Each list item (Name, Phone, Actions) */
+.ManageContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.item {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+.butons{
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Buttons */
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+.icon-button:hover {
+    transform: scale(1.1);
+}
+
+.icon-button.delete i {
+    color: #ff5447;
+}
+@media (max-width: 966px) {
+    .SuperAdmin-Body {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .SuperAdminsManage, .AdminsManage {
+        width: 100%;
+        max-height: 300px; /* Adjust for smaller screens */
+    }
+   
+    .SuperAdminContainer{
+        width: 100%;
+
+    }
+    .SuperAdmin-Main {
+
+        flex-direction: column;
+        align-items: center;
+    }
+   
+}
+
+/* Responsive design */
+@media (max-width: 620px) {
+    .Addbut h1 button {
+        font-size: 17px;
+    }
+    .Addbut{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .SuperAdmin-Body {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .SuperAdminsManage, .AdminsManage {
+        width: 100%;
+        max-height: 300px; /* Adjust for smaller screens */
+    }
+    .ManageContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+      
+    }
+    .butons{
+        display: flex;
+        flex-direction: row;
+        
+
+    }
+    .SuperAdminContainer{
+        width: 100%;
+
+    }
+    .SuperAdmin-Main {
+
+        flex-direction: column;
+        align-items: center;
+    }
+}
