@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/AdminLogin.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -26,22 +28,24 @@ export default function AdminLogin() {
       if (response.status === 200) {
         // Assuming the response contains a token
         const { token } = response.data;
-
+        console.log("ok")
         // Store token in localStorage
         localStorage.setItem("token", token);
-        navigate("/"); // Navigate to the admin dashboard
+        // toast.success("Admin Login Successful...!");
+        // navigate("/"); // Navigate to the admin dashboard
+        window.open("/", "_blank");
       } else {
-        alert("Login failed. Please check your credentials.");
+        console.log("1")
+        toast.error("Invalid Admin...!");
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      alert(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
+      console.log("2")
+      toast.error("Invalid Admin...!");
     }
   };
 
   return (
+    <>
     <div className="admin-login">
       <div className="login-form">
         <form onSubmit={loginAdmin}>
@@ -70,5 +74,7 @@ export default function AdminLogin() {
         </form>
       </div>
     </div>
+    <ToastContainer/>
+    </>
   );
 }

@@ -7,12 +7,28 @@ export default function MemberModel({
   formData,
   handleChange,
 }) {
+
+  const standardDesignations = [
+    "chairperson",
+    "vice-chairperson",
+    "secretary",
+    "vice-secretary",
+    "finance",
+    "documentation",
+    "technical",
+    "graphics",
+    "outreach",
+    "event-management",
+    "executive-Boys",
+    "executive-Girls",
+  ];
+  console.log(formData)
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>Assign Role</h2>
-        {formData.desig !== "additional-expertise" && <h3>Designation: {formData.designation}</h3>}
-        {formData.desig === "additional-expertise" && 
+        {standardDesignations.includes(formData.designation) && <h3>Designation: {formData.designation}</h3>}
+        {!standardDesignations.includes(formData.designation) && 
           <label>
           Designation:
           <input

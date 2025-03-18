@@ -95,7 +95,7 @@ const getEvents = errorHandler(async (req, res) => {
 
 const addEvent = errorHandler(async (req, res) => {
   const event = req.body;
-
+  console,log(event)
   // Validate required fields
   if (!event.title || !event.startDate || !event.endDate || !event.desc) {
     res.status(400);
