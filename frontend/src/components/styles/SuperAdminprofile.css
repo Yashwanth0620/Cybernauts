@@ -155,6 +155,27 @@
 .icon-button.delete i {
     color: #ff5447;
 }
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
 @media (max-width: 966px) {
     .SuperAdmin-Body {
         width: 100%;
