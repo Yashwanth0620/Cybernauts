@@ -21,7 +21,8 @@ const {
   deleteMember,
   addContributions,
   getCurrentMembers,
-  getYears
+  getYears,
+  editMember
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
 
@@ -56,6 +57,7 @@ router.get("/members/", getCurrentMembers);
 router.get("/members/:year", getMembers);
 router.get("/members/years", getYears);
 router.delete("/members/:year/:id", deleteMember);
+router.patch("/members/:year/:id",upload.single("image"), editMember);
 router.patch("/members/:id", addContributions);
 
 module.exports = router;

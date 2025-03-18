@@ -127,8 +127,8 @@ export default function Members() {
 
   const handleNavigate = (member,filterYear) => {
     // console.log(member,filterYear)
-
-    navigate("profile/", { state: {member,filterYear} }); 
+    const member1=member;
+    navigate("profile/", { state: {member1,filterYear} }); 
   };
 
   return (

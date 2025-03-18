@@ -126,6 +126,78 @@ const addMember = errorHandler(async (req, res) => {
   res.status(200).json(yearDocument.members);
 });
 
+// @desc to Edit member to the team
+// @API POST /members/:year/:id
+const editMember = errorHandler(async (req, res) => {
+  try {
+    console.log("0")
+    const { year, id } = req.params;
+    console.log(year,id)
+    const {
+      name,
+      rollNo,
+      designation,
+      description,
+      position,
+      mobileNo,
+      email,
+    } = req.body;
+    console.log(req.body)
+    // Find the document for the given year
+    let yearDocument = await MemberModel.findOne({ year });
+    console.log("1")
+    if (!yearDocument) {
+      return res.status(400).json({ message: "Failed to edit: Year not found" });
+    }
+    console.log("2")
+    let image;
+    if (req.file) {
+      try {
+        const tempPath = path.join(__dirname, "memberPhoto.jpg");
+        fs.writeFileSync(tempPath, req.file.buffer);
+
+        // Upload image and get URL
+        image = await uploadFileAndGetUrl(tempPath);
+        fs.unlinkSync(tempPath);
+      } catch (error) {
+        console.error("Image Upload Error:", error);
+        return res.status(500).json({ message: "Failed to upload image" });
+      }
+    }
+    console.log("3")
+    // Find the existing member by _id
+    const existingMemberIndex = yearDocument.members.findIndex(
+      (member) => member._id.toString() === id
+    );
+    console.log(existingMemberIndex)
+    if (existingMemberIndex !== -1) {
+      // Update existing member
+      yearDocument.members[existingMemberIndex] = {
+        ...yearDocument.members[existingMemberIndex],
+        name,
+        rollNo,
+        designation,
+        description,
+        position,
+        mobileNo,
+        email,
+        image: image || yearDocument.members[existingMemberIndex].image, // Keep old image if no new one
+      };
+    } else {
+      return res.status(404).json({ message: "Member not found" });
+    }
+
+    await yearDocument.save();
+
+    const updatedMember = yearDocument.members[existingMemberIndex];
+
+    res.status(200).json({ message: "Member updated successfully", member: updatedMember });
+  } catch (error) {
+    console.error("Edit Member Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // @desc To add contributions to a member
 // @route PUT /members/contributions/:year/:id/
 const addContributions = errorHandler(async (req, res) => {
@@ -187,4 +259,5 @@ module.exports = {
   addContributions,
   getAllYearsMembers,
   getYears,
+  editMember
 };

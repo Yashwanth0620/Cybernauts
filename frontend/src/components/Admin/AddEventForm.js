@@ -60,6 +60,7 @@ export default function AddEventForm({ closeForm }) {
 
     try {
       // Make the API call
+      console.log(formData);
       const response = await axios.post(
         "http://localhost:3001/admin/events",
         formData,
@@ -266,7 +267,7 @@ export default function AddEventForm({ closeForm }) {
           />
         </div>
 
-        <div className="form-group contributors-group">
+        {/* <div className="form-group contributors-group">
           <div className="contributors-header">
             <label>Contributors:</label>
             <button
@@ -291,9 +292,9 @@ export default function AddEventForm({ closeForm }) {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
-        {showPopup && (
+        {/* {showPopup && (
           <div className="popup">
             <div className="popup-content">
               <h3>Add Contributor</h3>
@@ -330,7 +331,7 @@ export default function AddEventForm({ closeForm }) {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="form-actions">
           <button type="submit" className="btn-submit" disabled={isSubmitting}>
