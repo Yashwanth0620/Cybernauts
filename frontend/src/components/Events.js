@@ -103,6 +103,7 @@ export default function Events() {
           <option value="workshop">Workshop</option>
           <option value="webinar">Webinar</option>
           <option value="tech-talk">Tech Talk</option>
+          <option value="Other">Other</option>
         </select>
 
         <i className="fas fa-chevron-down" type="filter"></i>

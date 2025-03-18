@@ -10,6 +10,8 @@ export default function AddEventForm() {
   const [contribution, setContribution] = useState("");
   const [roll, setRoll] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+ const [otherEventType, setOtherEventType] = useState("");
+  const [eventType, setEventType] = useState("");
 
   const navigate = useNavigate();
 
@@ -103,8 +105,24 @@ export default function AddEventForm() {
             <option value="Seminar">Seminar</option>
             <option value="Workshop">Workshop</option>
             <option value="Webinar">Webinar</option>
+            <option value="Other">Other</option>
           </select>
         </div>
+
+        {eventType === "Other" && (
+          <div className="form-group">
+            <label htmlFor="otherType">Specify Event Type:</label>
+            <input
+              type="text"
+              id="otherType"
+              name="otherType"
+              placeholder="Enter event type"
+              value={otherEventType}
+              onChange={(e) => setOtherEventType(e.target.value)}
+              required
+            />
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="startDate">Start Date:</label>

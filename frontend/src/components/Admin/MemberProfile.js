@@ -8,8 +8,11 @@ import DeleteComformModal from "./DeleteComformModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MemberModel from "./MemberModel";
+import ViewMemberImage from "./ViewMemberImage";
 
 export default function MemberProfile() {
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,11 +22,16 @@ export default function MemberProfile() {
     filterYear: "",
   };
   
-
+  const openImageModal = (image) => {
+    setCurrentImage(image);
+    setIsImageModalOpen(true);
+  };
+  
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const openEditModal = () => setEditIsModalOpen(true);
   const closeEditModal = () => setEditIsModalOpen(false);
+  const closeImageModal = () => setIsImageModalOpen(false);
 
   // console.log(member,filterYear)
   member.contributions = [
@@ -175,7 +183,8 @@ export default function MemberProfile() {
                   <div className="description">{contribution.description}</div>
                   <div className="description">{contribution.eventName}</div>
                   <div className="item">
-                    <button className="view-img">View-image</button>
+                  <button className="view-img" onClick={() => openImageModal(contribution.image || pp)}>View Image</button>
+
                   </div>
                   <div className="item">
                     <button className="icon-button">
@@ -197,6 +206,7 @@ export default function MemberProfile() {
         </div>
       </div>
       <ToastContainer/>
+      {isImageModalOpen && <ViewMemberImage src={currentImage} onClose={closeImageModal} />}
     </>
   );
 }

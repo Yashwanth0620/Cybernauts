@@ -8,6 +8,10 @@ export default function AddEventForm({ closeForm }) {
   const [contribution, setContribution] = useState("");
   const [roll, setRoll] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [eventType, setEventType] = useState("");
+  const [otherEventType, setOtherEventType] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -33,6 +37,7 @@ export default function AddEventForm({ closeForm }) {
 
     // Append basic form fields
     formData.append("title", formElements.title.value);
+    formData.append("type", eventType === "Other" ? otherEventType : eventType);
     formData.append("type", formElements.type.value);
     formData.append("startDate", formElements.startDate.value);
     formData.append("endDate", formElements.endDate.value);
@@ -72,6 +77,53 @@ export default function AddEventForm({ closeForm }) {
       console.error("Error adding event:", error);
       alert("Failed to add the event. Please try again.");
     }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      
+      if (isSubmitting) return; // Prevent multiple submissions
+      setIsSubmitting(true); // Disable the button
+    
+      const formData = new FormData();
+      const formElements = e.target.elements;
+    
+      formData.append("title", formElements.title.value);
+      formData.append("type", eventType === "Other" ? otherEventType : eventType);
+      formData.append("startDate", formElements.startDate.value);
+      formData.append("endDate", formElements.endDate.value);
+      formData.append("desc", formElements.description.value);
+      formData.append("startTime", formElements.startTime.value);
+      formData.append("endTime", formElements.endTime.value);
+      formData.append("form", formElements.form.value);
+      formData.append("organizer", formElements.organizer.value);
+      formData.append("faculty", formElements.faculty.value);
+      formData.append("chiefGuest", formElements.chiefGuest.value);
+      formData.append("contributors", JSON.stringify(contributors));
+    
+      const posterFile = formElements.poster.files[0];
+      if (posterFile) {
+        formData.append("poster", posterFile);
+      }
+    
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/admin/events",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("Event added successfully:", response.data);
+        navigate("/events");
+      } catch (error) {
+        console.error("Error adding event:", error);
+        alert("Failed to add the event. Please try again.");
+        setIsSubmitting(false); // Re-enable on error
+      }
+    };
   };
 
   return (
@@ -91,7 +143,13 @@ export default function AddEventForm({ closeForm }) {
 
         <div className="form-group">
           <label htmlFor="type">Event Type:</label>
-          <select id="type" name="type" required>
+          <select
+            id="type"
+            name="type"
+            required
+            value={eventType}
+            onChange={(e) => setEventType(e.target.value)}
+          >
             <option value="" disabled>
               Select type
             </option>
@@ -99,8 +157,24 @@ export default function AddEventForm({ closeForm }) {
             <option value="Seminar">Seminar</option>
             <option value="Workshop">Workshop</option>
             <option value="Webinar">Webinar</option>
+            <option value="Other">Other</option>
           </select>
         </div>
+
+        {eventType === "Other" && (
+          <div className="form-group">
+            <label htmlFor="otherType">Specify Event Type:</label>
+            <input
+              type="text"
+              id="otherType"
+              name="otherType"
+              placeholder="Enter event type"
+              value={otherEventType}
+              onChange={(e) => setOtherEventType(e.target.value)}
+              required
+            />
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="startDate">Start Date:</label>
@@ -259,10 +333,10 @@ export default function AddEventForm({ closeForm }) {
         )}
 
         <div className="form-actions">
-          <button type="submit" className="btn-submit">
-            Submit
+          <button type="submit" className="btn-submit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
-        </div>
+        </div>  
       </form>
     </div>
   );
