@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles/NavBar.css";
 import { useAuth } from "../AuthContext";
 
 export default function NavBar() {
   const [links, setLinks] = useState();
+  const navigate = useNavigate();
 
   const { role } = useAuth();
 
@@ -12,6 +13,17 @@ export default function NavBar() {
     const sm = window.innerWidth > 670;
     setLinks(sm);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phone");
+    
+    window.open("/", "_self");
+    return;
+  };
 
   return (
     <nav className="nav-bar">
@@ -51,6 +63,13 @@ export default function NavBar() {
               <p href="#">|</p>
               <Link to="/superadmin" className="link">
                 Admin Controls
+              </Link>
+            </>
+          )}
+          {!!role && (
+            <>
+              <Link onClick={handleLogout} id="logout-btn" className="link">
+                Logout
               </Link>
             </>
           )}

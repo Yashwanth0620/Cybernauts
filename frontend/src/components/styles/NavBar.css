@@ -16,6 +16,13 @@
     padding-left: 30px;
 }
 
+#logout-btn {
+    color: rgb(170, 2, 2);
+    order: 999;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
 .nav-logo img {
     margin-right: auto;
 }
