@@ -50,7 +50,7 @@ const eventSchema = mongoose.Schema({
       name: { type: String },
     },
   ],
-  cheifGuest: String,
+  chiefGuest: [String],
   contributors: [
     {
       roll: { type: String, required: true },

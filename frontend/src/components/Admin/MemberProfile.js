@@ -211,7 +211,7 @@ export default function MemberProfile() {
               {member.position ? member.position.toUpperCase() : " "}{" "}
               {filterYear}
             </h1>
-            <img src={member.image === "url" ? pp : member.image}  referrerPolicy="no-referrer" alt="" />
+            <img src={member.image}  referrerPolicy="no-referrer" alt="" />
             <div className="items">
               <h3>{member?.name?.toUpperCase() || "No Name"}</h3>
               <h3>{member?.rollNo?.toUpperCase() || "No Roll No"}</h3>

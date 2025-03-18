@@ -4,9 +4,11 @@ import "./styles/AdminLogin.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../AuthContext";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
+  const {role} = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,13 +29,15 @@ export default function AdminLogin() {
 
       if (response.status === 200) {
         // Assuming the response contains a token
-        const { token } = response.data;
-        console.log("ok")
+        const { token, name, phone, email } = response.data;
+
         // Store token in localStorage
         localStorage.setItem("token", token);
-        // toast.success("Admin Login Successful...!");
-        // navigate("/"); // Navigate to the admin dashboard
-        window.open("/", "_blank");
+        localStorage.setItem("name", name);
+        localStorage.setItem("phone", phone);
+        localStorage.setItem("email", email);
+
+        window.open("/", "_self");
       } else {
         console.log("1")
         toast.error("Invalid Admin...!");

@@ -22,7 +22,7 @@ export default function AddMember() {
   });
   const [searchParams] = useSearchParams();
   const year = searchParams.get("year");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setFormData({
@@ -93,13 +93,14 @@ export default function AddMember() {
     form.append("rollNo", formData.rollNo);
     form.append("designation", formData.designation);
     form.append("description", formData.description);
-    form.append("position", formData.position);
     form.append("mobileNo", formData.mobileNo);
     form.append("email", formData.email);
     form.append("year", year);
     if (formData.image) {
       form.append("image", formData.image);
     }
+    if(formData.designation.includes("secretary") || formData.designation.includes("chairperson")) form.append("position", "");
+    else form.append("position", formData.position);
 
     try {
       // Make the API call
@@ -137,10 +138,10 @@ export default function AddMember() {
     }
   };
 
-  const handleNavigate = (member,year) => {
+  const handleNavigate = (member, year) => {
     // console.log(member,year)
 
-    navigate("/admin/view-members/profile", { state: {member,year} }); 
+    navigate("/admin/view-members/profile", { state: { member, year } });
   };
 
   return (
@@ -150,7 +151,7 @@ export default function AddMember() {
           <h1>Our Team</h1>
           <h2>Meet the passionate minds of Cybernauts</h2>
         </div>
-        {console.log(members)}
+        {/* {console.log(members)} */}
         <div className="chairperson">
           <div className="section-label">
             <span>Chariperson</span>
@@ -161,10 +162,18 @@ export default function AddMember() {
               members
                 .filter((member) => member.designation === "chairperson")
                 .map((member) => (
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -210,11 +219,19 @@ export default function AddMember() {
               .filter((member) => member.designation === "vice-chairperson")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        {console.log(member.image)}
-                        <img src={member.image ? member.image : pp} alt="" />
+                        {/* {console.log(member.image)} */}
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -259,7 +276,10 @@ export default function AddMember() {
               .filter((member) => member.designation === "secretary")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
                         {console.log(member.image)}
@@ -268,7 +288,6 @@ export default function AddMember() {
                           alt="image"
                           referrerPolicy="no-referrer"
                           loading="lazy"
-                          
                         />
                       </div>
                       <div className="desc-body">
@@ -313,10 +332,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "vice-secretary")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -361,10 +388,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "finance")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -411,10 +446,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "documentation")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -460,10 +503,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "technical")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -509,10 +560,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "graphics")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -558,10 +617,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "outreach")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -607,10 +674,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "event-management")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -656,10 +731,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "executive-Boys")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -706,10 +789,18 @@ export default function AddMember() {
               .filter((member) => member.designation === "executive-Girls")
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>
@@ -757,10 +848,18 @@ export default function AddMember() {
               )
               .map((member) => (
                 <div className="member-body">
-                  <div className="member" onClick={()=>handleNavigate(member,year)}>
+                  <div
+                    className="member"
+                    onClick={() => handleNavigate(member, year)}
+                  >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img src={member.image ? member.image : pp} alt="" />
+                        <img
+                          src={member.image ? member.image : pp}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                        />
                       </div>
                       <div className="desc-body">
                         <h2>{member.name}</h2>

@@ -4,6 +4,9 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+
+const {isAuthenticated} = require("../middlewares/superAuthMiddleware");
+
 const {
   getEvents,
   addEvent,
@@ -13,7 +16,8 @@ const {
   sendMail,
   removeParticipant,
   sendResponse,
-  validateAdmin
+  validateAdmin,
+  fetchAdmins
 } = require("../controllers/admin.controller");
 const {
   addMember,
@@ -59,6 +63,8 @@ router.get("/members/years", getYears);
 router.delete("/members/:year/:id", deleteMember);
 router.patch("/members/:year/:id",upload.single("image"), editMember);
 router.patch("/members/:id", addContributions);
+
+router.route("/").get(isAuthenticated, fetchAdmins);
 
 module.exports = router;
 

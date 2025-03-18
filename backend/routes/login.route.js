@@ -3,10 +3,11 @@ const routes=express.Router()
 const {
     saveUser,
     checkUser
-}=require('../controllers/login.controller')
+}=require('../controllers/login.controller');
+const {isAuthenticated}  = require("../middlewares/superAuthMiddleware");
 
 routes.route('/signup')
-    .post(saveUser)
+    .post(isAuthenticated, saveUser);
 routes.route('/login')
     .post(checkUser)
 

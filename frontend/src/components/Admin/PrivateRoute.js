@@ -1,8 +1,25 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
+
+const Unauthorized = () => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      fontSize: "1.5rem",
+      fontWeight: "bold",
+      color: "#D32F2F",
+    }}
+  >
+    Unauthorized Access
+  </div>
+);
 
 const PrivateRoute = ({ element }) => {
   const { role, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -28,7 +45,17 @@ const PrivateRoute = ({ element }) => {
     );
   }
 
-  return role === "admin" ? element : <Navigate to="/admin/login" />;
+  // If role is null, redirect to login
+  if (!role) return <Navigate to="/admin/login" />;
+  console.log(role);
+  
+
+  // If role is "admin" and trying to access "/superadmin", show Unauthorized
+  if (role === "admin" && location.pathname.startsWith("/superadmin")) {
+    return <p>Unauhorized</p>
+  }
+
+  return element;
 };
 
 export default PrivateRoute;

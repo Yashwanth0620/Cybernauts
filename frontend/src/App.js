@@ -76,14 +76,7 @@ function App() {
         />
         <Route
           path="/superadmin"
-          element={< SuperAdminProfile/>} />
-        <Route
-          path="/viewimage"
-          element={< ViewMemberImage/>} />
-        <Route
-          path="/addcontribute"
-          element={< AddContribute/>} />
-        
+          element={<PrivateRoute element={< SuperAdminProfile/>} />} />
        
       </Routes>
       <Footer />

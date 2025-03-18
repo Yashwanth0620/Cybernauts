@@ -27,18 +27,17 @@ export default function Members() {
     "executive-Boys",
     "executive-Girls",
   ];
-  
-  
-  
+
   const fetchYearMembers = async () => {
     try {
-      console.log(filterYear)
-      const response = await axios.get(`http://localhost:3001/members/${filterYear}`);
+      console.log(filterYear);
+      const response = await axios.get(
+        `http://localhost:3001/members/${filterYear}`
+      );
       setOriginalMembers(response.data);
       setMembers(response.data);
       // setYear(response.data.year);
       console.log(response.data);
-      
     } catch (error) {
       console.error("Error fetching members:", error);
     }
@@ -49,7 +48,7 @@ export default function Members() {
       fetchYearMembers();
     }
   }, [filterYear]);
-  
+
   const handleYear = (e) => {
     console.log(e.target.value);
     setFilterYear(e.target.value);
@@ -82,22 +81,32 @@ export default function Members() {
     const inputValue = e.target.value;
     setSearchTerm(e.target.value);
     const newMembers = originalMembers.filter((member) => {
-      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()} ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()} ${member.position && member.position.toLowerCase()} ${member.mobileNo} ${member.email && member.email.toLowerCase()}`;
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${
+        member.rollNo && member.rollNo.toLowerCase()
+      } ${member.designation && member.designation.toLowerCase()} ${
+        member.description && member.description.toLowerCase()
+      } ${member.position && member.position.toLowerCase()} ${
+        member.mobileNo
+      } ${member.email && member.email.toLowerCase()}`;
       return memberDetails.includes(inputValue.toLowerCase());
     });
-    console.log(inputValue)
-    setMembers(newMembers)
-
+    console.log(inputValue);
+    setMembers(newMembers);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMembers = originalMembers.filter((member) => {
-      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()} ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()} ${member.position && member.position.toLowerCase()} ${member.mobileNo} ${member.email && member.email.toLowerCase()}`;
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${
+        member.rollNo && member.rollNo.toLowerCase()
+      } ${member.designation && member.designation.toLowerCase()} ${
+        member.description && member.description.toLowerCase()
+      } ${member.position && member.position.toLowerCase()} ${
+        member.mobileNo
+      } ${member.email && member.email.toLowerCase()}`;
       return memberDetails.includes(searchTerm.toLowerCase());
     });
-    setMembers(newMembers)
+    setMembers(newMembers);
   };
-
 
   return (
     <div className="members">
@@ -111,7 +120,7 @@ export default function Members() {
       </div>
 
       <div className="search-bar">
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <span className="search-icon">
             <i className="fas fa-search"></i>
           </span>
@@ -152,6 +161,7 @@ export default function Members() {
                     <div className="member-img">
                       <img
                         src={member.image == "url" ? pp : member.image}
+                        referrerPolicy="no-referrer"
                         alt=""
                       />
                       <div className="personal-details">

@@ -78,7 +78,6 @@ const addMember = errorHandler(async (req, res) => {
     mobileNo,
     email,
   } = req.body;
-  console.log(req.body)
   let yearDocument = await MemberModel.findOne({ year });
   const present = true;
   if (!yearDocument) {
@@ -88,23 +87,19 @@ const addMember = errorHandler(async (req, res) => {
 
   let image;
   if (req.file) {
-    console.log("has a file");
     
     try {
-      console.log("hiihhhh    1")
-      console.log(__dirname)
       const tempPath = path.join(__dirname, "memberPhoto.jpg");
-      console.log("hiihhhh   2")
       fs.writeFileSync(tempPath, req.file.buffer);
-      console.log("hiihhhh    3")
 
       // Upload using event ID instead of title
       image = await uploadFileAndGetUrl(tempPath);
+      console.log(image);
+      
 
       fs.unlinkSync(tempPath);
     } catch (error) {
       res.status(500);
-      console.log(error)
       throw new Error("Failed to upload image");
     }
   }

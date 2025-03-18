@@ -4,6 +4,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const errorHandler = require("express-async-handler");
 const updatesModel = require("../models/updates.model");
+const adminModel = require("../models/admin.model");
 const eventModel = require("../models/event.model");
 const jwt = require("jsonwebtoken");
 
@@ -13,7 +14,6 @@ const {
   sendMailResponse,
 } = require("./mail.controller");
 const contactModel = require("../models/contact.model");
-const { log } = require("console");
 
 const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
 
@@ -92,10 +92,9 @@ const getEvents = errorHandler(async (req, res) => {
 
 // @desc to add a new event
 // @API POST /admin/events
-
 const addEvent = errorHandler(async (req, res) => {
   const event = req.body;
-  console,log(event)
+  console, log(event);
   // Validate required fields
   if (!event.title || !event.startDate || !event.endDate || !event.desc) {
     res.status(400);
@@ -135,12 +134,14 @@ const addEvent = errorHandler(async (req, res) => {
   }
 
   faculty = event.faculty.split(",");
+  chiefGuest = event.chiefGuest.split(",");
 
   // Create event object
 
   const newEvent = {
     ...event,
     faculty,
+    chiefGuest,
     contributors,
     poster: posterFile,
   };
@@ -254,7 +255,13 @@ const deleteEvent = errorHandler(async (req, res) => {
   if (!event) {
     res.status(404);
     throw new Error("Event not found");
-  } else res.status(200).json({ message: "Event Deleted Successfully" });
+  }
+
+  if (event.poster) await deleteFileFromUrl(event.poster);
+  if (event.images && event.images.length > 0)
+    await Promise.all(event.images.map((image) => deleteFileFromUrl(image)));
+
+  res.status(200).json({ message: "Event Deleted Successfully" });
 });
 
 // @desc To post updates on the website
@@ -338,9 +345,20 @@ const sendResponse = errorHandler(async (req, res) => {
 
 const validateAdmin = errorHandler(async (req, res) => {
   if (req.user) {
-    return res.json({ role: "admin" });
+    return res.json({ role: req.user.role });
   }
   res.json({ role: null });
+});
+
+const fetchAdmins = errorHandler(async (req, res) => {
+  const users = await adminModel.find({});
+
+  const admins = users.filter((user) => user.role === "admin");
+  const superadmins = users.filter((user) => user.role === "superadmin");
+
+  res
+    .status(200)
+    .json({ message: "Fetched admins successfully", admins, superadmins });
 });
 
 // also add controllers for members functionality
@@ -355,5 +373,6 @@ module.exports = {
   removeParticipant,
   sendResponse,
   validateAdmin,
-  uploadFileAndGetUrl
+  uploadFileAndGetUrl,
+  fetchAdmins
 };

@@ -50,16 +50,16 @@ export default function EventDetails({ event, isAdmin }) {
       {/* Events Details Page */}
       <div className="event-details-page">
         <h1 className="event-name">{event.title}</h1>
-        <p className="date">{event.startDate}</p>
+        <p className="date">{event.startDate.substring(0, 10)}</p>
         <br />
         <p className="people">
-          <b>Organized By: &nbsp;&nbsp;&nbsp;&nbsp;</b>
+          <b>Organized By: </b>
           {event.organizer || "--"} <br />
-          <b>Respective faculty: &nbsp;&nbsp;&nbsp;&nbsp;</b>
+          <b>Respective faculty: </b>
           {event.faculty[0] || "--"} <br />
-          <b>Chief guest(s): &nbsp;&nbsp;&nbsp;&nbsp;</b>
-          {event.chiefGuests
-            ? event.chiefGuests.map((element) => element.name).join(", ")
+          <b>Chief guest(s): </b>
+          {event.chiefGuest.length > 0
+            ? event.chiefGuest.map((element) => element).join(", ")
             : "--"}
         </p>
 
