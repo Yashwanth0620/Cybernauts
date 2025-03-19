@@ -1,4 +1,3 @@
-const { google } = require("googleapis");
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
@@ -9,79 +8,16 @@ const eventModel = require("../models/event.model");
 const jwt = require("jsonwebtoken");
 
 const {
+  deleteFileFromUrl,
+  uploadFileAndGetUrl,
+} = require("./drive.controller");
+
+const {
   eventUpdateMail,
   updateRejection,
   sendMailResponse,
 } = require("./mail.controller");
 const contactModel = require("../models/contact.model");
-
-const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
-
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-// initializing drive
-const drive = google.drive({
-  version: "v3",
-  auth: oauth2Client,
-});
-
-const uploadFileAndGetUrl = async (filePath, type = "image") => {
-  try {
-    // Upload the file to Google Drive
-    const response = await drive.files.create({
-      requestBody: {
-        name: `$${type}.jpg`,
-        mimeType: "image/jpg",
-      },
-      media: {
-        mimeType: "image/jpg",
-        body: fs.createReadStream(filePath),
-      },
-    });
-
-    const fileId = response.data.id;
-
-    // Make the file publicly accessible
-    await drive.permissions.create({
-      fileId: fileId,
-      requestBody: {
-        role: "reader",
-        type: "anyone",
-      },
-    });
-
-    // Get the public URL
-    // const fileUrl = `https://drive.google.com/uc?id=${fileId}`;
-    const fileUrl = `https://drive.google.com/thumbnail?id=${fileId}`;
-
-    return fileUrl;
-  } catch (error) {
-    console.error("Error uploading file to Google Drive:", error);
-    throw new Error("Failed to upload photos to google drive");
-  }
-};
-
-const deleteFileFromUrl = async (fileUrl) => {
-  try {
-    // Extract file ID from the given URL
-    const fileIdMatch = fileUrl.match(/id=([a-zA-Z0-9_-]+)/);
-    if (!fileIdMatch) {
-      throw new Error("Invalid Google Drive file URL");
-    }
-
-    const fileId = fileIdMatch[1];
-
-    // Delete the file
-    await drive.files.delete({ fileId });
-  } catch (error) {
-    console.error("Error deleting file:", error.message);
-  }
-};
 
 // @desc to get all the core body members of particular year
 // @API GET /admin/events
@@ -93,27 +29,12 @@ const getEvents = errorHandler(async (req, res) => {
 // @desc to add a new event
 // @API POST /admin/events
 const addEvent = errorHandler(async (req, res) => {
+  
   const event = req.body;
-  console, log(event);
   // Validate required fields
   if (!event.title || !event.startDate || !event.endDate || !event.desc) {
     res.status(400);
     throw new Error("Missing required fields");
-  }
-
-  // Validate contributors if they exist
-  let contributors = [];
-  if (event.contributors) {
-    try {
-      contributors = JSON.parse(event.contributors);
-      if (!Array.isArray(contributors)) {
-        res.status(400);
-        throw new Error("Invalid contributors format");
-      }
-    } catch {
-      res.status(400);
-      throw new Error("Invalid contributors format");
-    }
   }
 
   // Handle optional poster upload
@@ -142,7 +63,6 @@ const addEvent = errorHandler(async (req, res) => {
     ...event,
     faculty,
     chiefGuest,
-    contributors,
     poster: posterFile,
   };
 
@@ -374,5 +294,5 @@ module.exports = {
   sendResponse,
   validateAdmin,
   uploadFileAndGetUrl,
-  fetchAdmins
+  fetchAdmins,
 };

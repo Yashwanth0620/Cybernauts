@@ -6,7 +6,7 @@ const upload = multer({ storage: storage });
 const path = require("path");
 const fs = require("fs");
 const { google } = require("googleapis");
-const {uploadFileAndGetUrl} = require("./admin.controller")
+const {uploadFileAndGetUrl} = require("./drive.controller");
 
 // @desc to get all the core body members of particular year
 // @API GET /members/:year

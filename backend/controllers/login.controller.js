@@ -2,7 +2,7 @@ const adminModel = require("../models/admin.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const errorHandler = require("express-async-handler");
-require("dotenv").config();
+// require("dotenv").config();
 const secret = process.env.SECRET;
 
 // @desc Check User Login

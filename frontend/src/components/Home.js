@@ -40,7 +40,7 @@ const App = () => {
         >
           CVR College of Engineering
         </a>
-        {(role !== "admin" && role !== "superadmin") && (
+        {role !== "admin" && role !== "superadmin" && (
           <Link to="/admin/login" className="link admin-link">
             Admin?
           </Link>
@@ -62,6 +62,7 @@ const App = () => {
         </div>
         <div>
           <h1>CYBERNAUTS</h1>
+          <h2>- A CSE Technical Club</h2>
           <p>{event?.title || "Recent Event"}</p>
           <h5>{event?.endDate?.substring(0, 10) || "Date"}</h5>
 
@@ -119,30 +120,11 @@ const App = () => {
         <h2>What we Do?</h2>
         <h3>Our recent event</h3>
         <div className="event-content">
-          <img
-            src="https://webflow-amber-prod.gumlet.io/620e4101b2ce12a1a6bff0e8/65e80f722774b7ae68fbecdb_samantha-gades-fIHozNWfcvs-unsplash%20(1).jpg?w=1600"
-            alt="Recent Hackathon Event"
-          />
+          <img src={image} loading="lazy" alt="Recent Hackathon Event" />
           <h4>
             <strong>{event?.title || "Recent Event"}</strong>
           </h4>
-          <p>
-            {event
-              ? `${event.title} was a remarkable ${
-                  event.type || "event"
-                } organized by ${
-                  event.organizer || "our team"
-                }, held from ${new Date(
-                  event.startDate
-                ).toLocaleDateString()} to ${new Date(
-                  event.endDate
-                ).toLocaleDateString()}. It featured engaging sessions, networking opportunities, and valuable insights. ${
-                  event.cheifGuest
-                    ? `The event was graced by ${event.cheifGuest}.`
-                    : ""
-                }`
-              : "Description of the latest event."}
-          </p>
+          <p>{event ? event.desc : "Description of the latest event."}</p>
 
           <button>
             <Link to="contactus">Contact Us</Link>

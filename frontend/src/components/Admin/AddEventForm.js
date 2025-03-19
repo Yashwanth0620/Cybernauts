@@ -4,30 +4,12 @@ import "../styles/AddEventForm.css";
 import { useNavigate } from "react-router-dom";
 
 export default function AddEventForm({ closeForm }) {
-  const [contributors, setContributors] = useState([]);
-  const [contribution, setContribution] = useState("");
-  const [roll, setRoll] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
   const [eventType, setEventType] = useState("");
   const [otherEventType, setOtherEventType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
   const navigate = useNavigate();
-
-  const handleAddContributor = () => {
-    if (contribution && roll) {
-      setContributors((prev) => [...prev, { contribution, roll }]);
-      setContribution("");
-      setRoll("");
-      setShowPopup(false);
-    } else {
-      alert("Please fill in both fields!");
-    }
-  };
-  const handleDeleteContributor = (index) => {
-    setContributors((prev) => prev.filter((_, i) => i !== index));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +20,6 @@ export default function AddEventForm({ closeForm }) {
     // Append basic form fields
     formData.append("title", formElements.title.value);
     formData.append("type", eventType === "Other" ? otherEventType : eventType);
-    formData.append("type", formElements.type.value);
     formData.append("startDate", formElements.startDate.value);
     formData.append("endDate", formElements.endDate.value);
     formData.append("desc", formElements.description.value);
@@ -49,9 +30,6 @@ export default function AddEventForm({ closeForm }) {
     formData.append("faculty", formElements.faculty.value);
     formData.append("chiefGuest", formElements.chiefGuest.value);
 
-    // Append contributors as a JSON string
-    formData.append("contributors", JSON.stringify(contributors));
-
     // Append the poster file
     const posterFile = formElements.poster.files[0];
     if (posterFile) {
@@ -60,7 +38,6 @@ export default function AddEventForm({ closeForm }) {
 
     try {
       // Make the API call
-      console.log(formData);
       const response = await axios.post(
         "http://localhost:3001/admin/events",
         formData,
@@ -71,61 +48,61 @@ export default function AddEventForm({ closeForm }) {
           },
         }
       );
-
+  
       console.log("Event added successfully:", response.data);
       navigate("/events");
     } catch (error) {
-      console.error("Error adding event:", error);
-      alert("Failed to add the event. Please try again.");
-    }
-
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      
-      if (isSubmitting) return; // Prevent multiple submissions
-      setIsSubmitting(true); // Disable the button
-    
-      const formData = new FormData();
-      const formElements = e.target.elements;
-    
-      formData.append("title", formElements.title.value);
-      formData.append("type", eventType === "Other" ? otherEventType : eventType);
-      formData.append("startDate", formElements.startDate.value);
-      formData.append("endDate", formElements.endDate.value);
-      formData.append("desc", formElements.description.value);
-      formData.append("startTime", formElements.startTime.value);
-      formData.append("endTime", formElements.endTime.value);
-      formData.append("form", formElements.form.value);
-      formData.append("organizer", formElements.organizer.value);
-      formData.append("faculty", formElements.faculty.value);
-      formData.append("chiefGuest", formElements.chiefGuest.value);
-      formData.append("contributors", JSON.stringify(contributors));
-    
-      const posterFile = formElements.poster.files[0];
-      if (posterFile) {
-        formData.append("poster", posterFile);
-      }
-    
-      try {
-        const response = await axios.post(
-          "http://localhost:3001/admin/events",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
-        console.log("Event added successfully:", response.data);
-        navigate("/events");
-      } catch (error) {
         console.error("Error adding event:", error);
         alert("Failed to add the event. Please try again.");
-        setIsSubmitting(false); // Re-enable on error
       }
     };
-  };
+
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+      
+  //     if (isSubmitting) return; // Prevent multiple submissions
+  //     setIsSubmitting(true); // Disable the button
+    
+  //     const formData = new FormData();
+  //     const formElements = e.target.elements;
+    
+  //     formData.append("title", formElements.title.value);
+  //     formData.append("type", eventType === "Other" ? otherEventType : eventType);
+  //     formData.append("startDate", formElements.startDate.value);
+  //     formData.append("endDate", formElements.endDate.value);
+  //     formData.append("desc", formElements.description.value);
+  //     formData.append("startTime", formElements.startTime.value);
+  //     formData.append("endTime", formElements.endTime.value);
+  //     formData.append("form", formElements.form.value);
+  //     formData.append("organizer", formElements.organizer.value);
+  //     formData.append("faculty", formElements.faculty.value);
+  //     formData.append("chiefGuest", formElements.chiefGuest.value);
+  //     console.log(eventType === "Other" ? otherEventType : eventType);
+      
+  //     const posterFile = formElements.poster.files[0];
+  //     if (posterFile) {
+  //       formData.append("poster", posterFile);
+  //     }
+    
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:3001/admin/events",
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //             Authorization: "Bearer " + localStorage.getItem("token"),
+  //           },
+  //         }
+  //       );
+  //       console.log("Event added successfully:", response.data);
+  //       navigate("/events");
+  //     } catch (error) {
+  //       console.error("Error adding event:", error);
+  //       alert("Failed to add the event. Please try again.");
+  //       setIsSubmitting(false); // Re-enable on error
+  //     }
+  //   };
 
   return (
     <div className="add-event-form">

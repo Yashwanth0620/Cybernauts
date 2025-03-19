@@ -78,7 +78,12 @@ a {
 .hero h1 {
   font-size: 3em;
   color: white;
+}
+
+.hero h2 {
   margin-bottom: 25px;
+  color: white;
+  font-size: 1.3em;
 }
 
 .hero i {
