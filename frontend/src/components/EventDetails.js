@@ -64,10 +64,7 @@ export default function EventDetails({ event, isAdmin }) {
         </p>
 
         <p className="description">&nbsp;&nbsp;&nbsp;{event.desc}</p>
-        <p className="participants">
-          Participants count:{" "}
-          {event.participants ? event.participants.length : 0}
-        </p>
+        
 
         {/* Image Grid */}
         <div className="image-grid">

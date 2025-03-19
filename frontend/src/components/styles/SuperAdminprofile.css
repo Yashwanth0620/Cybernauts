@@ -160,20 +160,63 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.6);
     border: 1px solid #ccc;
     padding: 20px;
     z-index: 1000;
+   
   }
   
   .popup-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 25%;
+    align-items: center;
+  }
+  .popup label{
+    color: black;
+    margin-right: auto;
+    padding-left:11px ;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .popup .popup-content input[type="text"], .popup .popup-content input[type="email"], .popup .popup-content input[type="password"]{
+    border: 2px solid grey;
+    border-radius: 15px;
+    color:black;
+    height: 2.5rem;
+    width: 85%;
+    padding: .5rem;
+    font-size: 13px;
+    font-family:'monospace' ;
+    
+    
   }
   
-  button {
-    margin-top: 10px;
+  .popup-flex{
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 95px;
+    
+  }
+ .popup button {
+     height: 2.2rem;
+     border-radius:9px ;
+     width: 110px;
+     font-family: "Arial, Helvetica, sans-serif";
+     font-size: 17px;
+  }
+.popup .AddBlue{
+    background-color:#162978;
+    color: white;
+    
+  }
+ .popup .CancelRed{
+    background-color:rgb(209, 53, 53);
+    color: white;
+
   }
   
 @media (max-width: 966px) {

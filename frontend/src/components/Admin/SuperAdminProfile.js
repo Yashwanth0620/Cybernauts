@@ -7,7 +7,13 @@ export default function SuperAdminProfile() {
   const [admins, setAdmins] = useState([]);
   const [superAdmins, setSuperAdmins] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [newUser, setNewUser] = useState({ name: "", email: "", password: "", phone: "", role: "" });
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    role: "",
+  });
 
   const user = localStorage.getItem("user");
 
@@ -28,9 +34,15 @@ export default function SuperAdminProfile() {
   }, []);
 
   const openPopup = (role) => {
-    setNewUser({ name: "", email: "", password: "", phone: "", role: role.toLowerCase() });
+    setNewUser({
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+      role: role.toLowerCase(),
+    });
     setShowPopup(true);
-  };  
+  };
 
   const closePopup = () => {
     setShowPopup(false);
@@ -42,28 +54,37 @@ export default function SuperAdminProfile() {
 
   const handleSubmit = async () => {
     console.log(newUser);
-    
+
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:3001/auth/signup", newUser, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:3001/auth/signup",
+        newUser,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       alert(response.data.message); // Show success message
-  
+
       // Add the new user to the appropriate state array
       if (newUser.role === "admin") {
-        setAdmins((prevAdmins) => [...prevAdmins, { name: newUser.name, phone: newUser.phone }]);
+        setAdmins((prevAdmins) => [
+          ...prevAdmins,
+          { name: newUser.name, phone: newUser.phone },
+        ]);
       } else if (newUser.role === "superadmin") {
-        setSuperAdmins((prevSuperAdmins) => [...prevSuperAdmins, { name: newUser.name, phone: newUser.phone }]);
+        setSuperAdmins((prevSuperAdmins) => [
+          ...prevSuperAdmins,
+          { name: newUser.name, phone: newUser.phone },
+        ]);
       }
-  
+
       closePopup();
     } catch (error) {
       alert(error.response?.data?.message || "Failed to add user"); // Show error message
     }
   };
-  
 
   return (
     <>
@@ -83,7 +104,9 @@ export default function SuperAdminProfile() {
             <div className="SuperAdminsManage">
               <div className="Addbut">
                 <h1>SuperAdmins</h1>
-                <button onClick={() => openPopup("SuperAdmin")}>Add-SuperAdmin+</button>
+                <button onClick={() => openPopup("SuperAdmin")}>
+                  Add-SuperAdmin+
+                </button>
               </div>
               {superAdmins.map((superAdmin, index) => (
                 <div className="ManageContainer" key={index}>
@@ -94,7 +117,10 @@ export default function SuperAdminProfile() {
                       <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button className="icon-button delete">
-                      <i className="fa-solid fa-trash" style={{ color: "#ff5447" }}></i>
+                      <i
+                        className="fa-solid fa-trash"
+                        style={{ color: "#ff5447" }}
+                      ></i>
                     </button>
                   </div>
                 </div>
@@ -114,7 +140,10 @@ export default function SuperAdminProfile() {
                       <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button className="icon-button delete">
-                      <i className="fa-solid fa-trash" style={{ color: "#ff5447" }}></i>
+                      <i
+                        className="fa-solid fa-trash"
+                        style={{ color: "#ff5447" }}
+                      ></i>
                     </button>
                   </div>
                 </div>
@@ -127,13 +156,48 @@ export default function SuperAdminProfile() {
         <div className="popup">
           <div className="popup-content">
             <h2>Add {newUser.role}</h2>
-            <input type="text" name="name" placeholder="Name" value={newUser.name} onChange={handleChange} />
-            <input type="email" name="email" placeholder="Email" value={newUser.email} onChange={handleChange} />
-            <input type="password" name="password" placeholder="Password" value={newUser.password} onChange={handleChange} />
-            <input type="text" name="phone" placeholder="Phone" value={newUser.phone} onChange={handleChange} />
+            <label>Name:</label>{" "}
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter Name"
+              value={newUser.name}
+              onChange={handleChange}
+            />
+            <label>Email:</label>{" "}
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              value={newUser.email}
+              onChange={handleChange}
+            />
+            <label>Password:</label>{" "}
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              value={newUser.password}
+              onChange={handleChange}
+            />
+            <label>Phone no:</label>{" "}
+            <input
+              type="text"
+              name="phone"
+              placeholder="Enter Phone no"
+              value={newUser.phone}
+              onChange={handleChange}
+            />
+            <label>Role:</label>{" "}
             <input type="text" name="role" value={newUser.role} disabled />
-            <button onClick={handleSubmit}>Add</button>
-            <button onClick={closePopup}>Cancel</button>
+            <div className="popup-flex">
+              <button className="CancelRed" onClick={closePopup}>
+                Cancel
+              </button>
+              <button className="AddBlue" onClick={handleSubmit}>
+                Add
+              </button>
+            </div>
           </div>
         </div>
       )}
