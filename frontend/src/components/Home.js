@@ -124,7 +124,7 @@ const App = () => {
           <h4>
             <strong>{event?.title || "Recent Event"}</strong>
           </h4>
-          <p>{event ? event.desc : "Description of the latest event."}</p>
+          <p className="description">{event ? event.desc : "Description of the latest event."}</p>
 
           <button>
             <Link to="contactus">Contact Us</Link>

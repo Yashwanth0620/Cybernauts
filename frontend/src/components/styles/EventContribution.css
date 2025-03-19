@@ -1,0 +1,157 @@
+.Eventcontribution {
+    padding: 20px;
+    
+  }
+  
+  .title-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .title-container::before,
+  .title-container::after {
+    content: "";
+    flex: 1;
+    border-top: 2px solid #ccc;
+    margin: 0 10px;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .Addcontributevent{
+    display: flex;
+    justify-content: center;
+  }
+  .Addcontributevent button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+   
+  }
+  
+ 
+  .ContributeCard  {
+    margin-left: 12%;
+    width: 75%;
+    overflow-y: auto;
+    height: auto; /* Adjust to push content with footer */
+    padding-bottom: 3rem; /* Add space for footer */
+  }
+  .contribut-container:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  .contribut-container {
+    font-family: 'monospace';
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: .5rem;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    border: .005px solid grey;
+
+  }
+  
+  .ContributeCard .item button {
+    width: 150px;
+    background-color: #003366;
+    color: white; /* Use white instead of black for better contrast */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+ 
+  .contribut-container .description{
+      padding: .5rem;
+      margin-right: 5rem;
+      
+  }
+  
+  
+  .ContributeCard .item button:hover {
+    background-color:#007bff;
+  }
+  .ContributeCard  .icon-button {
+    
+  
+   
+   
+    font-size: 1rem;
+    background-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .ContributeCard .icon-button i {
+    font-size: 1.2rem;
+  }
+  
+  .ContributeCard  .icon-button.delete {
+    background-color: white;
+    color: red;
+  }
+  
+  .ContributeCard  .icon-button:hover {
+    background-color: white;
+    transform: scale(1.05);
+  }
+  
+  .ContributeCard .icon-button.delete:hover {
+    background-color: white;
+  }
+  .Eventcontribution .Eventcontributebut{
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: center;
+     gap: 1.5rem;
+  }
+  .Eventcontribution .Eventcontributebut button{
+    width:250px;
+    height: 3.5rem;
+    border-radius: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+
+  }
+  .Eventcontribution .Eventsub{
+    background-color: #003366;
+    color: #fff;
+  }
+  .Eventcontribution .EventDis{
+    background-color: rgb(214, 7, 7);
+    color: #fff;
+  }
+  @media (max-width:915px) {
+    .contribut-container {
+      
+      display: flex;
+      flex-direction: column;
+    }
+    .ContributeCard  .icon-button.delete {
+       align-items: end;
+    }
+   
+  }
+  @media (max-width:615px) {
+    .Eventcontribution .Eventcontributebut{
+      display: flex;
+      flex-direction: column;
+    }
+  }
