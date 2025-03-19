@@ -8,7 +8,7 @@ import { useAuth } from "../AuthContext";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const {role} = useAuth();
+  // const {role} = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,15 +36,15 @@ export default function AdminLogin() {
         localStorage.setItem("name", name);
         localStorage.setItem("phone", phone);
         localStorage.setItem("email", email);
-
+        toast.success("Login Successfull... ")
         window.open("/", "_self");
       } else {
         console.log("1")
-        toast.error("Invalid Admin...!");
+        toast.error("Invalid Credentials...!");
       }
     } catch (error) {
       console.log("2")
-      toast.error("Invalid Admin...!");
+      toast.error("Invalid Credentials...!");
     }
   };
 

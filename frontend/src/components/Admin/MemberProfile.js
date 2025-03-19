@@ -36,6 +36,7 @@ export default function MemberProfile() {
     description: member1.description,
     mobileNo: member1.mobileNo,
     email: member1.email,
+    image: member1.image,
     position: member1.position,
   });
   console.log(member);
@@ -211,7 +212,8 @@ export default function MemberProfile() {
               {member.position ? member.position.toUpperCase() : " "}{" "}
               {filterYear}
             </h1>
-            <img src={member.image}  referrerPolicy="no-referrer" alt="" />
+            {console.log(member)}
+            <img src={member.image ? member.image: pp}  referrerPolicy="no-referrer" alt="" />
             <div className="items">
               <h3>{member?.name?.toUpperCase() || "No Name"}</h3>
               <h3>{member?.rollNo?.toUpperCase() || "No Roll No"}</h3>

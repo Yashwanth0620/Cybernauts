@@ -125,7 +125,7 @@ export default function Members() {
   };
 
   const handleNavigate = (member, filterYear) => {
-    // console.log(member,filterYear)
+    console.log(member,filterYear)
     const member1=member;
     navigate("profile/", { state: {member1,filterYear} }); 
   };
@@ -207,6 +207,7 @@ export default function Members() {
                 >
                   <div className="member-desc">
                     <div className="member-img">
+                      {console.log(member.image)}
                       <img
                         src={member.image ? member.image : pp}
                         referrerPolicy="no-referrer"
@@ -244,7 +245,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -279,7 +282,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -314,7 +319,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -349,7 +356,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -388,7 +397,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -418,7 +429,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -448,10 +461,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -491,7 +506,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -521,7 +538,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -551,10 +570,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -594,7 +615,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -624,7 +647,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -654,10 +679,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -697,7 +724,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -727,7 +756,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -757,10 +788,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -800,7 +833,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -830,7 +865,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -860,10 +897,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -903,7 +942,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -933,7 +974,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
@@ -963,10 +1006,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        <img
-                          src={member.image === "url" ? pp : member.image}
-                          alt=""
-                        />
+                      <img
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
+                        alt=""
+                      />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -1002,7 +1047,9 @@ export default function Members() {
                   <div className="member-desc">
                     <div className="member-img">
                       <img
-                        src={member.image === "url" ? pp : member.image}
+                        src={member.image ? member.image : pp}
+                        referrerPolicy="no-referrer"
+                        style={{ width: "auto", height: "100%" }}
                         alt=""
                       />
                       <div className="personal-details">
