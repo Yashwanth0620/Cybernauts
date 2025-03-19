@@ -58,6 +58,8 @@ export default function NavBar() {
           <Link to="/contactus" className="link" href="contLinkct.js">
             Contact
           </Link>
+          <p href="#">|</p>
+          <Link to="/announcement" className="link">Announcement</Link>
           {role === "superadmin" && (
             <>
               <p href="#">|</p>

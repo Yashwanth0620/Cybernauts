@@ -27,6 +27,9 @@ import ViewMembers from "./components/Admin/ViewMembers";
 
 import PrivateRoute from "./components/Admin/PrivateRoute";
 import SuperAdminProfile from "./components/Admin/SuperAdminProfile";
+import ViewMemberImage from "./components/Admin/ViewMemberImage";
+import AddContribute from "./components/Admin/AddContribute";
+import Announcement from "./components/Announcement";
 import NotFound from "./components/NotFound";
 
 
@@ -43,13 +46,13 @@ function App() {
         <Route path="/members" element={<Members />} />
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
-
         {/* admin specific pages */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/add-event"
           element={<PrivateRoute element={<AddEventForm />} />}
         />
+        <Route path="/announcement" element={<PrivateRoute element={<Announcement />} />} />
         <Route
           path="/admin/edit-event"
           element={<PrivateRoute element={<EditEventForm />} />}

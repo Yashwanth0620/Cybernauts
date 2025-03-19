@@ -1,0 +1,137 @@
+.announcement-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.announcement-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #003366;
+}
+
+/* Grid layout for branches - 4 items per row */
+.branch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 16px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* Styling for each branch item */
+.branch-item {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.branch-item:hover {
+    transform: scale(1.05);
+}
+
+/* Styling for branch images */
+.branch-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay for selected state */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 35px;
+    width: 100px;  /* Make it match the image size */
+    height: 100px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Show tick mark when selected */
+.branch-item.selected .overlay {
+    opacity: 1;
+}
+/* Branch name styling */
+.branch-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Submit button */
+.submit-button {
+    margin-top: 20px;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.submit-button:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+.message-box {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    resize: none; /* Prevents resizing */
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Highlight border on focus */
+.message-box:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Placeholder styling */
+.message-box::placeholder {
+    color: #999;
+    font-style: italic;
+}
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .branch-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .branch-logo {
+        width: 80px;
+        height: 80px;
+    }
+    .overlay {
+        width: 80px;
+        height: 80px;
+    }
+}
