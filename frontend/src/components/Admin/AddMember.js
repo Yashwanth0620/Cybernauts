@@ -135,10 +135,10 @@ export default function AddMember() {
     }
   };
 
-  const handleNavigate = (member, year) => {
-    // console.log(member,year)
-    const member1=member;
-    navigate("/admin/view-members/profile", { state: { member1, year } });
+  const handleNavigate = (member, filterYear) => {
+    const memberId=member._id;
+    // console.log(member1)
+    navigate("profile/", { state: {memberId,filterYear} }); 
   };
 
   return (

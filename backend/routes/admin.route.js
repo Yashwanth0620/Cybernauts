@@ -23,10 +23,12 @@ const {
   addMember,
   getMembers,
   deleteMember,
-  addContributions,
+  addContribution,
   getCurrentMembers,
   getYears,
-  editMember
+  editMember,
+  getMember,
+  deleteContribution
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
 
@@ -61,8 +63,10 @@ router.get("/members/", getCurrentMembers);
 router.get("/members/:year", getMembers);
 router.get("/members/years", getYears);
 router.delete("/members/:year/:id", deleteMember);
+router.get("/members/:year/:id", getMember);
 router.patch("/members/:year/:id",upload.single("image"), editMember);
-router.patch("/members/:id", addContributions);
+router.post("/members/addcontribution/:year/:id",upload.single("image"), addContribution);
+router.delete("/members/deletecontribution/:year/:memberId/:contributionId",deleteContribution);
 
 router.route("/").get(isAuthenticated, fetchAdmins);
 

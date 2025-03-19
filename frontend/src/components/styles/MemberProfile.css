@@ -132,6 +132,16 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  .MemberProfile-body .disable-view-img {
+    background-color: lightgrey;
+    color: white; /* Use white instead of black for better contrast */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background 0.3s ease;
+  }
   
   .MemberProfile-body .view-img:hover {
     background-color: #0055aa;
@@ -148,9 +158,9 @@
     cursor: pointer;
   }
   
-  .item button:hover {
+  /* .item button:hover {
     background-color: white;
-  }
+  } */
   .icon-button {
     
   

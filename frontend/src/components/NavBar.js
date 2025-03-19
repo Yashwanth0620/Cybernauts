@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/NavBar.css";
 import { useAuth } from "../AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function NavBar() {
   const [links, setLinks] = useState();
@@ -20,12 +22,18 @@ export default function NavBar() {
     localStorage.removeItem("name");
     localStorage.removeItem("email");
     localStorage.removeItem("phone");
-    
-    window.open("/", "_self");
+
+    toast.success("🦄 Logout Successful...!", {
+      autoClose: 500,
+      onClose: () => {
+        window.open("/", "_self");
+      },
+    });
     return;
   };
 
   return (
+    <>
     <nav className="nav-bar">
       <div className="bars">
         <img src={require("../assets/logo.png")} alt="Cybernauts logo"></img>
@@ -59,7 +67,9 @@ export default function NavBar() {
             Contact
           </Link>
           <p href="#">|</p>
-          <Link to="/announcement" className="link">Announcement</Link>
+          <Link to="/announcement" className="link">
+            Announcement
+          </Link>
           {role === "superadmin" && (
             <>
               <p href="#">|</p>
@@ -80,5 +90,7 @@ export default function NavBar() {
         ""
       )}
     </nav>
+    <ToastContainer/>
+    </>
   );
 }
