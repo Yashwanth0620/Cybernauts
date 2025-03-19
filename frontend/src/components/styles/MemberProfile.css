@@ -100,7 +100,7 @@
   
   .MemberProfile-body {
     margin-left: 5%;
-    width: 70%;
+    width: 75%;
     overflow-y: auto;
     
     height: auto; /* Adjust to push content with footer */
@@ -109,7 +109,7 @@
   .contribut-container:hover{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
-  .contribut-container {
+ .MemberProfile-body  .contribut-container {
     font-family: 'monospace';
     display: flex;
     flex-direction: row;
@@ -202,7 +202,7 @@
       top: 40px;
     }
     .MemberProfile-body{
-      width: 80%;
+      width: 70%;
     }
   
   }
@@ -231,14 +231,14 @@
       height: auto;
     }
     .MemberProfile-body{
-      width: 50%;
+      width: 60%;
     } 
-    .contribut-container{
+    .MemberProfile-body .contribut-container{
       display: flex;
       flex-direction: column;
     }
   }
-  @media (max-width: 940px) {
+  @media (max-width: 950px) {
     
     .MemberProfile-main {
       width: 35%;

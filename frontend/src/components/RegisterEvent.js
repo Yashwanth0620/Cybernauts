@@ -66,10 +66,7 @@ export default function RegisterEvent({ event, isAdmin }) {
         </p>
 
         <p className="description">&nbsp;&nbsp;&nbsp;{event.desc}</p>
-        <p className="participants">
-          Participants count:{" "}
-          {event.participants ? event.participants.length : 0}
-        </p>
+       
 
         <div className="register-button">
           {!isAdmin ? (

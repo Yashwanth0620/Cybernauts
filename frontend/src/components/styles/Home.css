@@ -48,6 +48,13 @@ a {
   min-height: 80px;
   display: flex;
 }
+ .description{
+  word-break: break-all;
+  font-family: sans-serif;
+  text-align: justify;
+  width: 100%;
+  color: black;
+}
 
 .hero .logo {
   flex-basis: 1;

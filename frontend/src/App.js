@@ -31,6 +31,8 @@ import ViewMemberImage from "./components/Admin/ViewMemberImage";
 import AddContribute from "./components/Admin/AddContribute";
 import Announcement from "./components/Announcement";
 import NotFound from "./components/NotFound";
+import EventContribution from "./components/Admin/EventContribution";
+import ContributionModal from "./components/Admin/ContributionModal";
 
 
 function App() {
@@ -83,6 +85,16 @@ function App() {
         <Route
           path="/notfound"
           element={< NotFound/>}  />
+        <Route
+          path="/eventcontribution"
+          element={< EventContribution/>}  />
+        <Route
+          path="/contributionmodel"
+          element={< ContributionModal/>}  />
+        <Route
+          path="/contribute"
+          element={< AddContribute/>}  />
+       
        
       </Routes>
       <Footer />

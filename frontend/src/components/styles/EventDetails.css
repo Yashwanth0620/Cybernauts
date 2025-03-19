@@ -4,6 +4,7 @@
   left: 15%;
   right: 15%;
   max-height: 85%;
+  margin-top: 4rem;
   z-index: 999;
   background-color: white;
   padding: 50px 60px;
@@ -31,6 +32,7 @@
 }
 
 .event-details-page .description {
+  word-break: break-all;
   font-family: sans-serif;
   text-align: justify;
   margin-bottom: 10px;
