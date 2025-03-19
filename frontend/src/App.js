@@ -46,13 +46,13 @@ function App() {
         <Route path="/members" element={<Members />} />
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/announcement" element={<Announcement />} />
         {/* admin specific pages */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/add-event"
           element={<PrivateRoute element={<AddEventForm />} />}
         />
+        <Route path="/announcement" element={<PrivateRoute element={<Announcement />} />} />
         <Route
           path="/admin/edit-event"
           element={<PrivateRoute element={<EditEventForm />} />}
