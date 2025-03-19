@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import pp from "../../assets/pp.jpg";
 import "../styles/SuperAdminprofile.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SuperAdminProfile() {
   const [admins, setAdmins] = useState([]);
@@ -56,33 +58,26 @@ export default function SuperAdminProfile() {
     console.log(newUser);
 
     try {
+      if(!newUser.name || !newUser.email || !newUser.password || !newUser.phone){
+        toast.warn("Fill all Details...")
+      }
       const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:3001/auth/signup",
-        newUser,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      alert(response.data.message); // Show success message
-
+      const response = await axios.post("http://localhost:3001/auth/signup", newUser, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
       // Add the new user to the appropriate state array
       if (newUser.role === "admin") {
-        setAdmins((prevAdmins) => [
-          ...prevAdmins,
-          { name: newUser.name, phone: newUser.phone },
-        ]);
+        setAdmins((prevAdmins) => [...prevAdmins, { name: newUser.name, phone: newUser.phone }]);
+        toast.success("Added Admin...")
       } else if (newUser.role === "superadmin") {
-        setSuperAdmins((prevSuperAdmins) => [
-          ...prevSuperAdmins,
-          { name: newUser.name, phone: newUser.phone },
-        ]);
+        setSuperAdmins((prevSuperAdmins) => [...prevSuperAdmins, { name: newUser.name, phone: newUser.phone }]);
+        toast.success("Added Super Admin")
       }
-
       closePopup();
+      
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to add user"); // Show error message
+      toast.error(error.response?.data?.message || "Failed to add user"); // Show error message
     }
   };
 
@@ -201,6 +196,7 @@ export default function SuperAdminProfile() {
           </div>
         </div>
       )}
+      <ToastContainer/>
     </>
   );
 }

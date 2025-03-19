@@ -140,8 +140,8 @@ export default function AddMember() {
 
   const handleNavigate = (member, year) => {
     // console.log(member,year)
-
-    navigate("/admin/view-members/profile", { state: { member, year } });
+    const member1=member;
+    navigate("/admin/view-members/profile", { state: { member1, year } });
   };
 
   return (
@@ -888,7 +888,7 @@ export default function AddMember() {
             className="Addmember-btn"
             onClick={() => {
               openModal();
-              formData.designation = "chairperson";
+              formData.desig = "additional-expertise";
             }}
           >
             Add+

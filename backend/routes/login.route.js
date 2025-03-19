@@ -7,7 +7,7 @@ const {
 const {isAuthenticated}  = require("../middlewares/superAuthMiddleware");
 
 routes.route('/signup')
-    .post(isAuthenticated, saveUser);
+    .post( saveUser);
 routes.route('/login')
     .post(checkUser)
 
