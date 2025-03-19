@@ -94,7 +94,6 @@ const addMember = errorHandler(async (req, res) => {
 
       // Upload using event ID instead of title
       image = await uploadFileAndGetUrl(tempPath);
-      console.log(image);
       
 
       fs.unlinkSync(tempPath);
@@ -125,9 +124,7 @@ const addMember = errorHandler(async (req, res) => {
 // @API POST /members/:year/:id
 const editMember = errorHandler(async (req, res) => {
   try {
-    console.log("0")
     const { year, id } = req.params;
-    console.log(year,id)
     const {
       name,
       rollNo,
@@ -137,14 +134,11 @@ const editMember = errorHandler(async (req, res) => {
       mobileNo,
       email,
     } = req.body;
-    console.log(req.body)
     // Find the document for the given year
     let yearDocument = await MemberModel.findOne({ year });
-    console.log("1")
     if (!yearDocument) {
       return res.status(400).json({ message: "Failed to edit: Year not found" });
     }
-    console.log("2")
     let image;
     if (req.file) {
       try {
@@ -159,12 +153,10 @@ const editMember = errorHandler(async (req, res) => {
         return res.status(500).json({ message: "Failed to upload image" });
       }
     }
-    console.log("3")
     // Find the existing member by _id
     const existingMemberIndex = yearDocument.members.findIndex(
       (member) => member._id.toString() === id
     );
-    console.log(existingMemberIndex)
     if (existingMemberIndex !== -1) {
       // Update existing member
       yearDocument.members[existingMemberIndex] = {
@@ -229,15 +221,11 @@ const addContributions = errorHandler(async (req, res) => {
 // @route DELETE /members/:year/:id
 const deleteMember = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  console.log("Hii")
-  console.log(year)
-  console.log(id)
   const yearDocument = await MemberModel.findOneAndUpdate(
     { year: year},
     { $pull: { members: { _id: id } } }, 
     { new: true }
   );
-  console.log(yearDocument)
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });

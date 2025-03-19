@@ -24,8 +24,6 @@ export default function Announcement() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Selected Branches:", selectedBranches);
-    console.log("Message:", message);
   };
 
   return (

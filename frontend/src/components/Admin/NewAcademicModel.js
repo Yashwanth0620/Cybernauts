@@ -31,8 +31,6 @@ export default function NewAcademicModel({
     handleClose();
     navigate(`/admin/add-member?year=${newyear}`);
   };
-  console.log(years)
-  console.log(newyear)
 
   return (
     <>

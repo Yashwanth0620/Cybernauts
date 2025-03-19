@@ -22,7 +22,6 @@ export default function MemberModel({
     "executive-Boys",
     "executive-Girls",
   ];
-  console.log(formData)
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>

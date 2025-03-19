@@ -58,15 +58,12 @@ const saveUser = errorHandler(async (req, res) => {
     user.role = user.role.toLowerCase();
 
     const newUser = new adminModel(user);
-    console.log(newUser);
     await newUser.save();
 
     res
       .status(200)
       .json({ status: "success", message: "Registered Successfully" });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 });
 
 module.exports = {

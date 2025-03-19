@@ -9,7 +9,7 @@
     text-align: center;
 }
 
-.announcement-title {
+.announcement-container .announcement-title {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -17,7 +17,7 @@
 }
 
 /* Grid layout for branches - 4 items per row */
-.branch-grid {
+.announcement-container .branch-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 items per row */
     gap: 16px;
@@ -26,7 +26,7 @@
 }
 
 /* Styling for each branch item */
-.branch-item {
+.announcement-container .branch-item {
     position: relative;
     cursor: pointer;
     text-align: center;
@@ -37,12 +37,12 @@
     transition: transform 0.2s ease-in-out;
 }
 
-.branch-item:hover {
+.announcement-container .branch-item:hover {
     transform: scale(1.05);
 }
 
 /* Styling for branch images */
-.branch-logo {
+.announcement-container .branch-logo {
     width: 100px;
     height: 100px;
     border-radius: 10px;
@@ -51,7 +51,7 @@
 }
 
 /* Overlay for selected state */
-.overlay {
+.announcement-container .overlay {
     position: absolute;
     top: 0;
     left: 35px;
@@ -70,18 +70,18 @@
 }
 
 /* Show tick mark when selected */
-.branch-item.selected .overlay {
+.announcement-container .branch-item.selected .overlay {
     opacity: 1;
 }
 /* Branch name styling */
-.branch-name {
+.announcement-container .branch-name {
     font-size: 14px;
     font-weight: bold;
     color: #222;
 }
 
 /* Submit button */
-.submit-button {
+.announcement-container .submit-button {
     margin-top: 20px;
     width: 100%;
     background: #007bff;
@@ -94,11 +94,11 @@
     transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
-.submit-button:hover {
+.announcement-container .submit-button:hover {
     background: #0056b3;
     transform: translateY(-2px);
 }
-.message-box {
+.announcement-container .message-box {
     width: 100%;
     margin-top: 20px;
     padding: 12px;
@@ -110,27 +110,27 @@
 }
 
 /* Highlight border on focus */
-.message-box:focus {
+.announcement-container .message-box:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     outline: none;
 }
 
 /* Placeholder styling */
-.message-box::placeholder {
+.announcement-container .message-box::placeholder {
     color: #999;
     font-style: italic;
 }
 /* Responsive adjustments */
 @media (max-width: 600px) {
-    .branch-grid {
+    .announcement-container .branch-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .branch-logo {
+    .announcement-container .branch-logo {
         width: 80px;
         height: 80px;
     }
-    .overlay {
+    .announcement-container .overlay {
         width: 80px;
         height: 80px;
     }

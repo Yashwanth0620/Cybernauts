@@ -47,7 +47,6 @@ const PrivateRoute = ({ element }) => {
 
   // If role is null, redirect to login
   if (!role) return <Navigate to="/admin/login" />;
-  console.log(role);
   
 
   // If role is "admin" and trying to access "/superadmin", show Unauthorized

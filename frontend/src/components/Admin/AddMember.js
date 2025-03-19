@@ -60,7 +60,6 @@ export default function AddMember() {
           }
         );
         setMembers(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -104,7 +103,6 @@ export default function AddMember() {
 
     try {
       // Make the API call
-      console.log("Form Data:", formData);
       const response = await axios.post(
         `http://localhost:3001/admin/members/add/`,
         form,
@@ -132,7 +130,6 @@ export default function AddMember() {
       });
       closeModal();
     } catch (error) {
-      console.log(error);
       toast.error("Failed to add member..!");
       // alert("Failed to add the event. Please try again.");
     }
@@ -282,7 +279,6 @@ export default function AddMember() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        {console.log(member.image)}
                         <img
                           src={member.image ? member.image : pp}
                           alt="image"

@@ -55,7 +55,6 @@ export default function SuperAdminProfile() {
   };
 
   const handleSubmit = async () => {
-    console.log(newUser);
 
     try {
       if(!newUser.name || !newUser.email || !newUser.password || !newUser.phone){

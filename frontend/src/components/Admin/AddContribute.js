@@ -44,7 +44,6 @@ export default function AddContribute({ closeModal }) {
       alert("All fields are required.");
       return;
     }
-    console.log({ description, eventName, image });
     closeModal(); // Close modal after submitting
   };
 

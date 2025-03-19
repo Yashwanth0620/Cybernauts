@@ -48,8 +48,6 @@ export default function AddEventForm({ closeForm }) {
           },
         }
       );
-  
-      console.log("Event added successfully:", response.data);
       navigate("/events");
     } catch (error) {
         console.error("Error adding event:", error);

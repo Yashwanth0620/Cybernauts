@@ -26,8 +26,6 @@ export default function MemberProfile() {
     setCurrentImage(image);
     setIsImageModalOpen(true);
   };
-  
-  console.log(member1);
   const [member, setMember] = useState({
     name: member1.name,
     _id: member1._id,
@@ -39,7 +37,6 @@ export default function MemberProfile() {
     image: member1.image,
     position: member1.position,
   });
-  console.log(member);
   const [formData, setFormData] = useState({
     name: member.name,
     rollNo: member.rollNo,
@@ -55,8 +52,6 @@ export default function MemberProfile() {
   const openEditModal = () => setEditIsModalOpen(true);
   const closeEditModal = () => setEditIsModalOpen(false);
   const closeImageModal = () => setIsImageModalOpen(false);
-
-  console.log(member);
   member.contributions = [
     {
       description: "Hii this is the desscription",
@@ -138,7 +133,6 @@ export default function MemberProfile() {
           },
         }
       );
-      console.log(response);
       if (response.status === 200) {
         toast.success("Deleted Successfully...!", {
           autoClose: 1000,
@@ -170,7 +164,6 @@ export default function MemberProfile() {
 
     try {
       // Make the API call
-      console.log("Form Data:", member._id);
       const response = await axios.patch(
         `http://localhost:3001/admin/members/${filterYear}/${member._id}`,
         form,
@@ -187,7 +180,6 @@ export default function MemberProfile() {
 
       closeEditModal();
     } catch (error) {
-      console.log(error);
       toast.error("Failed to Edit Member..!");
       // alert("Failed to add the event. Please try again.");
     }
@@ -206,13 +198,11 @@ export default function MemberProfile() {
       <div className="MemberProfile">
         <div className="MemberProfile-container">
           <div className="MemberProfile-main">
-            {console.log(member.position)}
             <h1>
               {member.designation.toUpperCase()}{" "}
               {member.position ? member.position.toUpperCase() : " "}{" "}
               {filterYear}
             </h1>
-            {console.log(member)}
             <img src={member.image ? member.image: pp}  referrerPolicy="no-referrer" alt="" />
             <div className="items">
               <h3>{member?.name?.toUpperCase() || "No Name"}</h3>
@@ -238,7 +228,6 @@ export default function MemberProfile() {
                 handleDelete={handleDelete}
               />
             )}
-            {console.log(formData)}
             {isEditModalOpen && (
               <MemberModel
                 closeModal={closeEditModal}

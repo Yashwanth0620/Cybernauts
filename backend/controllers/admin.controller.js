@@ -130,15 +130,6 @@ const updateEvent = errorHandler(async (req, res) => {
       updatedData.images = newImageUrls; // Update images in event
     }
 
-    // Convert contributors from string to array if necessary
-    if (typeof updatedData.contributors === "string") {
-      try {
-        updatedData.contributors = JSON.parse(req.body.contributors);
-      } catch (error) {
-        return res.status(400).json({ message: "Invalid contributors format" });
-      }
-    }
-
     // Update only fields that are not null/undefined
     Object.keys(updatedData).forEach((key) => {
       if (

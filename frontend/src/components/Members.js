@@ -30,14 +30,12 @@ export default function Members() {
 
   const fetchYearMembers = async () => {
     try {
-      console.log(filterYear);
       const response = await axios.get(
         `http://localhost:3001/members/${filterYear}`
       );
       setOriginalMembers(response.data);
       setMembers(response.data);
       // setYear(response.data.year);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching members:", error);
     }
@@ -50,7 +48,6 @@ export default function Members() {
   }, [filterYear]);
 
   const handleYear = (e) => {
-    console.log(e.target.value);
     setFilterYear(e.target.value);
   };
 
@@ -62,13 +59,11 @@ export default function Members() {
         setMembers(response.data.members);
         setYear(response.data.year);
         setFilterYear(response.data.year);
-        console.log(response.data);
 
         const response2 = await axios.get(
           "http://localhost:3001/members/years"
         );
         setYears(response2.data);
-        console.log(response2.data);
       } catch (error) {
         console.error("Error fetching members:", error);
       }
@@ -90,7 +85,6 @@ export default function Members() {
       } ${member.email && member.email.toLowerCase()}`;
       return memberDetails.includes(inputValue.toLowerCase());
     });
-    console.log(inputValue);
     setMembers(newMembers);
   };
   const handleSubmit = (e) => {

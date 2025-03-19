@@ -6,25 +6,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function AddEventForm() {
   const location = useLocation();
   const { event } = location.state || {};
-  const [contributors, setContributors] = useState(event.contributors);
-  const [contribution, setContribution] = useState("");
-  const [roll, setRoll] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
  const [otherEventType, setOtherEventType] = useState("");
   const [eventType, setEventType] = useState("");
 
   const navigate = useNavigate();
 
-  const handleAddContributor = () => {
-    if (contribution && roll) {
-      setContributors((prev) => [...prev, { contribution, roll }]);
-      setContribution("");
-      setRoll("");
-      setShowPopup(false);
-    } else {
-      alert("Please fill in both fields!");
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,9 +30,6 @@ export default function AddEventForm() {
     formData.append("organizer", formElements.organizer.value);
     formData.append("faculty", formElements.faculty.value);
     formData.append("chiefGuest", formElements.chiefGuest.value);
-
-    // Append contributors as a JSON string
-    formData.append("contributors", JSON.stringify(contributors));
 
     // Append the poster file
     const posterFile = formElements.poster.files[0];
@@ -72,8 +55,6 @@ export default function AddEventForm() {
           },
         }
       );
-
-      console.log("Event added successfully:", response.data);
       navigate("/events");
     } catch (error) {
       console.error("Error adding event:", error);
@@ -204,7 +185,7 @@ export default function AddEventForm() {
           />
         </div>
 
-        <div className="form-group contributors-group">
+        {/* <div className="form-group contributors-group">
           <div className="contributors-header">
             <label>Contributors:</label>
             <button
@@ -222,9 +203,9 @@ export default function AddEventForm() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
-        {showPopup && (
+        {/* {showPopup && (
           <div className="popup">
             <div className="popup-content">
               <h3>Add Contributor</h3>
@@ -256,7 +237,7 @@ export default function AddEventForm() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="form-actions">
           <button type="submit" className="btn-submit">

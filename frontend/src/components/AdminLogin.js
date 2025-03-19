@@ -39,11 +39,9 @@ export default function AdminLogin() {
         toast.success("Login Successfull... ")
         window.open("/", "_self");
       } else {
-        console.log("1")
         toast.error("Invalid Credentials...!");
       }
     } catch (error) {
-      console.log("2")
       toast.error("Invalid Credentials...!");
     }
   };
