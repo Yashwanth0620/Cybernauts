@@ -27,8 +27,8 @@ import ViewMembers from "./components/Admin/ViewMembers";
 
 import PrivateRoute from "./components/Admin/PrivateRoute";
 import SuperAdminProfile from "./components/Admin/SuperAdminProfile";
-import ViewMemberImage from "./components/Admin/ViewMemberImage";
-import AddContribute from "./components/Admin/AddContribute";
+import NotFound from "./components/NotFound";
+
 
 function App() {
   const location = useLocation();
@@ -77,6 +77,9 @@ function App() {
         <Route
           path="/superadmin"
           element={<PrivateRoute element={< SuperAdminProfile/>} />} />
+        <Route
+          path="/notfound"
+          element={< NotFound/>}  />
        
       </Routes>
       <Footer />
