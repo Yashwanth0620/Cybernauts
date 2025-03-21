@@ -36,7 +36,7 @@ export default function Announcement() {
     const data = { mails, notice: message };
     try {
       const response = await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/announce`,
+        `${process.env.REACT_APP_BACKEND_URI}/announce`,
         data,
         {
           headers: {

@@ -22,6 +22,23 @@ const getMembers = errorHandler(async (req, res) => {
   res.status(200).json(yearDocument.members);
 });
 
+// @desc to get all the core body members of particular year
+// @API GET /members/:year/:id
+const getMember = errorHandler(async (req, res) => {
+  const { year, id } = req.params;
+  const yearDocument = await MemberModel.findOne({ year });
+
+  if (!yearDocument || yearDocument.members.length === 0) {
+    return res.status(404).json({ message: "No members found for this year" });
+  }
+
+  const member = yearDocument.members.id(id);
+  if (!member) {
+    return res.status(404).json({ message: "Member not found" });
+  }
+  res.status(200).json(member);
+});
+
 // @desc Get all core body members of all years
 // @route GET /members/all
 const getAllYearsMembers = errorHandler(async (req, res) => {
@@ -67,7 +84,7 @@ const getCurrentMembers = errorHandler(async (req, res) => {
 // @desc to add members to the team
 // @API POST /members/add
 const addMember = errorHandler(async (req, res) => {
-  
+  ("Hjkllk")
   const {
     rollNo,
     name,
@@ -159,8 +176,7 @@ const editMember = errorHandler(async (req, res) => {
     );
     if (existingMemberIndex !== -1) {
       // Update existing member
-      yearDocument.members[existingMemberIndex] = {
-        ...yearDocument.members[existingMemberIndex],
+      yearDocument.members[existingMemberIndex].set({
         name,
         rollNo,
         designation,
@@ -168,8 +184,8 @@ const editMember = errorHandler(async (req, res) => {
         position,
         mobileNo,
         email,
-        image: image || yearDocument.members[existingMemberIndex].image, // Keep old image if no new one
-      };
+        // image: image || yearDocument.members[existingMemberIndex].image, // Keep old image if no new one
+      });
     } else {
       return res.status(404).json({ message: "Member not found" });
     }
@@ -187,26 +203,82 @@ const editMember = errorHandler(async (req, res) => {
 
 // @desc To add contributions to a member
 // @route PUT /members/contributions/:year/:id/
-const addContributions = errorHandler(async (req, res) => {
+const addContribution = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  const { description, image, eventId } = req.body;
-
-  const yearDocument = await MemberModel.findOne({ year, "members._id": id });
+  const { description} = req.body;
+  const yearDocument = await MemberModel.findOne({ year});
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });
   }
 
   const member = yearDocument.members.id(id);
-
   if (!member) {
     return res.status(404).json({ message: "Member not found" });
   }
+
+  let image;
+    if (req.file) {
+      try {
+        const tempPath = path.join(__dirname, "contributionPhoto.jpg");
+        fs.writeFileSync(tempPath, req.file.buffer);
+
+        // Upload image and get URL
+        image = await uploadFileAndGetUrl(tempPath);
+        fs.unlinkSync(tempPath);
+      } catch (error) {
+        console.error("Image Upload Error:", error);
+        return res.status(500).json({ message: "Failed to upload image" });
+      }
+    }
+
+  const newContribution = {
+    description,
+    image,
+  };
+
+  member.contributions.push(newContribution);
+
+  // Save the yearDocument with the updated member
+  await yearDocument.save();
+  res.status(200).json({ message: "Contribution added successfully", member });
+});
+// @desc To add contributions to a member
+// @route PUT /members/eventcontribution/:year/:id/
+const eventContribution = errorHandler(async (req, res) => {
+  const { year, id } = req.params;
+  const { rollNo, description, eventId, eventName} = req.body;
+  const yearDocument = await MemberModel.findOne({ year});
+
+  if (!yearDocument) {
+    return res.status(404).json({ message: "Member not found in this year" });
+  }
+
+  const member = yearDocument.members.id(id);
+  if (!member) {
+    return res.status(404).json({ message: "Member not found" });
+  }
+
+  let image;
+    if (req.file) {
+      try {
+        const tempPath = path.join(__dirname, "contributionPhoto.jpg");
+        fs.writeFileSync(tempPath, req.file.buffer);
+
+        // Upload image and get URL
+        image = await uploadFileAndGetUrl(tempPath);
+        fs.unlinkSync(tempPath);
+      } catch (error) {
+        console.error("Image Upload Error:", error);
+        return res.status(500).json({ message: "Failed to upload image" });
+      }
+    }
 
   const newContribution = {
     description,
     image,
     eventId,
+    eventName
   };
 
   member.contributions.push(newContribution);
@@ -214,7 +286,7 @@ const addContributions = errorHandler(async (req, res) => {
   // Save the yearDocument with the updated member
   await yearDocument.save();
 
-  res.status(200).json({ message: "Contributions added successfully", member });
+  res.status(200).json({ message: "Contribution added successfully", member });
 });
 
 // @desc To delete a member of a specific year
@@ -234,13 +306,58 @@ const deleteMember = errorHandler(async (req, res) => {
   res.status(200).json({ message: "Member Deleted Successfully" });
 });
 
+
+// @desc To delete a contribution from a member
+// @route DELETE /members/contributions/:year/:memberId/:contributionId
+const deleteContribution = errorHandler(async (req, res) => {
+  try {
+    const { year, memberId, contributionId } = req.params;
+
+    // Find the document for the given year and member
+    const yearDocument = await MemberModel.findOne({ year });
+
+    if (!yearDocument) {
+      return res.status(404).json({ message: "Member not found in this year" });
+    }
+
+    const member = yearDocument.members.id(memberId);
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
+    }
+
+    // Find the index of the contribution to delete
+    const contributionIndex = member.contributions.findIndex(
+      (contribution) => contribution._id.toString() === contributionId
+    );
+
+    if (contributionIndex === -1) {
+      return res.status(404).json({ message: "Contribution not found" });
+    }
+
+    // Remove the contribution from the array
+    member.contributions.splice(contributionIndex, 1);
+
+    // Save the updated document
+    await yearDocument.save();
+
+    res.status(200).json({ message: "Contribution deleted successfully", member:member });
+  } catch (error) {
+    console.error("Delete Contribution Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 module.exports = {
   getMembers,
   addMember,
   getCurrentMembers,
   deleteMember,
-  addContributions,
+  addContribution,
   getAllYearsMembers,
   getYears,
-  editMember
+  editMember,
+  getMember,
+  deleteContribution,
+  eventContribution
 };

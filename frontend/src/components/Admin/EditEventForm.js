@@ -46,7 +46,7 @@ export default function AddEventForm() {
     try {
       // Make the API call
       const response = await axios.put(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events/` + event._id,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/events/` + event._id,
         formData,
         {
           headers: {

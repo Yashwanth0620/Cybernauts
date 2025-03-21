@@ -1,0 +1,61 @@
+.winners-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    margin-bottom: 35px;
+}
+
+.winners-container input[type="text"],
+.winners-container input[type="number"],
+.winners-container select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.winners-container input[type="text"]:focus,
+.winners-container input[type="number"]:focus,
+.winners-container select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.member-input {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.member-input input {
+    flex: 1;
+    margin-right: 10px; 
+}
+
+.member-input input:last-child {
+    margin-right: 0; 
+}
+
+.submit-btn {
+    background-color: #003366; 
+    color: white; 
+    padding: 12px; 
+    font-size: 18px; 
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #002244;
+}

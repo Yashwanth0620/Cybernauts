@@ -52,7 +52,7 @@ export default function AddMember() {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/${year}`,
+          `${process.env.REACT_APP_BACKEND_URI}/members/${year}`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -104,7 +104,7 @@ export default function AddMember() {
     try {
       // Make the API call
       const response = await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/add/`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/add/`,
         form,
         {
           headers: {
@@ -135,10 +135,10 @@ export default function AddMember() {
     }
   };
 
-  const handleNavigate = (member, year) => {
-    // console.log(member,year)
-    const member1=member;
-    navigate("/admin/view-members/profile", { state: { member1, year } });
+  const handleNavigate = (member, filterYear) => {
+    const memberId=member._id;
+    // console.log(member1)
+    navigate("profile/", { state: {memberId,filterYear} }); 
   };
 
   return (
@@ -148,7 +148,6 @@ export default function AddMember() {
           <h1>Our Team</h1>
           <h2>Meet the passionate minds of Cybernauts</h2>
         </div>
-        {/* {console.log(members)} */}
         <div className="chairperson">
           <div className="section-label">
             <span>Chariperson</span>
@@ -222,7 +221,6 @@ export default function AddMember() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                        {/* {console.log(member.image)} */}
                         <img
                           src={member.image ? member.image : pp}
                           alt=""

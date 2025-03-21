@@ -14,7 +14,7 @@ const App = () => {
   useEffect(() => {
     const getRecentEvent = async () => {
       try {
-        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/events/recent`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/events/recent`);
         if (response.status === 200) {
           setEvent(response.data);
           if(response.data.images.length > 0) setBanner(response.data.images[0]); // Fix: Access response directly

@@ -27,12 +27,11 @@ export default function SuperAdminProfile() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin`,
+          `${process.env.REACT_APP_BACKEND_URI}/admin`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log(response.data);
 
         setAdmins(response.data.admins);
         setSuperAdmins(response.data.superadmins);
@@ -86,7 +85,7 @@ export default function SuperAdminProfile() {
       }
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/auth/signup`,
+        `${process.env.REACT_APP_BACKEND_URI}/auth/signup`,
         newUser,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -117,7 +116,7 @@ export default function SuperAdminProfile() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/${currAdmin._id}`, newUser,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/${currAdmin._id}`, newUser,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -135,7 +134,7 @@ export default function SuperAdminProfile() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.delete(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/${id}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

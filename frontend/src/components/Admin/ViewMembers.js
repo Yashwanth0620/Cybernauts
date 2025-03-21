@@ -45,7 +45,7 @@ export default function Members() {
   const fetchYearMembers = async () => {
     try {
       const response = await axios.get(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/${filterYear}`
+        `${process.env.REACT_APP_BACKEND_URI}/members/${filterYear}`
       );
       setOriginalMembers(response.data);
       setMembers(response.data);
@@ -72,13 +72,13 @@ export default function Members() {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/members`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/members`);
         setOriginalMembers(response.data.members);
         setMembers(response.data.members);
         setFilterYear(response.data.year);
 
         const response2 = await axios.get(
-          `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/years`
+          `${process.env.REACT_APP_BACKEND_URI}/members/years`
         );
         setYears(response2.data);
       } catch (error) {
@@ -120,8 +120,9 @@ export default function Members() {
   };
 
   const handleNavigate = (member, filterYear) => {
-    const member1=member;
-    navigate("profile/", { state: {member1,filterYear} }); 
+    const memberId=member._id;
+    // console.log(member1)
+    navigate("profile/", { state: {memberId,filterYear} }); 
   };
 
   return (

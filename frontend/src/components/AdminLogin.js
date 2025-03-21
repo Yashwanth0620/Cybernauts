@@ -18,7 +18,7 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/auth/login`,
+        `${process.env.REACT_APP_BACKEND_URI}/auth/login`,
         { email, password },
         {
           headers: {
@@ -36,13 +36,17 @@ export default function AdminLogin() {
         localStorage.setItem("name", name);
         localStorage.setItem("phone", phone);
         localStorage.setItem("email", email);
-        toast.success("Login Successfull... ")
-        window.open("/", "_self");
+        toast.success("🦄Login Successful...!", {
+          autoClose: 500,
+          onClose: () => {
+            window.open("/", "_self");
+          }
+        });
       } else {
         toast.error("Invalid Credentials...!");
       }
     } catch (error) {
-      toast.error("Invalid Credentials...!");
+      toast.error("Internal Error...!");
     }
   };
 

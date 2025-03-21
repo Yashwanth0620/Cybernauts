@@ -39,7 +39,7 @@ export default function AddEventForm({ closeForm }) {
     try {
       // Make the API call
       const response = await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events`,  
+        `${process.env.REACT_APP_BACKEND_URI}/admin/events`,  
         formData,
         {
           headers: {
@@ -84,7 +84,7 @@ export default function AddEventForm({ closeForm }) {
     
   //     try {
   //       const response = await axios.post(
-  //         `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events`,
+  //         `${process.env.REACT_APP_BACKEND_URI}/admin/events`,
   //         formData,
   //         {
   //           headers: {

@@ -27,7 +27,7 @@ export default function RegisterEvent() {
     if (!confirmation) return;
   
     try {
-      const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events/${event._id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/admin/events/${event._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
