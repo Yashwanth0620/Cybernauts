@@ -30,7 +30,8 @@ const {
   getYears,
   editMember,
   getMember,
-  deleteContribution
+  deleteContribution,
+  eventContribution
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
 
@@ -70,6 +71,7 @@ router.delete("/members/:year/:id", deleteMember);
 router.get("/members/:year/:id", getMember);
 router.patch("/members/:year/:id",upload.single("image"), editMember);
 router.post("/members/addcontribution/:year/:id",upload.single("image"), addContribution);
+router.post("/members/eventcontribution/:year/:id",upload.single("image"), eventContribution);
 router.delete("/members/deletecontribution/:year/:memberId/:contributionId",deleteContribution);
 
 router.route("/").get(isAuthenticated, fetchAdmins);

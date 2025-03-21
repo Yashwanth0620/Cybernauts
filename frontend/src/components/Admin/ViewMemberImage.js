@@ -8,7 +8,7 @@ export default function ViewMemberImage({ currentImage, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className='imageborders'>
-          <img src={currentImage} alt="Profile" />
+          <img src={currentImage} alt="Profile"/>
         </div>
         <button className="close-button" onClick={onClose}>✖</button>
       </div>

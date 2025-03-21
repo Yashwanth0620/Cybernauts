@@ -33,6 +33,7 @@ import Announcement from "./components/Announcement";
 import NotFound from "./components/NotFound";
 import EventContribution from "./components/Admin/EventContribution";
 import ContributionModal from "./components/Admin/ContributionModal";
+import AddWinners from "./components/Admin/AddWinners";
 import EventDetails from "./components/EventDetails";
 import RegisterEvent from "./components/RegisterEvent";
 
@@ -48,6 +49,7 @@ function App() {
 
         {/* mixed pages */}
         <Route path="/members" element={<Members />} />
+        <Route path="/events/addwinners" element={<AddWinners />} />
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
         <Route
@@ -96,14 +98,8 @@ function App() {
           path="*"
           element={< NotFound/>}  />
         <Route
-          path="/eventcontribution"
+          path="/events/eventcontribution"
           element={< EventContribution/>}  />
-        <Route
-          path="/contributionmodel"
-          element={< ContributionModal/>}  />
-        <Route
-          path="/contribute"
-          element={< AddContribute/>}  />
        
        
       </Routes>

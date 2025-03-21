@@ -3,29 +3,29 @@
     
   }
   
-  .title-container {
+  .Eventcontribution .title-container {
     display: flex;
     align-items: center;
     margin: 20px 0;
   }
   
-  .title-container::before,
-  .title-container::after {
+  .Eventcontribution .title-container::before,
+  .Eventcontribution .title-container::after {
     content: "";
     flex: 1;
     border-top: 2px solid #ccc;
     margin: 0 10px;
   }
   
-  .title {
+  .Eventcontribution .title {
     font-size: 18px;
     font-weight: bold;
   }
-  .Addcontributevent{
+  .Eventcontribution .Addcontributevent{
     display: flex;
     justify-content: center;
   }
-  .Addcontributevent button {
+  .Eventcontribution .Addcontributevent button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -36,17 +36,17 @@
   }
   
  
-  .ContributeCard  {
+  .Eventcontribution .ContributeCard  {
     margin-left: 12%;
     width: 75%;
     overflow-y: auto;
     height: auto; /* Adjust to push content with footer */
     padding-bottom: 3rem; /* Add space for footer */
   }
-  .contribut-container:hover{
+  .Eventcontribution .contribut-container:hover{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
-  .contribut-container {
+  .Eventcontribution .contribut-container {
     font-family: 'monospace';
     display: flex;
     flex-direction: row;
@@ -60,31 +60,43 @@
     border: .005px solid grey;
 
   }
-  
-  .ContributeCard .item button {
-    width: 150px;
+ 
+
+  .Eventcontribution  .view-img {
     background-color: #003366;
     color: white; /* Use white instead of black for better contrast */
     padding: 0.5rem 1rem;
     font-size: 1rem;
+    width: 8rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  .Eventcontribution  .disable-view-img {
+    background-color: lightgrey;
+    color: white; /* Use white instead of black for better contrast */
+    padding: 0.5rem 1rem;
+    width: 8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background 0.3s ease;
+  }
   
  
-  .contribut-container .description{
+  .Eventcontribution .contribut-container .description{
       padding: .5rem;
       margin-right: 5rem;
       
   }
   
   
-  .ContributeCard .item button:hover {
+  .Eventcontribution .ContributeCard .view-img:hover {
     background-color:#007bff;
   }
-  .ContributeCard  .icon-button {
+  .Eventcontribution .ContributeCard  .icon-button {
     
   
    
@@ -98,24 +110,24 @@
     transition: background 0.3s ease, transform 0.2s ease;
   }
   
-  .ContributeCard .icon-button i {
+  .Eventcontribution .ContributeCard .icon-button i {
     font-size: 1.2rem;
   }
   
-  .ContributeCard  .icon-button.delete {
+  .Eventcontribution .ContributeCard  .icon-button.delete {
     background-color: white;
     color: red;
   }
   
-  .ContributeCard  .icon-button:hover {
+  .Eventcontribution .ContributeCard  .icon-button:hover {
     background-color: white;
     transform: scale(1.05);
   }
   
-  .ContributeCard .icon-button.delete:hover {
+  .Eventcontribution .ContributeCard .icon-button.delete:hover {
     background-color: white;
   }
-  .Eventcontribution .Eventcontributebut{
+   .Eventcontribution .Eventcontributebut{
      display: flex;
      flex-direction: row;
      justify-content: center;
@@ -139,12 +151,12 @@
     color: #fff;
   }
   @media (max-width:915px) {
-    .contribut-container {
+    .Eventcontribution .contribut-container {
       
       display: flex;
       flex-direction: column;
     }
-    .ContributeCard  .icon-button.delete {
+    .Eventcontribution .ContributeCard  .icon-button.delete {
        align-items: end;
     }
    

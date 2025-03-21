@@ -253,6 +253,53 @@ const addContribution = errorHandler(async (req, res) => {
 
   res.status(200).json({ message: "Contribution added successfully", member });
 });
+// @desc To add contributions to a member
+// @route PUT /members/eventcontribution/:year/:id/
+const eventContribution = errorHandler(async (req, res) => {
+  const { year, id } = req.params;
+  console.log(year)
+  const { rollNo, description, eventId, eventName} = req.body;
+  const yearDocument = await MemberModel.findOne({ year, "members._id": id });
+
+  if (!yearDocument) {
+    return res.status(404).json({ message: "Member not found in this year" });
+  }
+
+  const member = yearDocument.members.id(id);
+  if (!member) {
+    return res.status(404).json({ message: "Member not found" });
+  }
+  console.log(member)
+
+  let image;
+    if (req.file) {
+      try {
+        const tempPath = path.join(__dirname, "contributionPhoto.jpg");
+        fs.writeFileSync(tempPath, req.file.buffer);
+
+        // Upload image and get URL
+        image = await uploadFileAndGetUrl(tempPath);
+        fs.unlinkSync(tempPath);
+      } catch (error) {
+        console.error("Image Upload Error:", error);
+        return res.status(500).json({ message: "Failed to upload image" });
+      }
+    }
+
+  const newContribution = {
+    description,
+    image,
+    eventId,
+    eventName
+  };
+
+  member.contributions.push(newContribution);
+
+  // Save the yearDocument with the updated member
+  await yearDocument.save();
+
+  res.status(200).json({ message: "Contribution added successfully", member });
+});
 
 // @desc To delete a member of a specific year
 // @route DELETE /members/:year/:id
@@ -323,5 +370,6 @@ module.exports = {
   getYears,
   editMember,
   getMember,
-  deleteContribution
+  deleteContribution,
+  eventContribution
 };
