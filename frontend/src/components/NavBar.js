@@ -9,8 +9,8 @@ export default function NavBar() {
 
   const { role } = useAuth();
 
+  const sm = window.innerWidth > 1050;
   useEffect(() => {
-    const sm = window.innerWidth > 670;
     setLinks(sm);
   }, []);
 
@@ -20,7 +20,7 @@ export default function NavBar() {
     localStorage.removeItem("name");
     localStorage.removeItem("email");
     localStorage.removeItem("phone");
-    
+
     window.open("/", "_self");
     return;
   };
@@ -35,15 +35,26 @@ export default function NavBar() {
       </div>
       {links ? (
         <>
-          <Link to="/" className="link" href="/">
+          <Link
+            onClick={() => {if(!sm) setLinks(false)  }}
+            to="/"
+            className="link"
+            href="/"
+          >
             Home
           </Link>
           <p href="#">|</p>
-          <Link to="/events" className="link" href="events.js">
+          <Link
+            onClick={() => {if(!sm) setLinks(false)}}
+            to="/events"
+            className="link"
+            href="events.js"
+          >
             Events
           </Link>
           <p href="#">|</p>
           <Link
+            onClick={() => {if(!sm) setLinks(false)}}
             to={role === "admin" ? "/admin/view-members" : "/members"}
             className="link"
             href="Members.js"
@@ -51,26 +62,52 @@ export default function NavBar() {
             Members
           </Link>
           <p href="#">|</p>
-          <Link to="/blog" className="link">
+          <Link onClick={() => {if(!sm) setLinks(false)}} to="/blog" className="link">
             Blog
           </Link>
           <p href="#">|</p>
-          <Link to="/contactus" className="link" href="contLinkct.js">
+          <Link
+            onClick={() => {if(!sm) setLinks(false)}}
+            to="/contactus"
+            className="link"
+            href="contLinkct.js"
+          >
             Contact
           </Link>
-          <p href="#">|</p>
-          <Link to="/announcement" className="link">Announcement</Link>
+          {!!role && (
+            <>
+              <p href="#">|</p>
+              <Link
+                onClick={() => {if(!sm) setLinks(false)}}
+                to="/announcement"
+                className="link"
+              >
+                Announcement
+              </Link>
+            </>
+          )}
           {role === "superadmin" && (
             <>
               <p href="#">|</p>
-              <Link to="/superadmin" className="link">
+              <Link
+                onClick={() => {if(!sm) setLinks(false)}}
+                to="/superadmin"
+                className="link"
+              >
                 Admin Controls
               </Link>
             </>
           )}
           {!!role && (
             <>
-              <Link onClick={handleLogout} id="logout-btn" className="link">
+              <Link
+                onClick={() => {
+                  handleLogout();
+                  {if(!sm) setLinks(false)};
+                }}
+                id="logout-btn"
+                className="link"
+              >
                 Logout
               </Link>
             </>

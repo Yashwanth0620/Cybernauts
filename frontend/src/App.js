@@ -83,7 +83,7 @@ function App() {
           path="/superadmin"
           element={<PrivateRoute element={< SuperAdminProfile/>} />} />
         <Route
-          path="/notfound"
+          path="*"
           element={< NotFound/>}  />
         <Route
           path="/eventcontribution"

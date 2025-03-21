@@ -17,6 +17,8 @@ const {
   removeParticipant,
   sendResponse,
   validateAdmin,
+  updateAdmin,
+  deleteAdmin,
   fetchAdmins
 } = require("../controllers/admin.controller");
 const {
@@ -31,6 +33,8 @@ const {
 const { addBlog } = require("../controllers/blog.controller");
 
 router.route("/validate").get(validateAdmin);
+
+router.route("/:id").put(updateAdmin).delete(deleteAdmin);
 
 //routes for event operations
 router.route("/events").get(getEvents).post(upload.single("poster"), addEvent);

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles/Contact.css';
+import axios from 'axios';
 
 export default function Contact() {
+  const [form, setForm] = useState({name: "", desc: ""});
+
+  const handleSubmit = async () => {
+    const response = await axios.post(`http://${process.env.REACT_APP_BACKEND_URI}:3001/contact`, form);
+
+  }
+
+  
   return (
     <>
 
@@ -11,12 +20,12 @@ export default function Contact() {
           <p>Reach out for any questions, feedback, and collaborations</p>
         </div>
         <div className="contact-form">
-          <form>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your Email" required />
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="Name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your Email" required />
 
-            <label htmlFor="description">Description:</label>
-            <textarea id="description" name="description" rows="4" placeholder="Your Feedback..." required></textarea>
+            <label htmlFor="desc">Description:</label>
+            <textarea id="desc" name="desc" rows="4" placeholder="Your Feedback..." required></textarea>
 
             <button type="submit" className="submit-btn">Submit</button>
           </form>

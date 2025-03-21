@@ -24,12 +24,16 @@ const eventRoutes = require("./routes/event.route");
 const memberRoutes = require("./routes/member.route");
 const loginRoutes = require("./routes/login.route");
 const contactRoutes = require("./routes/contact.route");
+const blogRoutes = require("./routes/blog.route");
+const mailRoutes = require("./routes/mail.route");
 // routing of endpoints
 app.use("/admin", isAuthenticated, adminRoutes);
 app.use("/events", eventRoutes);
 app.use("/members", memberRoutes);
 app.use("/auth", loginRoutes);
 app.use("/contact", contactRoutes);
+app.use("/blogs", blogRoutes);
+app.use("/announce", mailRoutes);
 
 app.use(errorHandler);
 app.listen(PORT, () => {

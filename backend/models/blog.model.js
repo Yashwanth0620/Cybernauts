@@ -5,7 +5,7 @@ const blogSchema = mongoose.Schema({
         type: String, 
         required: true
     },
-    content: {
+    description: {
         type: String,
         required: true,
         unique: true
@@ -16,7 +16,7 @@ const blogSchema = mongoose.Schema({
         unique: true
     },
     image: {
-        type: Buffer,
+        type: String,
         required: true
     }
 })

@@ -14,10 +14,10 @@ const App = () => {
   useEffect(() => {
     const getRecentEvent = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/events/recent");
+        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/events/recent`);
         if (response.status === 200) {
           setEvent(response.data);
-          setBanner(response.data.images[0]); // Fix: Access response directly
+          if(response.data.images.length > 0) setBanner(response.data.images[0]); // Fix: Access response directly
         }
       } catch (error) {
         console.error("Error fetching recent event:", error);
@@ -105,7 +105,7 @@ const App = () => {
           </div>
           <div className="image-content">
             <img
-              src="https://fliplet.com/wp-content/w3-webp/uploads/2024/01/What-is-a-hackathon.pngw3.webp"
+              src={require("../assets/aboutus.jpeg")}
               alt="Hackathon Event"
             />
           </div>
@@ -120,7 +120,7 @@ const App = () => {
         <h2>What we Do?</h2>
         <h3>Our recent event</h3>
         <div className="event-content">
-          <img src={image} loading="lazy" alt="Recent Hackathon Event" />
+          <img src={require("../assets/whatwedo.jpeg")} loading="lazy" alt="Recent Hackathon Event" />
           <h4>
             <strong>{event?.title || "Recent Event"}</strong>
           </h4>

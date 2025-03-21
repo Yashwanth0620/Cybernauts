@@ -52,7 +52,7 @@ export default function AddMember() {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/members/${year}`,
+          `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/${year}`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -104,7 +104,7 @@ export default function AddMember() {
     try {
       // Make the API call
       const response = await axios.post(
-        `http://localhost:3001/admin/members/add/`,
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/add/`,
         form,
         {
           headers: {

@@ -17,7 +17,7 @@ export default function EventDetails({ event, isAdmin }) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/admin/events/${event._id}`,
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events/${event._id}`,
         {
           method: "DELETE",
           headers: {

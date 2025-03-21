@@ -18,7 +18,7 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/login",
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/auth/login`,
         { email, password },
         {
           headers: {
