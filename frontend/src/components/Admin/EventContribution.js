@@ -57,7 +57,7 @@ export default function EventContribution() {
   //       // Make the API call
   //       console.log("hiii");
   //       const response = await axios.post(
-  //         `http://localhost:3001/admin/members/addcontribution/${filterYear}/${member._id}`,
+  //         `${process.env.REACT_APP_BACKEND_URI}/admin/members/addcontribution/${filterYear}/${member._id}`,
   //         form1,
   //         {
   //           headers: {

@@ -34,7 +34,7 @@ export default function MemberProfile() {
     }
     const fetchMember = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/admin/members/${filterYear}/${memberId}`, {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/admin/members/${filterYear}/${memberId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setMember(response.data);
@@ -50,7 +50,6 @@ export default function MemberProfile() {
   }, []);
 
   const openImageModal = (image) => {
-    console.log(image);
     setCurrentImage(image);
     setIsImageModalOpen(true);
   };
@@ -72,7 +71,7 @@ export default function MemberProfile() {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/${filterYear}/${member._id}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/${filterYear}/${member._id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -112,7 +111,7 @@ export default function MemberProfile() {
     try {
       // Make the API call
       const response = await axios.patch(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/${filterYear}/${member._id}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/${filterYear}/${member._id}`,
         form,
         {
           headers: {
@@ -158,9 +157,8 @@ export default function MemberProfile() {
 
     try {
       // Make the API call
-      console.log("hiii");
       const response = await axios.post(
-        `http://localhost:3001/admin/members/addcontribution/${filterYear}/${member._id}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/addcontribution/${filterYear}/${member._id}`,
         form1,
         {
           headers: {
@@ -169,15 +167,14 @@ export default function MemberProfile() {
           },
         }
       );
-      console.log(response.data);
       setFormData(response.data.member);
       setMember(response.data.member);
-      toast.success("Member Added successfully");
-      closeAddModal();
+      toast.success("Contribution Added successfully");
       setContributionData({
         description: "",
         image: null,
       });
+      closeAddModal();
     } catch (error) {
       toast.error("Failed to Add Contribution..!");
     }
@@ -197,9 +194,8 @@ export default function MemberProfile() {
   const handleDeleteContribution = async (id1) => {
     try {
       // Make the API call
-      console.log("hiii");
       const response = await axios.delete(
-        `http://localhost:3001/admin/members/deletecontribution/${filterYear}/${member._id}/${id1}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/deletecontribution/${filterYear}/${member._id}/${id1}`,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -220,8 +216,6 @@ export default function MemberProfile() {
 
   return (
     <>
-    {console.log(loading)}
-    {console.log(member)}
     {loading ? (
         <p>Loading...</p>
       ) : member ? (

@@ -17,7 +17,7 @@ export default function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/events`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/events`);
         const { upcomingEvents, completedEvents } = response.data;
 
         setUpcomingEvents(upcomingEvents);

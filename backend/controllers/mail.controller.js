@@ -29,7 +29,6 @@ const announce = errorHandler(async (req, res) => {
 
     try {
       await transporter.sendMail(message);
-      console.log(`Email sent to ${mail}`);
     } catch (error) {
       console.error(`Error sending email to ${mail}:`, error);
     }

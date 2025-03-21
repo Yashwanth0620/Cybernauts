@@ -6,7 +6,7 @@ export default function Contact() {
   const [form, setForm] = useState({name: "", desc: ""});
 
   const handleSubmit = async () => {
-    const response = await axios.post(`http://${process.env.REACT_APP_BACKEND_URI}:3001/contact`, form);
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URI}/contact`, form);
 
   }
 

@@ -13,7 +13,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/blogs`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/blogs`);
         setBlogPosts(response.data.blogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);

@@ -35,7 +35,7 @@ export default function AddBlogForm() {
 
     try {
       await axios.post(
-        `http://${process.env.REACT_APP_BACKEND_URI}:3001/blogs`,
+        `${process.env.REACT_APP_BACKEND_URI}/blogs`,
         formDataToSend,
         {
           headers: {

@@ -26,18 +26,13 @@ const getMembers = errorHandler(async (req, res) => {
 // @API GET /members/:year/:id
 const getMember = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  console.log(year)
-  console.log(id)
   const yearDocument = await MemberModel.findOne({ year });
 
   if (!yearDocument || yearDocument.members.length === 0) {
     return res.status(404).json({ message: "No members found for this year" });
   }
 
-  console.log("hiiii")
   const member = yearDocument.members.id(id);
-  console.log("h 2")
-  console.log(member)
   if (!member) {
     return res.status(404).json({ message: "Member not found" });
   }
@@ -89,7 +84,7 @@ const getCurrentMembers = errorHandler(async (req, res) => {
 // @desc to add members to the team
 // @API POST /members/add
 const addMember = errorHandler(async (req, res) => {
-  console.log("Hjkllk")
+  ("Hjkllk")
   const {
     rollNo,
     name,
@@ -147,8 +142,6 @@ const addMember = errorHandler(async (req, res) => {
 const editMember = errorHandler(async (req, res) => {
   try {
     const { year, id } = req.params;
-    console.log(year)
-    console.log(id)
     const {
       name,
       rollNo,
@@ -181,9 +174,7 @@ const editMember = errorHandler(async (req, res) => {
     const existingMemberIndex = yearDocument.members.findIndex(
       (member) => member._id.toString() === id
     );
-    console.log(existingMemberIndex)
     if (existingMemberIndex !== -1) {
-      console.log(yearDocument.members[existingMemberIndex])
       // Update existing member
       yearDocument.members[existingMemberIndex].set({
         name,
@@ -215,7 +206,7 @@ const editMember = errorHandler(async (req, res) => {
 const addContribution = errorHandler(async (req, res) => {
   const { year, id } = req.params;
   const { description} = req.body;
-  const yearDocument = await MemberModel.findOne({ year, "members._id": id });
+  const yearDocument = await MemberModel.findOne({ year});
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });
@@ -250,16 +241,14 @@ const addContribution = errorHandler(async (req, res) => {
 
   // Save the yearDocument with the updated member
   await yearDocument.save();
-
   res.status(200).json({ message: "Contribution added successfully", member });
 });
 // @desc To add contributions to a member
 // @route PUT /members/eventcontribution/:year/:id/
 const eventContribution = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  console.log(year)
   const { rollNo, description, eventId, eventName} = req.body;
-  const yearDocument = await MemberModel.findOne({ year, "members._id": id });
+  const yearDocument = await MemberModel.findOne({ year});
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });
@@ -269,7 +258,6 @@ const eventContribution = errorHandler(async (req, res) => {
   if (!member) {
     return res.status(404).json({ message: "Member not found" });
   }
-  console.log(member)
 
   let image;
     if (req.file) {
@@ -326,7 +314,7 @@ const deleteContribution = errorHandler(async (req, res) => {
     const { year, memberId, contributionId } = req.params;
 
     // Find the document for the given year and member
-    const yearDocument = await MemberModel.findOne({ year, "members._id": memberId });
+    const yearDocument = await MemberModel.findOne({ year });
 
     if (!yearDocument) {
       return res.status(404).json({ message: "Member not found in this year" });

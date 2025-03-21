@@ -19,7 +19,7 @@ export default function ContributionModal({
  useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/members");
+        const response = await axios.get("${process.env.REACT_APP_BACKEND_URI}/members");
         setMembers(response.data.members);
         setYear(response.data.year);
       } catch (error) {
@@ -71,7 +71,7 @@ export default function ContributionModal({
 
     try {
       const response = await axios.post(
-        `http://localhost:3001/admin/members/eventcontribution/${year}/${id1}`,
+        `${process.env.REACT_APP_BACKEND_URI}/admin/members/eventcontribution/${year}/${id1}`,
         form1,
         {
           headers: {
@@ -92,7 +92,6 @@ export default function ContributionModal({
       }, 2000);
       // closecontribute()
     } catch (error) {
-      console.log(error)
       toast.error("Failed to Add Contribution..!");
     }
 
