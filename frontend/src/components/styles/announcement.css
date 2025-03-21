@@ -1,5 +1,5 @@
 .announcement-container {
-    max-width: 800px;
+    max-width: 90%;
     margin: auto;
     padding: 20px;
     background: #fff;
@@ -9,6 +9,7 @@
     text-align: center;
 }
 
+/* Title Styling */
 .announcement-container .announcement-title {
     font-size: 22px;
     font-weight: bold;
@@ -16,10 +17,10 @@
     color: #003366;
 }
 
-/* Grid layout for branches - 4 items per row */
+/* Branch Grid - Adjusting Columns Based on Screen Size */
 .announcement-container .branch-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Auto-adjusting */
     gap: 16px;
     justify-content: center;
     padding: 10px;
@@ -54,8 +55,9 @@
 .announcement-container .overlay {
     position: absolute;
     top: 0;
-    left: 35px;
-    width: 100px;  /* Make it match the image size */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
     height: 100px;
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.5);
@@ -73,6 +75,7 @@
 .announcement-container .branch-item.selected .overlay {
     opacity: 1;
 }
+
 /* Branch name styling */
 .announcement-container .branch-name {
     font-size: 14px;
@@ -98,6 +101,8 @@
     background: #0056b3;
     transform: translateY(-2px);
 }
+
+/* Message Box */
 .announcement-container .message-box {
     width: 100%;
     margin-top: 20px;
@@ -105,7 +110,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
-    resize: none; /* Prevents resizing */
+    resize: none;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -121,10 +126,26 @@
     color: #999;
     font-style: italic;
 }
-/* Responsive adjustments */
-@media (max-width: 600px) {
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .announcement-container {
+        max-width: 95%;
+        padding: 15px;
+    }
+    .announcement-container .branch-logo {
+        width: 90px;
+        height: 90px;
+    }
+    .announcement-container .overlay {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 768px) {
     .announcement-container .branch-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr); 
     }
     .announcement-container .branch-logo {
         width: 80px;
@@ -133,5 +154,36 @@
     .announcement-container .overlay {
         width: 80px;
         height: 80px;
+    }
+}
+
+@media (max-width: 600px) {
+    .announcement-container .branch-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .announcement-container .branch-logo {
+        width: 70px;
+        height: 70px;
+    }
+    .announcement-container .overlay {
+        width: 70px;
+        height: 70px;
+    }
+    .announcement-container .message-box {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .announcement-container .branch-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .announcement-container .branch-logo {
+        width: 60px;
+        height: 60px;
+    }
+    .announcement-container .overlay {
+        width: 60px;
+        height: 60px;
     }
 }

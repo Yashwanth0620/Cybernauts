@@ -2,14 +2,14 @@ const contactModel = require('../models/contact.model');
 const errorHandler = require("express-async-handler");
 
 const sendFeedback = errorHandler(async (req, res) => {
-    const { email, desc } = req.body;
+    const { name, desc } = req.body;
 
-    if (!email || !desc) {
+    if (!name || !desc) {
         return res.status(400).json({ message: 'Please provide both email and description.' });
     }
 
     const contact = new contactModel({
-        email,
+        name,
         desc
     });
 

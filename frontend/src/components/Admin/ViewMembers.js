@@ -45,7 +45,7 @@ export default function Members() {
   const fetchYearMembers = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/members/${filterYear}`
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/${filterYear}`
       );
       setOriginalMembers(response.data);
       setMembers(response.data);
@@ -72,13 +72,13 @@ export default function Members() {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/members");
+        const response = await axios.get(`http://${process.env.REACT_APP_BACKEND_URI}:3001/members`);
         setOriginalMembers(response.data.members);
         setMembers(response.data.members);
         setFilterYear(response.data.year);
 
         const response2 = await axios.get(
-          "http://localhost:3001/members/years"
+          `http://${process.env.REACT_APP_BACKEND_URI}:3001/members/years`
         );
         setYears(response2.data);
       } catch (error) {

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("express-async-handler");
 const updatesModel = require("../models/updates.model");
 const adminModel = require("../models/admin.model");
+const bcrypt = require("bcryptjs");
 const eventModel = require("../models/event.model");
 const jwt = require("jsonwebtoken");
 
@@ -29,7 +30,6 @@ const getEvents = errorHandler(async (req, res) => {
 // @desc to add a new event
 // @API POST /admin/events
 const addEvent = errorHandler(async (req, res) => {
-  
   const event = req.body;
   // Validate required fields
   if (!event.title || !event.startDate || !event.endDate || !event.desc) {
@@ -272,6 +272,55 @@ const fetchAdmins = errorHandler(async (req, res) => {
     .json({ message: "Fetched admins successfully", admins, superadmins });
 });
 
+const updateAdmin = errorHandler(async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+  if(updates.password.length === 0) delete updates.password;
+  else {
+    const salt = await bcrypt.genSalt(10);
+    updates.password = await bcrypt.hash(updates.password, salt);
+  }
+  
+
+  // Find the existing admin
+  let admin = await adminModel.findById(id);
+  
+  if (!admin) {
+    res.status(404);
+    throw new Error("Admin not found");
+  }
+  
+  // Update only the provided fields
+  Object.keys(updates).forEach((key) => {
+    if (updates[key] !== undefined) {
+      admin[key] = updates[key];
+    }
+  });
+
+  // Save the updated admin
+  await admin.save();
+
+  res.status(200).json({ message: "Admin updated successfully", admin });
+});
+
+const deleteAdmin = errorHandler(async (req, res) => {
+  const { id } = req.params;
+
+  // Find the existing admin
+  const admin = await adminModel.findById(id);
+
+  if (!admin) {
+    res.status(404);
+    throw new Error("Admin not found");
+  }
+
+  // Delete the admin
+  await adminModel.findByIdAndDelete(id);
+
+  res.status(200).json({ message: "Admin deleted successfully" });
+});
+
+
 // also add controllers for members functionality
 
 module.exports = {
@@ -280,6 +329,8 @@ module.exports = {
   updateEvent,
   deleteEvent,
   addUpdates,
+  updateAdmin,
+  deleteAdmin,
   sendMail,
   removeParticipant,
   sendResponse,

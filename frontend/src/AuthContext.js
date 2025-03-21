@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
       try {
         const response = await axios.get(
-          "http://localhost:3001/admin/validate",
+          `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/validate`,
           {
             headers: {
               Authorization: "Bearer " + token,

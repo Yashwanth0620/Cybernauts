@@ -1,9 +1,14 @@
 import React from "react";
 import "./styles/RegisterEvent.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
-export default function RegisterEvent({ event, isAdmin }) {
+export default function RegisterEvent() {
   const navigate = useNavigate();
+  const { role } = useAuth();
+  const isAdmin = role === "admin";
+  const location = useLocation();
+  const { event } = location.state || {};
 
   const openGoogleForm = (event, e) => {
     e.preventDefault();
@@ -22,7 +27,7 @@ export default function RegisterEvent({ event, isAdmin }) {
     if (!confirmation) return;
   
     try {
-      const response = await fetch(`http://localhost:3001/admin/events/${event._id}`, {
+      const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events/${event._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -43,14 +48,22 @@ export default function RegisterEvent({ event, isAdmin }) {
       alert("An error occurred while deleting the event. Please try again.");
     }
   };
-  
+  const handeladdcontribution=()=>{
+
+  }
+  const handeladdwiners=()=>{
+
+  }
 
   return (
+    <>
     <div>
       {/* <div className="overlay"></div> */}
 
       {/* Register page */}
       <div className="register-page">
+      <div className="register-flex">
+
         <h1 className="event-name">{event.title}</h1>
         <p className="date">{event.startDate}</p>
         <br />
@@ -67,12 +80,20 @@ export default function RegisterEvent({ event, isAdmin }) {
 
         <p className="description">&nbsp;&nbsp;&nbsp;{event.desc}</p>
        
-
-        <div className="register-button">
+        </div>
+      
+      
+      <div className="register-button">
           {!isAdmin ? (
             <button className="register-btn" onClick={(e) => openGoogleForm(event, e)}>Register</button>
           ) : (
             <>
+             <button onClick={handeladdcontribution} className="admin-btn contribut">
+              Add Contribution
+            </button>
+            <button onClick={handeladdwiners} className="admin-btn winers">
+              Add Winers
+            </button>
               <button onClick={openEventEditForm} className="admin-btn edit">
                 Edit Event
               </button>
@@ -83,7 +104,9 @@ export default function RegisterEvent({ event, isAdmin }) {
             </>
           )}
         </div>
-      </div>
+       
     </div>
+    </div>
+    </>
   );
 }

@@ -42,7 +42,7 @@ const NotFound = () => {
         ))}
       </div>
       {showText && (
-        <div className="not-found-text">404 Not Found</div>
+        <div className="not-found-text">Page Not Found</div>
       )}
     </div>
   );

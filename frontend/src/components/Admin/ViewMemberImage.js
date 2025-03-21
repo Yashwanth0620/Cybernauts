@@ -4,6 +4,7 @@ import '../styles/viewmemberimage.css';
 
 export default function ViewMemberImage({ currentImage, onClose }) {
   return (
+    <div className='ViewMemberimg'>
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className='imageborders'>
@@ -11,6 +12,7 @@ export default function ViewMemberImage({ currentImage, onClose }) {
         </div>
         <button className="close-button" onClick={onClose}>✖</button>
       </div>
+    </div>
     </div>
   );
 } 

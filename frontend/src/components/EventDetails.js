@@ -1,10 +1,15 @@
 import React from "react";
 // This file has the same CSS as RegisterEvent, (same class definitions)
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./styles/EventDetails.css";
+import { useAuth } from "../AuthContext";
 
-export default function EventDetails({ event, isAdmin }) {
+export default function EventDetails() {
   const navigate = useNavigate();
+  const { role } = useAuth();
+    const isAdmin = role === "admin";
+    const location = useLocation();
+    const { event } = location.state || {};
   const openEventEditForm = () => {
     navigate("/admin/edit-event", { state: { event } });
   };
@@ -17,7 +22,7 @@ export default function EventDetails({ event, isAdmin }) {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/admin/events/${event._id}`,
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/events/${event._id}`,
         {
           method: "DELETE",
           headers: {
@@ -42,6 +47,12 @@ export default function EventDetails({ event, isAdmin }) {
       alert("An error occurred while deleting the event. Please try again.");
     }
   };
+  const handeladdcontribution=()=>{
+
+  }
+  const handeladdwiners=()=>{
+
+  }
 
   return (
     <div>
@@ -49,6 +60,7 @@ export default function EventDetails({ event, isAdmin }) {
 
       {/* Events Details Page */}
       <div className="event-details-page">
+        <div className="event-flex">
         <h1 className="event-name">{event.title}</h1>
         <p className="date">{event.startDate.substring(0, 10)}</p>
         <br />
@@ -84,9 +96,16 @@ export default function EventDetails({ event, isAdmin }) {
             <p>No images available</p>
           )}
         </div>
-
+        </div>
+        <div className="event-button">
         {isAdmin && (
           <div className="btn-wrap">
+            <button onClick={handeladdcontribution} className="admin-btn contribut">
+              Add Contribution
+            </button>
+            <button onClick={handeladdwiners} className="admin-btn winers">
+              Add Winers
+            </button>
             <button onClick={openEventEditForm} className="admin-btn edit">
               Edit Event
             </button>
@@ -95,6 +114,7 @@ export default function EventDetails({ event, isAdmin }) {
             </button>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

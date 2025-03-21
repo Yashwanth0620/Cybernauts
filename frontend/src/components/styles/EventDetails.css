@@ -1,14 +1,9 @@
 .event-details-page {
-  position: fixed;
-  top: 10%;
-  left: 15%;
-  right: 15%;
-  max-height: 85%;
-  margin-top: 4rem;
-  z-index: 999;
+ display: flex;
+ flex-direction: row;
   background-color: white;
   padding: 50px 60px;
-  overflow-y: scroll;
+ gap: 6rem;
 }
 
 .event-details-page .event-name {
@@ -51,29 +46,57 @@
   width: 70%;
   height: 200px;
 }
-
+.event-details-page .event-button{
+ 
+}
 .btn-wrap {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
-.admin-btn {
+.event-details-page .admin-btn {
   flex-grow: 1;
   margin: 5px;
   padding: 20px;
-  max-width: 300px;
+ width: 200px;
   border-radius: 10px;
   color: white;
-  font-size: 15px;
+  font-size: 17px;
   cursor: pointer;
 }
 
+.admin-btn.contribut {
+  background: linear-gradient(135deg, #3d4044, #3a3f47);
+
+  
+}
+.admin-btn.winers {
+  background: linear-gradient(135deg, #d4f9c8, #e0cc65, #ffd700);
+
+}
 .admin-btn.edit {
-  background-color: #3b71ca;
+  background-color: #3B71CA;
 }
 
 .admin-btn.delete {
-  background-color: #dc4c64;
+  background-color: #DC4C64;
+}
+.admin-btn.contribut:hover {
+
+  transform: translateY(-3px);
+
+  
+}
+.admin-btn.winers:hover {
+  transform: translateY(-3px);
+}
+.admin-btn.edit:hover {
+  transform: translateY(-3px);
+}
+
+.admin-btn.delete:hover {
+  transform: translateY(-3px);
 }
 
 .image-grid {
@@ -102,7 +125,7 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 790px) {
   .image-container {
     width: 100%;
     max-height: 250px;
@@ -113,6 +136,15 @@
   }
   .image-grid {
     text-align: center;
+  }
+  .event-details-page {
+    display: flex;
+    flex-direction: column;
+  }
+  .btn-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 }
 
@@ -126,17 +158,33 @@
   .event-details-page .image-carousel {
     width: 60%;
   }
+  
 }
 
 @media (max-width: 1200px) {
   .event-details-page .image-carousel {
     width: 80%;
   }
+  .event-details-page .admin-btn {
+    flex-grow: 1;
+    margin: 5px;
+    padding: 20px;
+     width: 200px;
+    font-size: 15=7px;
+  }
+  
 }
 
 @media (max-width: 900px) {
   .event-details-page .image-carousel {
     width: 100%;
+  }
+  .event-details-page .admin-btn {
+    flex-grow: 1;
+    margin: 5px;
+    padding: 15px;
+     width: 150px;
+    font-size: 12px;
   }
 }
 
@@ -152,5 +200,11 @@
 @media (max-width: 500px) {
   .event-details-page {
     padding: 30px 30px;
+  }
+  .btn-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

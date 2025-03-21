@@ -72,7 +72,7 @@ export default function MemberProfile() {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/admin/members/${filterYear}/${member._id}`,
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/${filterYear}/${member._id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export default function MemberProfile() {
     try {
       // Make the API call
       const response = await axios.patch(
-        `http://localhost:3001/admin/members/${filterYear}/${member._id}`,
+        `http://${process.env.REACT_APP_BACKEND_URI}:3001/admin/members/${filterYear}/${member._id}`,
         form,
         {
           headers: {
