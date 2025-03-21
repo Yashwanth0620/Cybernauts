@@ -33,6 +33,8 @@ import Announcement from "./components/Announcement";
 import NotFound from "./components/NotFound";
 import EventContribution from "./components/Admin/EventContribution";
 import ContributionModal from "./components/Admin/ContributionModal";
+import EventDetails from "./components/EventDetails";
+import RegisterEvent from "./components/RegisterEvent";
 
 
 function App() {
@@ -48,6 +50,14 @@ function App() {
         <Route path="/members" element={<Members />} />
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
+        <Route
+          path="/events/completed"
+          element={<EventDetails />}
+        />
+        <Route
+          path="/events/upcoming"
+          element={<RegisterEvent />}
+        />
         {/* admin specific pages */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
@@ -78,7 +88,7 @@ function App() {
         <Route
           path="/admin/view-members/profile"
           element={<PrivateRoute element={<MemberProfile />} />}
-        />
+          />
         <Route
           path="/superadmin"
           element={<PrivateRoute element={< SuperAdminProfile/>} />} />
