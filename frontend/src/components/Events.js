@@ -2,18 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/Events.css";
-import RegisterEvent from "./RegisterEvent";
-import EventDetails from "./EventDetails";
-
 import { useAuth } from "../AuthContext";
 
 export default function Events() {
   const { role } = useAuth();
   const navigate = useNavigate();
-
-  const [registerPage, setRegisterPage] = useState(false);
-  const [detailsPage, setDetailsPage] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [completedEvents, setCompletedEvents] = useState([]);
@@ -29,42 +22,62 @@ export default function Events() {
 
         setUpcomingEvents(upcomingEvents);
         setCompletedEvents(completedEvents);
-        setFilteredCompletedEvents(completedEvents);
         setFilteredUpcomingEvents(upcomingEvents);
+        setFilteredCompletedEvents(completedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
+        alert("Failed to fetch events. Please try again later.");
       }
     };
 
     fetchEvents();
   }, []);
 
-  // Filter events based on the search query
-
   const handleSearch = (e) => {
-    const query = e.target.value; // Get the input value
-    setSearchQuery(query); // Update the search query state
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
 
-    // Filter the events based on the input value
-    setFilteredCompletedEvents(
-      completedEvents.filter((event) =>
-        `${event.title} ${event.startDate} ${event.type}`
-          .toLowerCase()
-          .includes(query.toLowerCase())
-      )
-    );
     setFilteredUpcomingEvents(
       upcomingEvents.filter((event) =>
         `${event.title} ${event.startDate} ${event.type}`
           .toLowerCase()
-          .includes(query.toLowerCase())
+          .includes(query)
+      )
+    );
+
+    setFilteredCompletedEvents(
+      completedEvents.filter((event) =>
+        `${event.title} ${event.startDate} ${event.type}`
+          .toLowerCase()
+          .includes(query)
       )
     );
   };
 
+  const handleFilterChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    if (!query) {
+      setFilteredUpcomingEvents(upcomingEvents);
+      setFilteredCompletedEvents(completedEvents);
+    } else {
+      setFilteredUpcomingEvents(
+        upcomingEvents.filter((event) => event.type.toLowerCase() === query)
+      );
+      setFilteredCompletedEvents(
+        completedEvents.filter((event) => event.type.toLowerCase() === query)
+      );
+    }
+  };
+
   const openAddEventForm = () => {
-    // window.open("/admin/add-event", "_blank");
     navigate("/admin/add-event");
+  };
+
+  const handleViewDetails = (event) => {
+    const eventDate = new Date(event.startDate);
+    const currentDate = new Date();
+    const path = eventDate > currentDate ? "/events/upcoming" : "/events/completed";
+    navigate(path, { state: { event } });
   };
 
   return (
@@ -91,28 +104,24 @@ export default function Events() {
           <input
             type="text"
             id="search"
-            placeholder="Search by name, date, type etc"
+            placeholder="Search by name, date, type, etc."
             value={searchQuery}
             onChange={handleSearch}
           />
         </form>
-        <select defaultValue={searchQuery} onChange={handleSearch}>
+
+        <select defaultValue="" onChange={handleFilterChange}>
           <option value="">All</option>
           <option value="hackathon">Hackathon</option>
           <option value="seminar">Seminar</option>
           <option value="workshop">Workshop</option>
           <option value="webinar">Webinar</option>
           <option value="tech-talk">Tech Talk</option>
-          <option value="Other">Other</option>
+          <option value="other">Other</option>
         </select>
-
-        <i className="fas fa-chevron-down" type="filter"></i>
       </div>
 
-      {/* Upcoming Events */}
-      <div className="section-label">
-        <span>Upcoming</span>
-      </div>
+      <div className="section-label"><span>Upcoming</span></div>
       <div className="card-container">
         {filteredUpcomingEvents.map((event, index) => (
           <div className="card" key={index}>
@@ -120,8 +129,7 @@ export default function Events() {
               <img
                 src={event.poster}
                 className="im"
-                alt={<p>{event.title}</p>}
-                referrerPolicy="no-referrer"
+                alt={event.title}
                 style={{ width: "auto", height: "100%" }}
               />
             </div>
@@ -131,13 +139,7 @@ export default function Events() {
                 <h2>{event.startDate.substring(0, 10)}</h2>
                 <h3>{event.type}</h3>
               </div>
-              <button
-                className="btn"
-                onClick={() => {
-                  setSelectedEvent(event);
-                  setRegisterPage(true);
-                }}
-              >
+              <button className="btn" onClick={() => handleViewDetails(event)}>
                 {!isAdmin ? "Register" : "View Details"}
               </button>
             </div>
@@ -145,10 +147,7 @@ export default function Events() {
         ))}
       </div>
 
-      {/* Completed Events */}
-      <div className="section-label">
-        <span>Completed</span>
-      </div>
+      <div className="section-label"><span>Completed</span></div>
       <div className="card-container">
         {filteredCompletedEvents.map((event, index) => (
           <div className="card" key={index}>
@@ -156,8 +155,7 @@ export default function Events() {
               <img
                 className="im"
                 src={event.poster}
-                referrerPolicy="no-referrer"
-                alt={<p>{event.title}</p>}
+                alt={event.title}
                 style={{ width: "auto", height: "100%" }}
               />
             </div>
@@ -167,36 +165,13 @@ export default function Events() {
                 <h2>{event.startDate.substring(0, 10)}</h2>
                 <h3>{event.type}</h3>
               </div>
-              <button
-                className="btn"
-                onClick={() => {
-                  setSelectedEvent(event);
-                  setDetailsPage(true);
-                }}
-              >
+              <button className="btn" onClick={() => handleViewDetails(event)}>
                 View Details
               </button>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Overlay controlling */}
-      {(registerPage || detailsPage) && (
-        <div
-          className="overlay"
-          onClick={() => {
-            setDetailsPage(false);
-            setRegisterPage(false);
-          }}
-        ></div>
-      )}
-
-      {/* Displaying details for an event */}
-      {registerPage && (
-        <RegisterEvent event={selectedEvent} isAdmin={isAdmin} />
-      )}
-      {detailsPage && <EventDetails event={selectedEvent} isAdmin={isAdmin} />}
     </div>
   );
 }
