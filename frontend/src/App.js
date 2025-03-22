@@ -49,7 +49,7 @@ function App() {
 
         {/* mixed pages */}
         <Route path="/members" element={<Members />} />
-        <Route path="/events/addwinners" element={<AddWinners />} />
+        
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
         <Route
@@ -71,6 +71,7 @@ function App() {
           path="/admin/edit-event"
           element={<PrivateRoute element={<EditEventForm />} />}
         />
+        <Route path="/events/addwinners" element={<PrivateRoute element={<AddWinners /> }/>}/>
         <Route
           path="/admin/add-blog"
           element={<PrivateRoute element={<AddBlogForm />} />}

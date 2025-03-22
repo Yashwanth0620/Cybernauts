@@ -6,8 +6,8 @@ import axios from "axios";
 
 export default function ContributionModal({
   closecontribute,
-  // eventId,
-  // eventName
+   eventId,
+   eventName
 }) {
   const [description, setDescription] = useState("");
   const [rollNo, setRollNo] = useState("");
@@ -19,7 +19,7 @@ export default function ContributionModal({
  useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("${process.env.REACT_APP_BACKEND_URI}/members");
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/members`);
         setMembers(response.data.members);
         setYear(response.data.year);
       } catch (error) {
@@ -63,8 +63,8 @@ export default function ContributionModal({
     form1.append("description",description);
     form1.append("id", id1);
     form1.append("year", year);
-    form1.append("eventId", "67d85284816acbc9e8159910");
-    form1.append("eventName", "event-Name");
+    form1.append("eventId", eventId);
+    form1.append("eventName", eventName);
     if (image) {
       form1.append("image", image);
     }
@@ -118,6 +118,8 @@ export default function ContributionModal({
                 value={rollNo}
                 onChange={(e) => handleSearch(e.target.value)}
               />
+              {console.log(members)}
+              {console.log(filteredMembers)}
               {filteredMembers.length > 0 && (
                 <ul className="dropdown">
                   {filteredMembers.map((member, index) => (

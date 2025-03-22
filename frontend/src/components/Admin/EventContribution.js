@@ -7,15 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ViewMemberImage from "./ViewMemberImage";
 
 export default function EventContribution() {
-  const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
   const [contributions, setContributions] = useState([]);
   const [tempContributions, setTempContributions] = useState([]);
   const [currentImage, setCurrentImage] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [members, setMembers] = useState([]);
   const [year, setYear] = useState([]);
- 
-
+  
+  
+  const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
   const openContributeModal = () => setIsContributeModalOpen(true);
   const closeContributeModal = () => setIsContributeModalOpen(false);
   const closeImageModal = () => setIsImageModalOpen(false);

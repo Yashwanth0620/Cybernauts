@@ -6,11 +6,15 @@ import { useAuth } from "../AuthContext";
 import DeleteComformModal from "./Admin/DeleteComformModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ContributionModal from "./Admin/ContributionModal";
 
 export default function EventDetails() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const openDeleteModal = () => setIsDeleteModalOpen(true);
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
+  const openContributeModal = () => setIsContributeModalOpen(true);
+  const closeContributeModal = () => setIsContributeModalOpen(false);
   const navigate = useNavigate();
   const { role } = useAuth();
   const isAdmin = role === "admin";
@@ -19,6 +23,11 @@ export default function EventDetails() {
   const openEventEditForm = () => {
     navigate("/admin/edit-event", { state: { event } });
   };
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("contributionmodal-overlay")) {
+      closeContributeModal();
+    }
+  };  
 
   const deleteEvent = async () => {
 
@@ -49,8 +58,10 @@ export default function EventDetails() {
       toast.success("Internal Error...!")
     }
   };
-  const handeladdcontribution = () => {};
-  const handeladdwiners = () => {};
+  
+  const handeladdwiners = () => {
+    navigate("/events/addwinners")
+  };
 
   return (
     <>
@@ -99,7 +110,7 @@ export default function EventDetails() {
           {isAdmin && (
             <div className="btn-wrap">
               <button
-                onClick={handeladdcontribution}
+                onClick={openContributeModal}
                 className="admin-btn contribut"
               >
                 Add Contribution
@@ -122,6 +133,18 @@ export default function EventDetails() {
                 handleDelete={deleteEvent}
               />
             )}
+          {isContributeModalOpen && (
+                    <div
+                      className="contributionmodal-overlay"
+                      onMouseDown={handleOverlayClick}
+                    >
+                      <ContributionModal
+                        closecontribute={closeContributeModal}
+                        eventId={event._id}
+                        eventName={event.title}
+                      />
+                    </div>
+                  )}  
         </div>
       </div>
     </div>

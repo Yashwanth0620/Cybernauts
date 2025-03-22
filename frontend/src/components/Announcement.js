@@ -32,7 +32,8 @@ export default function Announcement() {
     const mails = [];
     if (selectedBranches.includes("CSE"))
       mails.push("yashwanth.k0620@gmail.com");
-    if (selectedBranches.includes("IT")) mails.push("22b81a05y0.2@gmail.com");
+    if (selectedBranches.includes("IT")) mails.push("shanigalavamshi@gmail.com");
+    if (selectedBranches.includes("CSIT")) mails.push("rakeshkasthuri03@gmail.com");
     const data = { mails, notice: message };
     try {
       const response = await axios.post(
