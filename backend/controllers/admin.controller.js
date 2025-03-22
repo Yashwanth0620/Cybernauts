@@ -104,7 +104,7 @@ const updateEvent = errorHandler(async (req, res) => {
       const tempPath = path.join(__dirname, "tempPoster.jpg");
       fs.writeFileSync(tempPath, req.files.poster[0].buffer); // Save new poster temporarily
 
-      updatedData.poster = await uploadFileAndGetUrl(id.toString(), tempPath); // Upload new poster
+      updatedData.poster = await uploadFileAndGetUrl(tempPath, "poster"); // Upload new poster
       fs.unlinkSync(tempPath); // Remove temp file
     }
 
@@ -275,21 +275,20 @@ const fetchAdmins = errorHandler(async (req, res) => {
 const updateAdmin = errorHandler(async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
-  if(updates.password.length === 0) delete updates.password;
+  if (updates.password.length === 0) delete updates.password;
   else {
     const salt = await bcrypt.genSalt(10);
     updates.password = await bcrypt.hash(updates.password, salt);
   }
-  
 
   // Find the existing admin
   let admin = await adminModel.findById(id);
-  
+
   if (!admin) {
     res.status(404);
     throw new Error("Admin not found");
   }
-  
+
   // Update only the provided fields
   Object.keys(updates).forEach((key) => {
     if (updates[key] !== undefined) {
@@ -319,7 +318,6 @@ const deleteAdmin = errorHandler(async (req, res) => {
 
   res.status(200).json({ message: "Admin deleted successfully" });
 });
-
 
 // also add controllers for members functionality
 

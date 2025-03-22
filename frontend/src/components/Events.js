@@ -155,6 +155,7 @@ export default function Events() {
             <div className="im-parent">
               <img
                 className="im"
+                referrerPolicy="no-referrer"
                 src={event.poster}
                 alt={event.title}
                 style={{ width: "auto", height: "100%" }}
