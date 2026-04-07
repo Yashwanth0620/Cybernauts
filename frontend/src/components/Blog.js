@@ -48,7 +48,7 @@ const BlogPage = () => {
               <div className="post-content">
                 <h3>{post.title}</h3>
                 <p>{post.description}</p>
-                <span className="date">{post.date}</span>
+
               </div>
               <div className="post-image">
                 <img src={post.image} alt={post.title} />
@@ -56,7 +56,7 @@ const BlogPage = () => {
             </div>
           ))
         ) : (
-          <p>No blogs available</p>
+          <p>No blogs available.</p>
         )}
       </section>
     </div>

@@ -1,9 +1,12 @@
 const express = require("express");
+// Trigger restart for blog updates
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const errorHandler = require("./middlewares/errorHandler");
 const { isAuthenticated } = require("./middlewares/authMiddleware");
+const cron = require("node-cron");
+const { sendAutomatedFeedbackRequests } = require("./controllers/feedback.controller");
 dotenv.config();
 
 const app = express();
@@ -26,6 +29,8 @@ const loginRoutes = require("./routes/login.route");
 const contactRoutes = require("./routes/contact.route");
 const blogRoutes = require("./routes/blog.route");
 const mailRoutes = require("./routes/mail.route");
+const certificateRoutes = require("./routes/certificate.route");
+const feedbackRoutes = require("./routes/feedback.route");
 // routing of endpoints
 app.use("/admin", isAuthenticated, adminRoutes);
 app.use("/events", eventRoutes);
@@ -34,8 +39,17 @@ app.use("/auth", loginRoutes);
 app.use("/contact", contactRoutes);
 app.use("/blogs", blogRoutes);
 app.use("/announce", mailRoutes);
+app.use("/certificate", certificateRoutes);
+app.use("/feedback", feedbackRoutes);
 
 app.use(errorHandler);
+
+// Schedule automated feedback to run every hour
+cron.schedule("0 * * * *", () => {
+  console.log("Running automated feedback check...");
+  sendAutomatedFeedbackRequests();
+});
+
 app.listen(PORT, () => {
   console.log(`Sever listening on port ${PORT}...`);
 });

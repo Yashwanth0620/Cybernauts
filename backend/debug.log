@@ -1,0 +1,223 @@
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=12wHu_N9ZAvncXtU9NaeoYO2LWm0Su5Ed
+[2026-01-23T11:13:16.082Z] Update Event Request ID: 6973553bf10d70efb93ad01d
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1ywmvW6B4fBtiP4MRsC0ZHs6MM0r5iOfi
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1NebG07YFQXNqczk2kQOsJT0xf2S45yta
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1xtPZ_QdtrWiw8OwolPdr8beD8APoKpv8
+[2026-01-23T11:21:37.219Z] Update Event Request ID: 6973535850a6bf18cfac3733
+[2026-01-23T11:21:59.724Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:22:02.041Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:22:02.967Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:22:04.761Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:22:05.152Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:22:07.590Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:22:09.143Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:22:10.197Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG_11.jpg'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:22:11.394Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG.jpg'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\IMG.jpg'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:22:24.383Z] Update Event Request ID: 6973535850a6bf18cfac3733
+[2026-01-23T11:22:53.030Z] Update Event Request ID: 67ddad32ea9e734b267360d1
+Uploading new images...
+[2026-01-23T11:22:58.988Z] Update Event Request ID: 67ddad32ea9e734b267360d1
+Uploading new images...
+[2026-01-23T11:23:07.664Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\clock.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\clock.png'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:36:06.781Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:36:14.079Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new images...
+[2026-01-23T11:36:51.599Z] Update Event Request ID: 6973535850a6bf18cfac3733
+Uploading new poster...
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1vYKq-x_IwCMQ9SCibJa3SLmVCMrIu2yn
+[2026-01-23T11:39:56.066Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:40:05.568Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:40:34.472Z] Update Event Request ID: 69735df81b28d1b783cefc66
+[2026-01-23T11:42:15.349Z] Update Event Request ID: 69735df81b28d1b783cefc66
+[2026-01-23T11:42:48.770Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:42:58.083Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:42:58.620Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:43:03.521Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:43:03.928Z] ERROR: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\clock.png'
+Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\clock.png'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:277:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[2026-01-23T11:43:28.468Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new poster...
+[2026-01-23T11:44:00.722Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:44:08.146Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:44:17.495Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:44:26.850Z] Update Event Request ID: 69735df81b28d1b783cefc66
+Uploading new images...
+[2026-01-23T11:45:06.685Z] Update Event Request ID: 67dda0e3ea9e734b26735cf3
+Uploading new images...
+[2026-01-23T11:46:42.416Z] Update Event Request ID: 67ddad32ea9e734b267360d1
+Uploading new images...
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1f3vwcENcYY40sAK23Kyi26wcsgvgG41o
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1AfYIhgY1zlAK-6QWp4ThdH_qbMkqC7kJ
+[2026-01-23T13:09:42.958Z] Update Event Request ID: 697372b81b28d1b783cefcce
+[2026-01-23T13:09:55.590Z] Update Event Request ID: 697372b81b28d1b783cefcce
+Uploading new images...
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=13cOKyGfF7PVnHFFx5wVKxxDWTuiaR78U
+[2026-01-23T13:17:58.403Z] Update Event Request ID: 67ddad32ea9e734b267360d1
+Uploading new images...
+[2026-01-23T13:19:49.164Z] Update Event Request ID: 67ddad32ea9e734b267360d1
+Uploading new images...
+[AddBlog] Request. Title: Welcome to EduEvent Hub, hasFile: true
+[AddBlog] Request. Title: Welcome to EduEvent Hub, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: Why Educational Events Are Important, hasFile: true
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915335240.jpg
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1dMGf8SZwfgqAUb8CqwYdGYQwA7cLY4F5
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915344412.jpg
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1n6J25NZtNUAw6N3UntlWSSPzn4AhlmCD
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915365628.jpg
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915367147.jpg
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915369092.jpg
+[AddBlog] Request. Title: saimnafifh, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915369687.jpg
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1RVpFyf_GfYh-iAqEyaL0bXkae6gYrVse
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1v_wzvKYOIxloBaEFs0r9Vs14g9ELBvMb
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1MyxD4gTaDLGZCkCo4mKSGHG76Z9ZBSbZ
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1CBT90fXDxI1Q_aHCcesO3SLwNxQti-7H
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915393651.jpg
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1xrqATq5hjJ-VLXz1F25UiLSKKDIqSXdk
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915417906.jpg
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915418392.jpg
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915418917.jpg
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915419174.jpg
+[AddBlog] Request. Title: fnafa;njn, hasFile: true
+[AddBlog] Temp file written to C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\temp_1770915419556.jpg
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1InsFvbQLYrPoWZDDWzrjoxgOhobd-7xV
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1ewu0taseRfKa1-Wz45pNCTx4vGGhgMJ9
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1sJxaTDkIJigB6H-eGVarnr9rWwkV55c7
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=12HlmTqUVoZCdUSYW1N3N5sGT81K2Biqr
+[AddBlog] Image uploaded: https://drive.google.com/thumbnail?id=1e99clPWEf5m_vkn34W13jq8xjsS0Q2fO
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1OMVLo16Q1QRqn1sp0_yQ0sei_vZ4_RIN
+[2026-02-13T10:43:29.652Z] Update Event Request ID: 698f002346fa6a321239690d
+[2026-02-13T10:44:32.826Z] Update Event Request ID: 698f002346fa6a321239690d
+[2026-02-13T10:45:00.412Z] Update Event Request ID: 698f002346fa6a321239690d
+[2026-02-13T10:47:12.033Z] Update Event Request ID: 698f002346fa6a321239690d
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1Ro5PHSjq-fBUIBgkBKDYvWGCZ789vrUu
+[2026-02-13T10:49:13.011Z] Update Event Request ID: 698f01626114cfb7d6b65bed
+[2026-02-13T11:00:52.041Z] Update Event Request ID: 698f01626114cfb7d6b65bed
+[2026-02-13T11:02:05.512Z] Update Event Request ID: 698f01626114cfb7d6b65bed
+[2026-02-13T11:02:09.141Z] Update Event Request ID: 698f01626114cfb7d6b65bed
+[2026-02-13T11:02:13.098Z] Error updating event: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\1234.png'
+Stack: Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\1234.png'
+    at Object.unlinkSync (node:fs:1878:11)
+    at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:175:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1yNe_1vSqfltczrKbmwP87LX-aP5jKxID
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1d_kY-aPkl7n_Hv0LEzNpluJCJw3JeRCS
+[2026-03-25T06:32:22.425Z] AddWinner Request. EventID: 69c38076abf57fd4e63e61d4
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"saimanish","collegename":"cvr college"}]}
+[2026-03-25T06:32:22.442Z] Winner added successfully.
+[2026-03-25T06:33:44.343Z] AddWinner Request. EventID: 67ddad32ea9e734b267360d1
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"saimanish","collegename":"cvr college"}]}
+[2026-03-25T06:33:44.356Z] Winner added successfully.
+[2026-03-25T06:36:35.268Z] AddWinner Request. EventID: 67ddac85ea9e734b267360cd
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"rakesh","collegename":"cvr"}]}
+[2026-03-25T06:36:35.287Z] Winner added successfully.
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=11DyjotE4ruPBzSoUHDBMnZ71i2nJ2iKQ

@@ -26,25 +26,25 @@ export default function MemberModel({
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>Assign Role</h2>
-        {standardDesignations.includes(formData.designation) ? <h3>Designation: {formData.designation}</h3> : 
-        !standardDesignations.includes(formData.desig) && 
+        {formData.designation && standardDesignations.includes(formData.designation) ? <h3>Designation: {formData.designation}</h3> :
+          !standardDesignations.includes(formData.designation) &&
           <label>
-          Designation:
-          <input
-            type="text"
-            name="designation"
-            placeholder="Enter additional designation"
-            value={formData.designation}
-            onChange={handleChange}
-            required
-          />
-        </label>
+            Designation:
+            <input
+              type="text"
+              name="designation"
+              placeholder="Enter additional designation"
+              value={formData.designation || ""}
+              onChange={handleChange}
+              required
+            />
+          </label>
         }
 
         <form onSubmit={handleSubmit}>
-          {!formData.designation.includes("chairperson") &&
-            !formData.designation.includes("secretary") &&
-            formData.desig !== "additional-expertise" && (
+          {!formData.designation?.includes("chairperson") &&
+            !formData.designation?.includes("secretary") &&
+            formData.designation !== "additional-expertise" && (
               <label>
                 Position :
                 <select

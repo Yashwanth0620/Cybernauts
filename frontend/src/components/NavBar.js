@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/NavBar.css";
 import { useAuth } from "../AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,6 +11,7 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   const { role } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const sm = window.innerWidth > 1050;
   useEffect(() => {
@@ -34,98 +36,120 @@ export default function NavBar() {
 
   return (
     <>
-    <nav className="nav-bar">
-      <div className="bars">
-        <img src={require("../assets/logo.png")} alt="Cybernauts logo"></img>
-        <div onClick={() => setLinks(!links)} className="bar">
-          <i className="fa-solid fa-bars"></i>
+      <nav className="nav-bar">
+        <div className="bars">
+          <img src={require("../assets/logo.png")} alt="EduEvent Hub logo"></img>
+          <div onClick={() => setLinks(!links)} className="bar">
+            <i className="fa-solid fa-bars"></i>
+          </div>
         </div>
-      </div>
-      {links ? (
-        <>
-          <Link
-            onClick={() => {if(!sm) setLinks(false)  }}
-            to="/"
-            className="link"
-            href="/"
-          >
-            Home
-          </Link>
-          <p href="#">|</p>
-          <Link
-            onClick={() => {if(!sm) setLinks(false)}}
-            to="/events"
-            className="link"
-            href="events.js"
-          >
-            Events
-          </Link>
-          <p href="#">|</p>
-          <Link
-            onClick={() => {if(!sm) setLinks(false)}}
-            to={role === "admin" ? "/admin/view-members" : "/members"}
-            className="link"
-            href="Members.js"
-          >
-            Members
-          </Link>
-          <p href="#">|</p>
-          <Link onClick={() => {if(!sm) setLinks(false)}} to="/blog" className="link">
-            Blog
-          </Link>
-          <p href="#">|</p>
-          <Link
-            onClick={() => {if(!sm) setLinks(false)}}
-            to="/contactus"
-            className="link"
-            href="contLinkct.js"
-          >
-            Contact
-          </Link>
-          {!!role && (
-            <>
-              <p href="#">|</p>
-              <Link
-                onClick={() => {if(!sm) setLinks(false)}}
-                to="/announcement"
-                className="link"
-              >
-                Announcement
-              </Link>
-            </>
-          )}
-          {role === "superadmin" && (
-            <>
-              <p href="#">|</p>
-              <Link
-                onClick={() => {if(!sm) setLinks(false)}}
-                to="/superadmin"
-                className="link"
-              >
-                Admin Controls
-              </Link>
-            </>
-          )}
-          {!!role && (
-            <>
-              <Link
-                onClick={() => {
-                  handleLogout();
-                  {if(!sm) setLinks(false)};
-                }}
-                id="logout-btn"
-                className="link"
-              >
-                Logout
-              </Link>
-            </>
-          )}
-        </>
-      ) : (
-        ""
-      )}
-    </nav>
-    <ToastContainer/>
+        {links ? (
+          <>
+            <Link
+              onClick={() => { if (!sm) setLinks(false) }}
+              to="/"
+              className="link"
+              href="/"
+            >
+              Home
+            </Link>
+            <p href="#">|</p>
+            <Link
+              onClick={() => { if (!sm) setLinks(false) }}
+              to="/events"
+              className="link"
+              href="events.js"
+            >
+              Events
+            </Link>
+            <p href="#">|</p>
+            <Link
+              onClick={() => { if (!sm) setLinks(false) }}
+              to={role === "admin" ? "/admin/view-members" : "/members"}
+              className="link"
+              href="Members.js"
+            >
+              Members
+            </Link>
+            <p href="#">|</p>
+            <Link onClick={() => { if (!sm) setLinks(false) }} to="/blog" className="link">
+              Blog
+            </Link>
+            {!role && (
+              <>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
+                  to="/contactus"
+                  className="link"
+                >
+                  Contact
+                </Link>
+              </>
+            )}
+            {!!role && (
+              <>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
+                  to="/announcement"
+                  className="link"
+                >
+                  Announcement
+                </Link>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
+                  to="/admin/dashboard"
+                  className="link"
+                >
+                  Dashboard
+                </Link>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
+                  to="/admin/contacts"
+                  className="link"
+                >
+                  View Contacts
+                </Link>
+              </>
+            )}
+            {role === "superadmin" && (
+              <>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
+                  to="/superadmin"
+                  className="link"
+                >
+                  Admin Controls
+                </Link>
+              </>
+            )}
+            {!!role && (
+              <>
+                <Link
+                  onClick={() => {
+                    handleLogout();
+                    { if (!sm) setLinks(false) };
+                  }}
+                  id="logout-btn"
+                  className="link"
+                >
+                  Logout
+                </Link>
+              </>
+            )}
+            <div className="theme-toggle" onClick={toggleTheme}>
+              {theme === "light" ? <i className="fa-solid fa-moon"></i> : <i className="fa-solid fa-sun"></i>}
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+      </nav>
+      <ToastContainer />
     </>
   );
 }

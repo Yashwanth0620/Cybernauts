@@ -5,7 +5,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
-const {isAuthenticated} = require("../middlewares/superAuthMiddleware");
+const { isAuthenticated } = require("../middlewares/superAuthMiddleware");
 
 const {
   getEvents,
@@ -19,7 +19,9 @@ const {
   validateAdmin,
   updateAdmin,
   deleteAdmin,
-  fetchAdmins
+  fetchAdmins,
+  exportEventRegistrations,
+  addWinner,
 } = require("../controllers/admin.controller");
 const {
   addMember,
@@ -34,13 +36,22 @@ const {
   eventContribution
 } = require("../controllers/member.controller");
 const { addBlog } = require("../controllers/blog.controller");
+const { getContacts, deleteContact } = require("../controllers/contact.controller");
 
 router.route("/validate").get(validateAdmin);
+
+//routes for contact operations (must be before /:id route)
+router.get("/contacts", getContacts);
+router.delete("/contacts/:id", deleteContact);
 
 router.route("/:id").put(updateAdmin).delete(deleteAdmin);
 
 //routes for event operations
 router.route("/events").get(getEvents).post(upload.single("poster"), addEvent);
+
+router.post("/events/:id/winners", addWinner);
+
+router.get("/events/:id/export", exportEventRegistrations);
 
 router
   .route("/events/:id")
@@ -52,6 +63,8 @@ router
     updateEvent
   )
   .delete(deleteEvent);
+
+
 
 // router.route("/blog").post(addBlog);
 
@@ -69,10 +82,10 @@ router.get("/members/:year", getMembers);
 router.get("/members/years", getYears);
 router.delete("/members/:year/:id", deleteMember);
 router.get("/members/:year/:id", getMember);
-router.patch("/members/:year/:id",upload.single("image"), editMember);
-router.post("/members/addcontribution/:year/:id",upload.single("image"), addContribution);
-router.post("/members/eventcontribution/:year/:id",upload.single("image"), eventContribution);
-router.delete("/members/deletecontribution/:year/:memberId/:contributionId",deleteContribution);
+router.patch("/members/:year/:id", upload.single("image"), editMember);
+router.post("/members/addcontribution/:year/:id", upload.single("image"), addContribution);
+router.post("/members/eventcontribution/:year/:id", upload.single("image"), eventContribution);
+router.delete("/members/deletecontribution/:year/:memberId/:contributionId", deleteContribution);
 
 router.route("/").get(isAuthenticated, fetchAdmins);
 

@@ -120,11 +120,13 @@ export default function MemberProfile() {
           },
         }
       );
+      console.log(response)
       setFormData(response.data.member);
       setMember(response.data.member);
       toast.success("Member Edited successfully");
       closeEditModal();
     } catch (error) {
+      console.log(error);
       toast.error("Failed to Edit Member..!");
       // alert("Failed to add the event. Please try again.");
     }

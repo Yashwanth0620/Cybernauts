@@ -9,7 +9,7 @@ export default function Footer() {
           <img
             className="a"
             src={require("../assets/logo.png")}
-            alt="Cybernauts Logo"
+            alt="EduEvent Hub Logo"
           />
           <p>Pioneering the Future of Technology.</p>
         </div>
@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
         <div className="contact-info">
           <h4>Get in touch with us</h4>
-          <p>Mail us at cybernauts@gmail.com</p>
+          <p>Mail us at EduEventHub@gmail.com</p>
           <p>📞 +91 22222 33333 | +91 88888 77777</p>
           <div className="social-icons">
             <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="bi bi-instagram"></a>
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p style={{ textAlign: "center", marginTop: "20px" }}>&copy; 2024 Cybernauts. All Rights Reserved</p>
+      <p style={{ textAlign: "center", marginTop: "20px" }}>&copy; 2024 EduEvent Hub. All Rights Reserved</p>
     </footer>
   )
 }

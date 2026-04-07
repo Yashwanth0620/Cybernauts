@@ -41,6 +41,7 @@ const uploadFileAndGetUrl = async (filePath, type = "image") => {
     return `https://drive.google.com/thumbnail?id=${fileId}`;
   } catch (error) {
     console.error("Error uploading file to Google Drive:", error.message);
+    throw error; // Re-throw to be caught by caller
   }
 };
 
@@ -58,7 +59,7 @@ const deleteFileFromUrl = async (fileUrl) => {
     // Delete the file
     await drive.files.delete({ fileId });
   } catch (error) {
-    // console.error("Error deleting file:", error.message);
+    console.error("Error deleting file:", error.message);
   }
 };
 

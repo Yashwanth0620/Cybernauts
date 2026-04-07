@@ -17,7 +17,7 @@ const App = () => {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/events/recent`);
         if (response.status === 200) {
           setEvent(response.data);
-          if(response.data.images.length > 0) setBanner(response.data.images[0]); // Fix: Access response directly
+          if (response.data.images.length > 0) setBanner(response.data.images[0]); // Fix: Access response directly
         }
       } catch (error) {
         console.error("Error fetching recent event:", error);
@@ -58,11 +58,11 @@ const App = () => {
         }}
       >
         <div className="logo">
-          <img src={require("../assets/logo.png")} alt="Cybernauts logo"></img>
+          <img src={require("../assets/logo.png")} alt="EduEvent Hub logo"></img>
         </div>
         <div>
-          <h1>CYBERNAUTS</h1>
-          <h2>- A CSE Technical Club</h2>
+          <h1>EduEvent Hub</h1>
+          <h2>- Unified Event Platform for Student-Led Techincal Commitee</h2>
           <p>{event?.title || "Recent Event"}</p>
           <h5>{event?.endDate?.substring(0, 10) || "Date"}</h5>
 
@@ -85,7 +85,7 @@ const App = () => {
 
       {/* About Section */}
       <section className="about">
-        <h2>About Cybernauts</h2>
+        <h2>About EduEvent Hub</h2>
         <h3>Empowering Tomorrow's Innovators</h3>
         <div className="about-content">
           <div className="text-content">

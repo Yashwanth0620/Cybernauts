@@ -4,17 +4,21 @@
 .blog-section {
     padding: 40px 10%;
 }
+
 .blog-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-.blog-sectiontext{
+}
+
+.blog-sectiontext {
     max-width: 80%;
 }
-button{
+
+button {
     margin-bottom: 10px;
 }
+
 .blog-section h2 {
     font-size: 36px;
     margin-bottom: 5px;
@@ -41,13 +45,13 @@ button{
 
 .blog-post h3 {
     font-size: 24px;
-    color: #000;
+    color: var(--text-color);
     margin-bottom: 10px;
 }
 
 .post-content p {
     font-size: 16px;
-    color: #444;
+    color: var(--text-color);
     line-height: 1.6;
 }
 
@@ -122,8 +126,8 @@ button{
 /* Responsive Design */
 @media (max-width: 768px) {
     nav ul li {
-        display: block; 
-        margin: 5px 0; 
+        display: block;
+        margin: 5px 0;
     }
 
     .post-content p {
@@ -133,11 +137,12 @@ button{
     .blog-post {
         flex-direction: column;
     }
+
     .blog-post .post-content {
         width: 100%;
     }
 
-    .blog-post .post-image  {
+    .blog-post .post-image {
         width: 80%;
         align-self: center;
         margin-top: 20px;

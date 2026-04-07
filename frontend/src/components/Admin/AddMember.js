@@ -98,7 +98,7 @@ export default function AddMember() {
     if (formData.image) {
       form.append("image", formData.image);
     }
-    if(formData.designation.includes("secretary") || formData.designation.includes("chairperson")) form.append("position", "");
+    if (formData.designation.includes("secretary") || formData.designation.includes("chairperson")) form.append("position", "");
     else form.append("position", formData.position);
 
     try {
@@ -136,9 +136,9 @@ export default function AddMember() {
   };
 
   const handleNavigate = (member, filterYear) => {
-    const memberId=member._id;
+    const memberId = member._id;
     // console.log(member1)
-    navigate("profile/", { state: {memberId,filterYear} }); 
+    navigate("profile/", { state: { memberId, filterYear } });
   };
 
   return (
@@ -146,7 +146,7 @@ export default function AddMember() {
       <div className="members">
         <div className="head">
           <h1>Our Team</h1>
-          <h2>Meet the passionate minds of Cybernauts</h2>
+          <h2>Meet the passionate minds of EduEvent Hub</h2>
         </div>
         <div className="chairperson">
           <div className="section-label">

@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 export default function AddBlogForm() {
   const [formData, setFormData] = useState({
     title: "",
-    date: "",
     description: "",
     image: null,
   });
@@ -29,7 +28,6 @@ export default function AddBlogForm() {
     const token = localStorage.getItem("token");
     const formDataToSend = new FormData();
     formDataToSend.append("title", formData.title);
-    formDataToSend.append("date", formData.date);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("image", formData.image);
 
@@ -48,7 +46,7 @@ export default function AddBlogForm() {
       toast.success("Blog added successfully!");
 
       // Reset form fields
-      setFormData({ title: "", date: "", description: "", image: null });
+      setFormData({ title: "", description: "", image: null });
 
       // Clear file input manually
       if (fileInputRef.current) {
@@ -74,17 +72,6 @@ export default function AddBlogForm() {
               placeholder="Enter Blog title"
               required
               value={formData.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="date">Date:</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              required
-              value={formData.date}
               onChange={handleChange}
             />
           </div>

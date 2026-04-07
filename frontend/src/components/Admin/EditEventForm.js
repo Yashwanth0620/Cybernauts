@@ -6,8 +6,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function AddEventForm() {
   const location = useLocation();
   const { event } = location.state || {};
- const [otherEventType, setOtherEventType] = useState("");
-  const [eventType, setEventType] = useState("");
+
+  // Initialize state with event details or defaults
+  const [otherEventType, setOtherEventType] = useState(
+    event && !["Hackathon", "Seminar", "Workshop", "Webinar"].includes(event.type)
+      ? event.type
+      : ""
+  );
+  const [eventType, setEventType] = useState(
+    event && ["Hackathon", "Seminar", "Workshop", "Webinar"].includes(event.type)
+      ? event.type
+      : (event ? "Other" : "")
+  );
 
   const navigate = useNavigate();
 
@@ -18,6 +28,14 @@ export default function AddEventForm() {
     const formData = new FormData(); // Use FormData to handle file uploads
     const formElements = e.target.elements;
 
+    const startDateTime = new Date(`${formElements.startDate.value}T${formElements.startTime.value}`);
+    const endDateTime = new Date(`${formElements.endDate.value}T${formElements.endTime.value}`);
+
+    if (endDateTime <= startDateTime) {
+      alert("End Date & Time must be after Start Date & Time");
+      return;
+    }
+
     // Append basic form fields
     formData.append("title", formElements.title.value);
     formData.append("type", formElements.type.value);
@@ -26,7 +44,7 @@ export default function AddEventForm() {
     formData.append("desc", formElements.description.value);
     formData.append("startTime", formElements.startTime.value);
     formData.append("endTime", formElements.endTime.value);
-    formData.append("form", formElements.form.value);
+
     formData.append("organizer", formElements.organizer.value);
     formData.append("faculty", formElements.faculty.value);
     formData.append("chiefGuest", formElements.chiefGuest.value);
@@ -73,12 +91,20 @@ export default function AddEventForm() {
             id="title"
             name="title"
             placeholder="Enter event title"
+            defaultValue={event?.title}
+            required
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="type">Event Type:</label>
-          <select id="type" name="type">
+          <select
+            id="type"
+            name="type"
+            value={eventType}
+            onChange={(e) => setEventType(e.target.value)}
+            required
+          >
             <option value="" disabled>
               Select type
             </option>
@@ -107,12 +133,24 @@ export default function AddEventForm() {
 
         <div className="form-group">
           <label htmlFor="startDate">Start Date:</label>
-          <input type="date" id="startDate" name="startDate" />
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            defaultValue={event?.startDate ? event.startDate.substring(0, 10) : ""}
+            required
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="endDate">End Date:</label>
-          <input type="date" id="endDate" name="endDate" />
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            defaultValue={event?.endDate ? event.endDate.substring(0, 10) : ""}
+            required
+          />
         </div>
 
         <div className="form-group">
@@ -121,26 +159,41 @@ export default function AddEventForm() {
             id="description"
             name="description"
             placeholder="Enter event description"
+            defaultValue={event?.desc}
+            required
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="startTime">Start Time:</label>
-          <input type="time" id="startTime" name="startTime" />
+          <input
+            type="time"
+            id="startTime"
+            name="startTime"
+            defaultValue={event?.startTime}
+            required
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="endTime">End Time:</label>
-          <input type="time" id="endTime" name="endTime" />
+          <input
+            type="time"
+            id="endTime"
+            name="endTime"
+            defaultValue={event?.endTime}
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="poster">Poster:</label>
+          <label htmlFor="poster">Poster (Leave empty to keep existing):</label>
           <input type="file" id="poster" name="poster" accept="image/*" />
+          {event?.poster && <p style={{ fontSize: '0.8rem', marginTop: '5px' }}>Current: <a href={event.poster} target="_blank" rel="noreferrer">View Poster</a></p>}
         </div>
 
         <div className="form-group">
-          <label htmlFor="images">Images:</label>
+          <label htmlFor="images">Images (Leave empty to keep existing):</label>
           <input
             type="file"
             id="images"
@@ -148,12 +201,10 @@ export default function AddEventForm() {
             accept="image/*"
             multiple
           />
+          {event?.images && event.images.length > 0 && <p style={{ fontSize: '0.8rem', marginTop: '5px' }}>{event.images.length} images currently uploaded</p>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="form">Form:</label>
-          <input type="text" id="form" name="form" placeholder="Form URL" />
-        </div>
+
 
         <div className="form-group">
           <label htmlFor="organizer">Organizer:</label>
@@ -162,6 +213,7 @@ export default function AddEventForm() {
             id="organizer"
             name="organizer"
             placeholder="Enter Organizer Name"
+            defaultValue={event?.organizer}
           />
         </div>
 
@@ -172,6 +224,7 @@ export default function AddEventForm() {
             id="faculty"
             name="faculty"
             placeholder="Enter Faculty Name"
+            defaultValue={Array.isArray(event?.faculty) ? event.faculty.join(", ") : event?.faculty}
           />
         </div>
 
@@ -182,6 +235,7 @@ export default function AddEventForm() {
             id="chiefGuest"
             name="chiefGuest"
             placeholder="Enter Chief Guest Name"
+            defaultValue={Array.isArray(event?.chiefGuests?.array) ? event.chiefGuests.array.map(c => c.name).join(", ") : (Array.isArray(event?.chiefGuest) ? event.chiefGuest.join(", ") : event?.chiefGuest)}
           />
         </div>
 

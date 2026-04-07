@@ -17,6 +17,14 @@ export default function AddEventForm({ closeForm }) {
     const formData = new FormData(); // Use FormData to handle file uploads
     const formElements = e.target.elements;
 
+    const startDateTime = new Date(`${formElements.startDate.value}T${formElements.startTime.value}`);
+    const endDateTime = new Date(`${formElements.endDate.value}T${formElements.endTime.value}`);
+
+    if (endDateTime <= startDateTime) {
+      alert("End Date & Time must be after Start Date & Time");
+      return;
+    }
+
     // Append basic form fields
     formData.append("title", formElements.title.value);
     formData.append("type", eventType === "Other" ? otherEventType : eventType);
@@ -25,7 +33,7 @@ export default function AddEventForm({ closeForm }) {
     formData.append("desc", formElements.description.value);
     formData.append("startTime", formElements.startTime.value);
     formData.append("endTime", formElements.endTime.value);
-    formData.append("form", formElements.form.value);
+
     formData.append("organizer", formElements.organizer.value);
     formData.append("faculty", formElements.faculty.value);
     formData.append("chiefGuest", formElements.chiefGuest.value);
@@ -37,9 +45,10 @@ export default function AddEventForm({ closeForm }) {
     }
 
     try {
+      setIsSubmitting(true);
       // Make the API call
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URI}/admin/events`,  
+        `${process.env.REACT_APP_BACKEND_URI}/admin/events`,
         formData,
         {
           headers: {
@@ -48,22 +57,28 @@ export default function AddEventForm({ closeForm }) {
           },
         }
       );
-      navigate("/events");
-    } catch (error) {
-        console.error("Error adding event:", error);
-        alert("Failed to add the event. Please try again.");
+      if (response.status === 200) {
+        alert("Event added successfully!");
+        navigate("/events");
       }
-    };
+    } catch (error) {
+      console.error("Error adding event:", error);
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || "Failed to add the event. Please try again.";
+      alert(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   //   const handleSubmit = async (e) => {
   //     e.preventDefault();
-      
+
   //     if (isSubmitting) return; // Prevent multiple submissions
   //     setIsSubmitting(true); // Disable the button
-    
+
   //     const formData = new FormData();
   //     const formElements = e.target.elements;
-    
+
   //     formData.append("title", formElements.title.value);
   //     formData.append("type", eventType === "Other" ? otherEventType : eventType);
   //     formData.append("startDate", formElements.startDate.value);
@@ -76,12 +91,12 @@ export default function AddEventForm({ closeForm }) {
   //     formData.append("faculty", formElements.faculty.value);
   //     formData.append("chiefGuest", formElements.chiefGuest.value);
   //     console.log(eventType === "Other" ? otherEventType : eventType);
-      
+
   //     const posterFile = formElements.poster.files[0];
   //     if (posterFile) {
   //       formData.append("poster", posterFile);
   //     }
-    
+
   //     try {
   //       const response = await axios.post(
   //         `${process.env.REACT_APP_BACKEND_URI}/admin/events`,
@@ -198,16 +213,7 @@ export default function AddEventForm({ closeForm }) {
           />
         </div> */}
 
-        <div className="form-group">
-          <label htmlFor="form">Form:</label>
-          <input
-            type="text"
-            id="form"
-            name="form"
-            placeholder="Form URL"
-            required
-          />
-        </div>
+
 
         <div className="form-group">
           <label htmlFor="organizer">Organizer:</label>
@@ -312,7 +318,7 @@ export default function AddEventForm({ closeForm }) {
           <button type="submit" className="btn-submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
-        </div>  
+        </div>
       </form>
     </div>
   );

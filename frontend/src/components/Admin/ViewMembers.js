@@ -93,13 +93,10 @@ export default function Members() {
     const inputValue = e.target.value;
     setSearchTerm(e.target.value);
     const newMembers = originalMembers.filter((member) => {
-      const memberDetails = `${member.name && member.name.toLowerCase()} ${
-        member.rollNo && member.rollNo.toLowerCase()
-      } ${member.designation && member.designation.toLowerCase()} ${
-        member.description && member.description.toLowerCase()
-      } ${member.position && member.position.toLowerCase()} ${
-        member.mobileNo
-      } ${member.email && member.email.toLowerCase()}`;
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()
+        } ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()
+        } ${member.position && member.position.toLowerCase()} ${member.mobileNo
+        } ${member.email && member.email.toLowerCase()}`;
       return memberDetails.includes(inputValue.toLowerCase());
     });
     setMembers(newMembers);
@@ -107,22 +104,19 @@ export default function Members() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newMembers = originalMembers.filter((member) => {
-      const memberDetails = `${member.name && member.name.toLowerCase()} ${
-        member.rollNo && member.rollNo.toLowerCase()
-      } ${member.designation && member.designation.toLowerCase()} ${
-        member.description && member.description.toLowerCase()
-      } ${member.position && member.position.toLowerCase()} ${
-        member.mobileNo
-      } ${member.email && member.email.toLowerCase()}`;
+      const memberDetails = `${member.name && member.name.toLowerCase()} ${member.rollNo && member.rollNo.toLowerCase()
+        } ${member.designation && member.designation.toLowerCase()} ${member.description && member.description.toLowerCase()
+        } ${member.position && member.position.toLowerCase()} ${member.mobileNo
+        } ${member.email && member.email.toLowerCase()}`;
       return memberDetails.includes(searchTerm.toLowerCase());
     });
     setMembers(newMembers);
   };
 
   const handleNavigate = (member, filterYear) => {
-    const memberId=member._id;
+    const memberId = member._id;
     // console.log(member1)
-    navigate("profile/", { state: {memberId,filterYear} }); 
+    navigate("profile/", { state: { memberId, filterYear } });
   };
 
   return (
@@ -131,7 +125,7 @@ export default function Members() {
         <div className="head-container">
           <div className="head-text">
             <h1>Our Team</h1>
-            <h2>Meet the passionate minds of Cybernauts</h2>
+            <h2>Meet the passionate minds of EduEvent Hub</h2>
           </div>
 
           <button className="head-btn" onClick={openAddMember}>
@@ -455,12 +449,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -564,12 +558,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -673,12 +667,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -782,12 +776,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -891,12 +885,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}
@@ -1000,12 +994,12 @@ export default function Members() {
                   >
                     <div className="member-desc">
                       <div className="member-img">
-                      <img
-                        src={member.image ? member.image : pp}
-                        referrerPolicy="no-referrer"
-                        style={{ width: "auto", height: "100%" }}
-                        alt=""
-                      />
+                        <img
+                          src={member.image ? member.image : pp}
+                          referrerPolicy="no-referrer"
+                          style={{ width: "auto", height: "100%" }}
+                          alt=""
+                        />
                         <div className="personal-details">
                           <h4>
                             {member.designation + " team " + member.position}

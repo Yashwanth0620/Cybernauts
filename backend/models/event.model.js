@@ -39,18 +39,36 @@ const eventSchema = mongoose.Schema({
   ],
   form: {
     type: String,
-    required: true,
+    required: false,
   },
   organizer: String,
   faculty: [String],
   winners: [
     {
-      // not needed for the frontend form
       position: { type: String },
-      name: { type: String },
+      prizeMoney: { type: String },
+      type: { type: String }, // "Team" or "Individual"
+      teamSize: { type: Number },
+      members: [
+        {
+          name: { type: String },
+          collegename: { type: String },
+        },
+      ],
     },
   ],
   chiefGuest: [String],
+  participants: [
+    {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String },
+      rollNo: { type: String },
+      branch: { type: String },
+      year: { type: String },
+      registeredAt: { type: Date, default: Date.now },
+    },
+  ],
   contributors: [
     {
       roll: { type: String, required: true },
@@ -58,6 +76,22 @@ const eventSchema = mongoose.Schema({
       image: Buffer,
     },
   ],
+  feedbacks: [
+    {
+      email: { type: String, required: true },
+      rating: { type: Number, min: 1, max: 5, required: true },
+      comment: { type: String },
+      submittedAt: { type: Date, default: Date.now },
+    },
+  ],
+  averageRating: {
+    type: Number,
+    default: 0,
+  },
+  feedbackEmailSent: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Event", eventSchema);

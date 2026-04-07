@@ -166,6 +166,13 @@ export default function Events() {
                 <h1>{event.title}</h1>
                 <h2>{event.startDate.substring(0, 10)}</h2>
                 <h3>{event.type}</h3>
+                {event.averageRating > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', marginTop: '5px' }}>
+                    <span style={{ color: '#ffd700', fontSize: '1.2em', marginRight: '5px' }}>★</span>
+                    <span>{event.averageRating.toFixed(1)}</span>
+                    <span style={{ fontSize: '0.8em', color: '#888', marginLeft: '5px' }}>({event.feedbacks?.length || 0})</span>
+                  </div>
+                )}
               </div>
               <button className="btn" onClick={() => handleViewDetails(event)}>
                 View Details

@@ -6,25 +6,36 @@ const fs = require("fs");
 const { uploadFileAndGetUrl } = require("./drive.controller");
 
 const addBlog = errorHandler(async (req, res) => {
-  const { title, date, description } = req.body;
+  const { title, description } = req.body;
+  const logPath = path.join(__dirname, "..", "debug.log");
+  fs.appendFileSync(logPath, `[AddBlog] Request. Title: ${title}, hasFile: ${!!req.file}\n`);
+
   let image = null;
   if (req.file) {
+    const tempPath = path.join(__dirname, `temp_${Date.now()}.jpg`);
     try {
-      const tempPath = path.join(__dirname, "temp.jpg");
       fs.writeFileSync(tempPath, req.file.buffer);
+      fs.appendFileSync(logPath, `[AddBlog] Temp file written to ${tempPath}\n`);
 
       // Upload using event ID instead of title
       image = await uploadFileAndGetUrl(tempPath, "blog");
+      fs.appendFileSync(logPath, `[AddBlog] Image uploaded: ${image}\n`);
 
-      fs.unlinkSync(tempPath);
+      if (fs.existsSync(tempPath)) {
+        fs.unlinkSync(tempPath);
+      }
     } catch (error) {
+      fs.appendFileSync(logPath, `[AddBlog] Error: ${error.message}\n`);
+      if (fs.existsSync(tempPath)) {
+        try { fs.unlinkSync(tempPath); } catch (e) { /* ignore */ }
+      }
       res.status(500);
-      throw new Error("Failed to upload image");
+      throw new Error(`UPLOAD FAILED (v2): ${error.message}`);
     }
   }
 
   // Validate required fields
-  if (!title || !date || !description || !image) {
+  if (!title || !description || !image) {
     res.status(400);
     throw new Error("All fields are required");
   }
@@ -32,7 +43,6 @@ const addBlog = errorHandler(async (req, res) => {
   // Create new blog entry
   const newBlog = new Blog({
     title,
-    date,
     description,
     image,
   });

@@ -6,7 +6,7 @@ const upload = multer({ storage: storage });
 const path = require("path");
 const fs = require("fs");
 const { google } = require("googleapis");
-const {uploadFileAndGetUrl} = require("./drive.controller");
+const { uploadFileAndGetUrl } = require("./drive.controller");
 
 // @desc to get all the core body members of particular year
 // @API GET /members/:year
@@ -61,6 +61,7 @@ const getYears = errorHandler(async (req, res) => {
   const yearDocuments = await MemberModel.find();
 
   const years = yearDocuments.flatMap((yearDocument) => yearDocument.year);
+  years.sort((a, b) => b.localeCompare(a));
 
   res.status(200).json(years);
 });
@@ -104,14 +105,14 @@ const addMember = errorHandler(async (req, res) => {
 
   let image;
   if (req.file) {
-    
+
     try {
       const tempPath = path.join(__dirname, "memberPhoto.jpg");
       fs.writeFileSync(tempPath, req.file.buffer);
 
       // Upload using event ID instead of title
       image = await uploadFileAndGetUrl(tempPath);
-      
+
 
       fs.unlinkSync(tempPath);
     } catch (error) {
@@ -131,7 +132,7 @@ const addMember = errorHandler(async (req, res) => {
     image,
     contributions: [],
   };
-  
+
   yearDocument.members.push(member);
   await yearDocument.save();
   res.status(200).json(yearDocument.members);
@@ -157,9 +158,18 @@ const editMember = errorHandler(async (req, res) => {
       return res.status(400).json({ message: "Failed to edit: Year not found" });
     }
     let image;
+    const logPath = path.join(__dirname, "..", "member_debug.log");
+    fs.appendFileSync(logPath, `\n\n[editMember] Request for ID: ${id}\n`);
+    fs.appendFileSync(logPath, `[editMember] Body: ${JSON.stringify(req.body)}\n`);
+    if (req.file) {
+      fs.appendFileSync(logPath, `[editMember] req.file IS PRESENT: ${req.file.originalname}, size: ${req.file.size}\n`);
+    } else {
+      fs.appendFileSync(logPath, `[editMember] req.file is MISSING\n`);
+    }
+
     if (req.file) {
       try {
-        const tempPath = path.join(__dirname, "memberPhoto.jpg");
+        const tempPath = path.join(__dirname, `memberPhoto_${Date.now()}.jpg`);
         fs.writeFileSync(tempPath, req.file.buffer);
 
         // Upload image and get URL
@@ -184,7 +194,7 @@ const editMember = errorHandler(async (req, res) => {
         position,
         mobileNo,
         email,
-        // image: image || yearDocument.members[existingMemberIndex].image, // Keep old image if no new one
+        image: image || yearDocument.members[existingMemberIndex].image, // Fix: Use new image if uploaded, otherwise keep existing
       });
     } else {
       return res.status(404).json({ message: "Member not found" });
@@ -193,7 +203,7 @@ const editMember = errorHandler(async (req, res) => {
     await yearDocument.save();
 
     const updatedMember = yearDocument.members[existingMemberIndex];
-
+    console.log("Member updated successfully, sending back image:", updatedMember.image);
     res.status(200).json({ message: "Member updated successfully", member: updatedMember });
   } catch (error) {
     console.error("Edit Member Error:", error);
@@ -205,8 +215,8 @@ const editMember = errorHandler(async (req, res) => {
 // @route PUT /members/contributions/:year/:id/
 const addContribution = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  const { description} = req.body;
-  const yearDocument = await MemberModel.findOne({ year});
+  const { description } = req.body;
+  const yearDocument = await MemberModel.findOne({ year });
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });
@@ -218,19 +228,19 @@ const addContribution = errorHandler(async (req, res) => {
   }
 
   let image;
-    if (req.file) {
-      try {
-        const tempPath = path.join(__dirname, "contributionPhoto.jpg");
-        fs.writeFileSync(tempPath, req.file.buffer);
+  if (req.file) {
+    try {
+      const tempPath = path.join(__dirname, "contributionPhoto.jpg");
+      fs.writeFileSync(tempPath, req.file.buffer);
 
-        // Upload image and get URL
-        image = await uploadFileAndGetUrl(tempPath);
-        fs.unlinkSync(tempPath);
-      } catch (error) {
-        console.error("Image Upload Error:", error);
-        return res.status(500).json({ message: "Failed to upload image" });
-      }
+      // Upload image and get URL
+      image = await uploadFileAndGetUrl(tempPath);
+      fs.unlinkSync(tempPath);
+    } catch (error) {
+      console.error("Image Upload Error:", error);
+      return res.status(500).json({ message: "Failed to upload image" });
     }
+  }
 
   const newContribution = {
     description,
@@ -247,8 +257,8 @@ const addContribution = errorHandler(async (req, res) => {
 // @route PUT /members/eventcontribution/:year/:id/
 const eventContribution = errorHandler(async (req, res) => {
   const { year, id } = req.params;
-  const { rollNo, description, eventId, eventName} = req.body;
-  const yearDocument = await MemberModel.findOne({ year});
+  const { rollNo, description, eventId, eventName } = req.body;
+  const yearDocument = await MemberModel.findOne({ year });
 
   if (!yearDocument) {
     return res.status(404).json({ message: "Member not found in this year" });
@@ -260,19 +270,19 @@ const eventContribution = errorHandler(async (req, res) => {
   }
 
   let image;
-    if (req.file) {
-      try {
-        const tempPath = path.join(__dirname, "contributionPhoto.jpg");
-        fs.writeFileSync(tempPath, req.file.buffer);
+  if (req.file) {
+    try {
+      const tempPath = path.join(__dirname, "contributionPhoto.jpg");
+      fs.writeFileSync(tempPath, req.file.buffer);
 
-        // Upload image and get URL
-        image = await uploadFileAndGetUrl(tempPath);
-        fs.unlinkSync(tempPath);
-      } catch (error) {
-        console.error("Image Upload Error:", error);
-        return res.status(500).json({ message: "Failed to upload image" });
-      }
+      // Upload image and get URL
+      image = await uploadFileAndGetUrl(tempPath);
+      fs.unlinkSync(tempPath);
+    } catch (error) {
+      console.error("Image Upload Error:", error);
+      return res.status(500).json({ message: "Failed to upload image" });
     }
+  }
 
   const newContribution = {
     description,
@@ -294,8 +304,8 @@ const eventContribution = errorHandler(async (req, res) => {
 const deleteMember = errorHandler(async (req, res) => {
   const { year, id } = req.params;
   const yearDocument = await MemberModel.findOneAndUpdate(
-    { year: year},
-    { $pull: { members: { _id: id } } }, 
+    { year: year },
+    { $pull: { members: { _id: id } } },
     { new: true }
   );
 
@@ -340,7 +350,7 @@ const deleteContribution = errorHandler(async (req, res) => {
     // Save the updated document
     await yearDocument.save();
 
-    res.status(200).json({ message: "Contribution deleted successfully", member:member });
+    res.status(200).json({ message: "Contribution deleted successfully", member: member });
   } catch (error) {
     console.error("Delete Contribution Error:", error);
     res.status(500).json({ message: "Internal server error" });

@@ -2,9 +2,10 @@
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-color);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--card-bg);
+  color: var(--text-color);
 }
 
 .add-event-form h2 {
@@ -27,9 +28,11 @@
 .form-group select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-color);
   border-radius: 4px;
   box-sizing: border-box;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 textarea {
@@ -41,6 +44,7 @@ textarea {
   justify-content: center;
   margin-top: 20px;
 }
+
 .btn-submit {
   padding: 10px 15px;
   background-color: #003366;

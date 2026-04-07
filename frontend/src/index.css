@@ -1,3 +1,33 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #162978;
+  --nav-bg: #dff4f3;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --button-hover: #e0e0e0;
+  --button-text: #162978;
+}
+
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --nav-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  --button-hover: #333333;
+  --button-text: black;
+}
+
+select {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+option {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +35,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 code {

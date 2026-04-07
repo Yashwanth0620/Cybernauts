@@ -1,61 +1,57 @@
 .winners-container {
-    max-width: 600px;
-    margin: auto;
+    max-width: 500px;
+    margin: 50px auto;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
     background-color: #f9f9f9;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 25px;
-    margin-bottom: 35px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
 }
 
-.winners-container input[type="text"],
-.winners-container input[type="number"],
+.winners-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.winners-container input,
 .winners-container select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
     font-size: 16px;
 }
 
-.winners-container input[type="text"]:focus,
-.winners-container input[type="number"]:focus,
+.winners-container input:focus,
 .winners-container select:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
 .member-input {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    gap: 10px;
 }
 
 .member-input input {
     flex: 1;
-    margin-right: 10px; 
-}
-
-.member-input input:last-child {
-    margin-right: 0; 
 }
 
 .submit-btn {
-    background-color: #003366; 
-    color: white; 
-    padding: 12px; 
-    font-size: 18px; 
-    border: none; 
-    border-radius: 5px;
-    cursor: pointer;
     width: 100%;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .submit-btn:hover {
-    background-color: #002244;
+    background-color: #0056b3;
 }

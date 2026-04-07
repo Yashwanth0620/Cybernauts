@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider } from "./AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 import Home from "./components/Home";
 import Events from "./components/Events";
@@ -36,6 +37,9 @@ import ContributionModal from "./components/Admin/ContributionModal";
 import AddWinners from "./components/Admin/AddWinners";
 import EventDetails from "./components/EventDetails";
 import RegisterEvent from "./components/RegisterEvent";
+import AdminContact from "./components/Admin/AdminContact";
+import FeedbackForm from "./components/FeedbackForm";
+import Dashboard from "./components/Admin/Dashboard";
 
 
 function App() {
@@ -49,7 +53,7 @@ function App() {
 
         {/* mixed pages */}
         <Route path="/members" element={<Members />} />
-        
+
         <Route path="/events" element={<Events />} />
         <Route path="/blog" element={<Blog />} />
         <Route
@@ -60,6 +64,7 @@ function App() {
           path="/events/upcoming"
           element={<RegisterEvent />}
         />
+        <Route path="/events/:id/feedback" element={<FeedbackForm />} />
         {/* admin specific pages */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
@@ -71,7 +76,8 @@ function App() {
           path="/admin/edit-event"
           element={<PrivateRoute element={<EditEventForm />} />}
         />
-        <Route path="/events/addwinners" element={<PrivateRoute element={<AddWinners /> }/>}/>
+        <Route path="/events/addwinners" element={<PrivateRoute element={<AddWinners />} />} />
+
         <Route
           path="/admin/add-blog"
           element={<PrivateRoute element={<AddBlogForm />} />}
@@ -91,18 +97,25 @@ function App() {
         <Route
           path="/admin/view-members/profile"
           element={<PrivateRoute element={<MemberProfile />} />}
-          />
+        />
+        <Route
+          path="/admin/contacts"
+          element={<PrivateRoute element={<AdminContact />} />}
+        />
+        <Route path="/admin/dashboard" element={<PrivateRoute element={<Dashboard/>}/>} />
+
+     
         <Route
           path="/superadmin"
-          element={<PrivateRoute element={< SuperAdminProfile/>} />} />
+          element={<PrivateRoute element={< SuperAdminProfile />} />} />
         <Route
           path="*"
-          element={< NotFound/>}  />
+          element={< NotFound />} />
         <Route
           path="/events/eventcontribution"
-          element={< EventContribution/>}  />
-       
-       
+          element={< EventContribution />} />
+
+
       </Routes>
       <Footer />
     </div>
@@ -111,11 +124,13 @@ function App() {
 
 function WrappedApp() {
   return (
-    <AuthProvider>
-      <Router>
-        <App />
-      </Router>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <App />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

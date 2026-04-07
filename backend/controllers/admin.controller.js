@@ -7,6 +7,7 @@ const adminModel = require("../models/admin.model");
 const bcrypt = require("bcryptjs");
 const eventModel = require("../models/event.model");
 const jwt = require("jsonwebtoken");
+const ExcelJS = require("exceljs");
 
 const {
   deleteFileFromUrl,
@@ -39,44 +40,82 @@ const addEvent = errorHandler(async (req, res) => {
 
   // Handle optional poster upload
   let posterFile = null;
+
+  const logPath = path.join(__dirname, "..", "debug.log");
+  fs.appendFileSync(logPath, `[AddEvent] Request received. Has file: ${!!req.file}\n`);
+
   if (req.file) {
     try {
       const tempPath = path.join(__dirname, "tempPoster.jpg");
       fs.writeFileSync(tempPath, req.file.buffer);
 
+      fs.appendFileSync(logPath, `[AddEvent] Uploading poster...\n`);
       // Upload using event ID instead of title
       posterFile = await uploadFileAndGetUrl(tempPath, "poster");
+      fs.appendFileSync(logPath, `[AddEvent] Poster uploaded: ${posterFile}\n`);
 
-      fs.unlinkSync(tempPath);
+      // Clean up temp file
+      if (fs.existsSync(tempPath)) {
+        fs.unlinkSync(tempPath);
+      }
+
+      // If upload failed but didn't throw, log warning
+      if (!posterFile) {
+        console.warn("Poster upload returned null/undefined, continuing without poster");
+      }
     } catch (error) {
-      res.status(500);
-      throw new Error("Failed to upload event poster");
+      console.error("Error uploading poster:", error);
+      // Don't fail the entire event creation if poster upload fails
+      // Just log the error and continue without poster
+      if (fs.existsSync(path.join(__dirname, "tempPoster.jpg"))) {
+        try {
+          fs.unlinkSync(path.join(__dirname, "tempPoster.jpg"));
+        } catch (unlinkError) {
+          console.error("Error deleting temp file:", unlinkError);
+        }
+      }
+      // Continue without poster - don't throw error
     }
   }
 
-  faculty = event.faculty.split(",");
-  chiefGuest = event.chiefGuest.split(",");
+  // Handle faculty and chiefGuest - split if they exist
+  let faculty = [];
+  if (event.faculty && typeof event.faculty === 'string' && event.faculty.trim() !== '') {
+    faculty = event.faculty.split(",").map(f => f.trim()).filter(f => f);
+  } else if (Array.isArray(event.faculty)) {
+    faculty = event.faculty;
+  }
+
+  let chiefGuest = [];
+  if (event.chiefGuest && typeof event.chiefGuest === 'string' && event.chiefGuest.trim() !== '') {
+    chiefGuest = event.chiefGuest.split(",").map(c => c.trim()).filter(c => c);
+  } else if (Array.isArray(event.chiefGuest)) {
+    chiefGuest = event.chiefGuest;
+  }
 
   // Create event object
-
   const newEvent = {
     ...event,
     faculty,
     chiefGuest,
-    poster: posterFile,
+    poster: posterFile || event.poster || "",
   };
 
   // Save event to database
-
   try {
     const createdEvent = await eventModel.create(newEvent);
     res
       .status(200)
       .json({ message: "Event added successfully", eventId: createdEvent._id });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: err.message });
+    console.error("Error creating event:", err);
+    // Handle validation errors
+    if (err.name === 'ValidationError') {
+      const errors = Object.values(err.errors).map(e => e.message).join(', ');
+      res.status(400).json({ message: `Validation error: ${errors}`, error: err.message });
+    } else {
+      res.status(500).json({ message: "Internal server error", error: err.message });
+    }
   }
 });
 
@@ -84,9 +123,13 @@ const addEvent = errorHandler(async (req, res) => {
 // @API PUT /admin/events/:id
 const updateEvent = errorHandler(async (req, res) => {
   const id = req.params.id;
+  const logPath = path.join(__dirname, "..", "debug.log");
+  fs.appendFileSync(logPath, `[${new Date().toISOString()}] Update Event Request ID: ${id}\n`);
+
   const event = await eventModel.findById(id);
 
   if (!event) {
+    fs.appendFileSync(logPath, `[${new Date().toISOString()}] Event not found for ID: ${id}\n`);
     res.status(404);
     throw new Error("Event not found");
   }
@@ -97,14 +140,19 @@ const updateEvent = errorHandler(async (req, res) => {
   try {
     // Handle poster update (if provided)
     if (req.files && req.files.poster) {
+      fs.appendFileSync(logPath, `[${new Date().toISOString()}] Processing new poster upload...\n`);
       if (event.poster) {
+        fs.appendFileSync(logPath, `[${new Date().toISOString()}] Deleting old poster: ${event.poster}\n`);
         await deleteFileFromUrl(event.poster); // Delete previous poster
       }
 
       const tempPath = path.join(__dirname, "tempPoster.jpg");
       fs.writeFileSync(tempPath, req.files.poster[0].buffer); // Save new poster temporarily
 
+      fs.appendFileSync(logPath, `[${new Date().toISOString()}] Uploading new poster...\n`);
       updatedData.poster = await uploadFileAndGetUrl(tempPath, "poster"); // Upload new poster
+      fs.appendFileSync(logPath, `[${new Date().toISOString()}] New poster URL: ${updatedData.poster}\n`);
+
       fs.unlinkSync(tempPath); // Remove temp file
     }
 
@@ -152,9 +200,13 @@ const updateEvent = errorHandler(async (req, res) => {
       .status(200)
       .json({ message: "Event Updated Successfully", updatedEvent });
   } catch (error) {
+    const logPath = path.join(__dirname, "..", "debug.log");
+    const logMessage = `[${new Date().toISOString()}] Error updating event: ${error.message}\nStack: ${error.stack}\n\n`;
+    fs.appendFileSync(logPath, logMessage);
+
     console.error("Error updating event:", error);
     res.status(500);
-    throw new Error("Failed to update event");
+    throw new Error(`Failed to update event: ${error.message}`);
   }
 });
 
@@ -180,7 +232,7 @@ const deleteEvent = errorHandler(async (req, res) => {
 const addUpdates = errorHandler(async (req, res) => {
   const update = req.body;
   await updatesModel.create(update);
-  res.status(200).json({ message: "update added successfully" });
+  res.status(200).json({ success: true, message: "update added successfully" });
 });
 
 // @desc to send mail for all event members
@@ -319,6 +371,128 @@ const deleteAdmin = errorHandler(async (req, res) => {
   res.status(200).json({ message: "Admin deleted successfully" });
 });
 
+// @desc Export event registrations to Excel
+// @API GET /admin/events/:id/export
+// @access ADMIN
+const exportEventRegistrations = errorHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const event = await eventModel.findById(id);
+  if (!event) {
+    res.status(404);
+    throw new Error("Event not found");
+  }
+
+  // Create a new workbook and worksheet
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet(`${event.title} - Registrations`);
+
+  // Add event info at the top
+  worksheet.addRow([`Event: ${event.title}`]);
+  worksheet.addRow([`Type: ${event.type || "N/A"}`]);
+  worksheet.addRow([`Date: ${new Date(event.startDate).toLocaleDateString()}`]);
+  worksheet.addRow([`Total Registrations: ${event.participants?.length || 0}`]);
+  worksheet.addRow([]); // Empty row
+
+  // Define columns and add header
+  worksheet.columns = [
+    { header: "S.No", key: "sno", width: 10 },
+    { header: "Name", key: "name", width: 30 },
+    { header: "Email", key: "email", width: 35 },
+    { header: "Phone", key: "phone", width: 15 },
+    { header: "Roll Number", key: "rollNo", width: 15 },
+    { header: "Branch", key: "branch", width: 15 },
+    { header: "Year", key: "year", width: 10 },
+    { header: "Registered At", key: "registeredAt", width: 20 },
+  ];
+
+  // Style the header row (row 6 after info rows)
+  const headerRow = worksheet.getRow(6);
+  headerRow.font = { bold: true };
+  headerRow.fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFD3D3D3" },
+  };
+
+  // Add participants data
+  if (event.participants && event.participants.length > 0) {
+    event.participants.forEach((participant, index) => {
+      worksheet.addRow({
+        sno: index + 1,
+        name: participant.name || "",
+        email: participant.email || "",
+        phone: participant.phone || "",
+        rollNo: participant.rollNo || "",
+        branch: participant.branch || "",
+        year: participant.year || "",
+        registeredAt: participant.registeredAt
+          ? new Date(participant.registeredAt).toLocaleString()
+          : "",
+      });
+    });
+  } else {
+    worksheet.addRow({
+      sno: "-",
+      name: "No registrations yet",
+      email: "",
+      phone: "",
+      rollNo: "",
+      branch: "",
+      year: "",
+      registeredAt: "",
+    });
+  }
+
+  // Set the filename
+  const fileName = `${event.title.replace(/[^a-z0-9]/gi, "_")}_registrations_${Date.now()}.xlsx`;
+
+  // Set response headers
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${fileName}"`
+  );
+
+  // Write to response
+  await workbook.xlsx.write(res);
+  res.end();
+});
+
+// @desc Add a winner to an event
+// @API POST /admin/events/:id/winners
+const addWinner = errorHandler(async (req, res) => {
+  const { id } = req.params;
+  const winnerData = req.body; // Expects { position, prizeMoney, type, teamSize, members }
+
+  const logPath = path.join(__dirname, "..", "debug.log");
+  fs.appendFileSync(logPath, `[${new Date().toISOString()}] AddWinner Request. EventID: ${id}\nData: ${JSON.stringify(winnerData)}\n`);
+
+  try {
+    const event = await eventModel.findById(id);
+    if (!event) {
+      fs.appendFileSync(logPath, `[${new Date().toISOString()}] Event not found: ${id}\n`);
+      res.status(404);
+      throw new Error("Event not found");
+    }
+
+    event.winners.push(winnerData);
+    await event.save();
+    fs.appendFileSync(logPath, `[${new Date().toISOString()}] Winner added successfully.\n`);
+
+    res.status(200).json({ message: "Winner added successfully", event });
+  } catch (error) {
+    fs.appendFileSync(logPath, `[${new Date().toISOString()}] Error in addWinner: ${error.message}\n`);
+    res.status(500);
+    throw error;
+  }
+});
+
+
+
 // also add controllers for members functionality
 
 module.exports = {
@@ -335,4 +509,6 @@ module.exports = {
   validateAdmin,
   uploadFileAndGetUrl,
   fetchAdmins,
+  exportEventRegistrations,
+  addWinner,
 };

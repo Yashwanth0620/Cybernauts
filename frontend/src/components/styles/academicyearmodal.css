@@ -8,7 +8,7 @@
 }
 
 /* Main BorrowerForm styling */
-.AcademicYear .overlay.active ~ .navbar {
+.AcademicYear .overlay.active~.navbar {
   display: none;
 }
 
@@ -17,23 +17,25 @@
   flex-direction: column;
   justify-content: center;
 }
-.AcademicYear select{
-  border : 2px solid rgba(0, 0, 0, 0.5);
+
+.AcademicYear select {
+  border: 2px solid var(--text-color);
   border-radius: 8px;
   font-size: 15px;
   padding: .3rem;
-  width :200px;
-  height :2rem
+  width: 200px;
+  height: 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 /* FrndBorrowForm container styling */
 .AcademicYear .AskAcademic {
   margin: 1.5rem;
-  background: white;
+  background: var(--card-bg);
+  color: var(--text-color);
   border-radius: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -20px,
-              rgba(0, 0, 0, 0.3) 0px 20px 40px -30px,
-              rgba(10, 37, 64, 0.35) 0px -2px 4px 0px inset;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -57,7 +59,7 @@
 /* Item styling */
 .AcademicYear .item p {
   font-size: 16px;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 .AcademicYear .item {
@@ -71,15 +73,18 @@
 /* Input field styling */
 .AcademicYear input[type='text'] {
   font-family: 'monospace';
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  width:  17rem;
+  border: 2px solid var(--text-color);
+  width: 17rem;
   height: 2.5rem;
   font-size: 18px;
   border-radius: 12px;
   padding: 0.7rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
+
 .AcademicYear input[type='text']:hover {
-  border: 3px solid black;
+  border: 3px solid var(--text-color);
 }
 
 /* Button container styling */
@@ -108,6 +113,7 @@
 .AcademicYear .butn button:hover {
   opacity: 1;
 }
+
 .AcademicYear .butn button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
@@ -136,7 +142,7 @@
   background: none;
   border: none;
   font-size: 22px;
-  color: #555;
+  color: var(--text-color);
   cursor: pointer;
   z-index: 1001;
   transition: color 0.3s ease;
@@ -149,36 +155,40 @@
 /* Responsive styling */
 @media screen and (max-width: 900px) {
   .AcademicYear .AskAcademic {
-      width: 85%;
+    width: 85%;
   }
 }
 
 @media screen and (max-width: 800px) {
   .AcademicYear h1 {
-      font-size: 2.5rem;
+    font-size: 2.5rem;
   }
+
   .AcademicYear .butn button {
-      width: 130px;
+    width: 130px;
   }
 }
 
 @media screen and (max-width: 700px) {
   .AcademicYear .butn button {
-      width: 120px;
+    width: 120px;
   }
 }
 
 @media screen and (max-width: 400px) {
   .AcademicYear h1 {
-      font-size: 1.8rem;
+    font-size: 1.8rem;
   }
+
   .AcademicYear {
-      margin: 1.5rem;
+    margin: 1.5rem;
   }
+
   .AcademicYear .butn button {
-      width: 90px;
+    width: 90px;
   }
+
   .AcademicYear .item {
-      gap: 0.8rem;
+    gap: 0.8rem;
   }
 }
