@@ -100,6 +100,14 @@ export default function NavBar() {
                 <p href="#">|</p>
                 <Link
                   onClick={() => { if (!sm) setLinks(false) }}
+                  to="/admin/dashboard"
+                  className="link"
+                >
+                  Dashboard
+                </Link>
+                <p href="#">|</p>
+                <Link
+                  onClick={() => { if (!sm) setLinks(false) }}
                   to="/admin/contacts"
                   className="link"
                 >

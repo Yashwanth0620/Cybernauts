@@ -1,0 +1,35 @@
+.dashboard {
+  padding: 20px;
+}
+.dashboard h2{
+  text-decoration: underline;
+}
+
+.cards {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.card {
+  padding: 15px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  font-weight: bold;
+  min-width: 150px;
+}
+.gauge-text{
+  display: flex;
+  justify-content: center;
+}
+.charts {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  
+}
+
+.chart-box {
+  width: 300px;
+}

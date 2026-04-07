@@ -39,6 +39,7 @@ import EventDetails from "./components/EventDetails";
 import RegisterEvent from "./components/RegisterEvent";
 import AdminContact from "./components/Admin/AdminContact";
 import FeedbackForm from "./components/FeedbackForm";
+import Dashboard from "./components/Admin/Dashboard";
 
 
 function App() {
@@ -101,6 +102,9 @@ function App() {
           path="/admin/contacts"
           element={<PrivateRoute element={<AdminContact />} />}
         />
+        <Route path="/admin/dashboard" element={<PrivateRoute element={<Dashboard/>}/>} />
+
+     
         <Route
           path="/superadmin"
           element={<PrivateRoute element={< SuperAdminProfile />} />} />

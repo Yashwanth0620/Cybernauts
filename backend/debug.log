@@ -216,3 +216,8 @@ Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"memb
 [2026-03-25T06:36:35.268Z] AddWinner Request. EventID: 67ddac85ea9e734b267360cd
 Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"rakesh","collegename":"cvr"}]}
 [2026-03-25T06:36:35.287Z] Winner added successfully.
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=11DyjotE4ruPBzSoUHDBMnZ71i2nJ2iKQ
