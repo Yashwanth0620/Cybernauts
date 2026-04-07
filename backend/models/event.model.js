@@ -88,6 +88,10 @@ const eventSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  feedbackEmailSent: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Event", eventSchema);

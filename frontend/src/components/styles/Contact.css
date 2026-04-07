@@ -7,7 +7,7 @@
     padding: 50px;
     max-width: 100%;
     margin: 0 auto;
-    margin: 0 auto;
+
     background-color: var(--bg-color);
     box-shadow: var(--shadow);
 }
@@ -30,14 +30,12 @@
 
 .contact-form {
     width: 38%;
-    height: 320px;
-    padding: 20px;
-    border-radius: 30px;
+    height: auto;
+    padding: 40px;
     border-radius: 30px;
     background-color: var(--card-bg);
-    border: 1px solid var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: var(--shadow);
-    margin-right: 130px;
 }
 
 .contact-form form {
@@ -53,13 +51,16 @@
 
 .contact-form input,
 .contact-form textarea {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
     font-size: 16px;
-    width: 90%;
+    width: 100%;
+    box-sizing: border-box;
     background-color: var(--bg-color);
     color: var(--text-color);
+    border: 1px solid #ccc;
+    font-family: inherit;
 }
 
 .contact-form input::placeholder,
@@ -122,8 +123,5 @@
         margin-right: 0;
     }
 
-    nav .nav-menu li {
-        display: block;
-        margin: 10px 0;
-    }
+
 }

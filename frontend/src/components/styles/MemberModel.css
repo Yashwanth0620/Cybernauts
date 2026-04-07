@@ -1,88 +1,100 @@
 /* Overlay background */
 .modal-overlay {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.09);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  /* Modal box */
-  .modal {
-    background: white;
-    padding: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-radius: 8px;
-    width: 350px;
-    z-index: 1001;
-    font-family: "roboto", sans-serif;
-  }
-  
-  /* Heading */
-  .modal h2 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Labels and inputs */
-  .modal label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  .modal select{
-    border: 2px solid rgba(0, 0, 0, 0.6);
-    margin-left: .9rem;
-    padding: .3rem;
-    font-family:  "roboto", sans-serif;
-    font-size: 15px;
-  }
-  .modal select {
-    position: relative;
-    z-index: 1;
-  }
-  .modal select option {
-    position: relative;
-    top: -20px; /* Adjust to move options up */
-  }
-  .modal h3{
-    margin: 1rem;
-  }
-  .modal input {
-    width: 100%;
-    padding: 6px;
-    margin-bottom: 6px;
-    font-family:  monospace;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.6) ;
-  }
-  .modal input .modal-img{
-    border: none;
-  }
-  /* Buttons */
-  .modal-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .modal-buttons button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-  }
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.09);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  
-  .modal-buttons button:first-child {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .modal-buttons button:last-child {
-    background-color: #ccc;
-  }
-  
+/* Modal box */
+.modal {
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  width: 350px;
+  z-index: 1001;
+  font-family: "roboto", sans-serif;
+}
+
+/* Heading */
+.modal h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Labels and inputs */
+.modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal select {
+  border: 2px solid var(--text-color);
+  margin-left: .9rem;
+  padding: .3rem;
+  font-family: "roboto", sans-serif;
+  font-size: 15px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.modal select {
+  position: relative;
+  z-index: 1;
+}
+
+.modal select option {
+  position: relative;
+  top: -20px;
+  /* Adjust to move options up */
+}
+
+.modal h3 {
+  margin: 1rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 6px;
+  font-family: monospace;
+  border-bottom: 1px solid var(--text-color);
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+.modal input .modal-img {
+  border: none;
+}
+
+/* Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.modal-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-buttons button:last-child {
+  background-color: #ccc;
+}

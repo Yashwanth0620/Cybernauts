@@ -132,4 +132,67 @@ const submitFeedback = errorHandler(async (req, res) => {
     res.status(201).json({ message: "Feedback submitted successfully!" });
 });
 
-module.exports = { sendFeedbackRequest, submitFeedback };
+// Automated feedback method
+const sendAutomatedFeedbackRequests = async () => {
+    try {
+        const now = new Date();
+        const events = await eventModel.find({
+            feedbackEmailSent: false
+        });
+
+        for (const event of events) {
+            // Calculate actual end datetime including time
+            const endDate = new Date(event.endDate);
+            if (event.endTime) {
+                const [hours, minutes] = event.endTime.split(':').map(Number);
+                endDate.setHours(hours, minutes, 0, 0);
+            } else {
+                endDate.setHours(23, 59, 59, 999);
+            }
+
+            if (endDate >= now) continue; // Event is not completed yet
+
+            // If completed but no participants, just mark as sent
+            if (!event.participants || event.participants.length === 0) {
+                event.feedbackEmailSent = true;
+                await event.save();
+                continue;
+            }
+
+            const feedbackLink = `${process.env.FRONTEND_URI || 'http://localhost:3000'}/events/${event._id}/feedback`;
+
+            for (const participant of event.participants) {
+                if (participant.email) {
+                    const mailOptions = {
+                        from: process.env.MAIL,
+                        to: participant.email,
+                        subject: `We'd love your feedback on ${event.title}`,
+                        html: `
+                          <p>Dear ${participant.name},</p>
+                          <p>Thank you for attending <strong>${event.title}</strong>.</p>
+                          <p>We value your opinion and would love to hear your thoughts!</p>
+                          <p>Please take a moment to rate the event and leave a comment:</p>
+                          <a href="${feedbackLink}" style="display: inline-block; padding: 10px 20px; background-color: #162978; color: white; text-decoration: none; border-radius: 5px;">Give Feedback</a>
+                          <p>Or click here: <a href="${feedbackLink}">${feedbackLink}</a></p>
+                          <br/>
+                          <p>Best Regards,</p>
+                          <p>${event.organizer || "Cybernauts Team"}</p>
+                        `,
+                    };
+                    try {
+                        await transporter.sendMail(mailOptions);
+                    } catch (err) {
+                        console.error("Failed automated feedback send to:", participant.email, err);
+                    }
+                }
+            }
+
+            event.feedbackEmailSent = true;
+            await event.save();
+        }
+    } catch (error) {
+        console.error("Error running automated feedback requests:", error);
+    }
+};
+
+module.exports = { sendFeedbackRequest, submitFeedback, sendAutomatedFeedbackRequests };

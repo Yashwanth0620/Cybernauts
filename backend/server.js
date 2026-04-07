@@ -5,6 +5,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const errorHandler = require("./middlewares/errorHandler");
 const { isAuthenticated } = require("./middlewares/authMiddleware");
+const cron = require("node-cron");
+const { sendAutomatedFeedbackRequests } = require("./controllers/feedback.controller");
 dotenv.config();
 
 const app = express();
@@ -41,6 +43,13 @@ app.use("/certificate", certificateRoutes);
 app.use("/feedback", feedbackRoutes);
 
 app.use(errorHandler);
+
+// Schedule automated feedback to run every hour
+cron.schedule("0 * * * *", () => {
+  console.log("Running automated feedback check...");
+  sendAutomatedFeedbackRequests();
+});
+
 app.listen(PORT, () => {
   console.log(`Sever listening on port ${PORT}...`);
 });

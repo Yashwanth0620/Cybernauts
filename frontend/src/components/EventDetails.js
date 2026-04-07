@@ -7,6 +7,7 @@ import DeleteComformModal from "./Admin/DeleteComformModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContributionModal from "./Admin/ContributionModal";
+import SuggestionsModal from "./Admin/SuggestionsModal";
 
 export default function EventDetails() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -15,6 +16,11 @@ export default function EventDetails() {
   const [isContributeModalOpen, setIsContributeModalOpen] = useState(false);
   const openContributeModal = () => setIsContributeModalOpen(true);
   const closeContributeModal = () => setIsContributeModalOpen(false);
+
+  const [isSuggestionsModalOpen, setIsSuggestionsModalOpen] = useState(false);
+  const openSuggestionsModal = () => setIsSuggestionsModalOpen(true);
+  const closeSuggestionsModal = () => setIsSuggestionsModalOpen(false);
+
   const navigate = useNavigate();
   const { role } = useAuth();
   const isAdmin = role === "admin";
@@ -26,6 +32,9 @@ export default function EventDetails() {
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains("contributionmodal-overlay")) {
       closeContributeModal();
+    }
+    if (e.target.classList.contains("suggestionsmodal-overlay")) {
+      closeSuggestionsModal();
     }
   };
 
@@ -117,6 +126,11 @@ export default function EventDetails() {
             <p className="people" style={{ marginTop: '20px' }}>
               <b>Total Registrations: </b> {event.participants?.length || 0}
             </p>
+            {event.averageRating > 0 && (
+              <p className="people" style={{ marginTop: '5px' }}>
+                <b>Average Rating: </b> {event.averageRating.toFixed(1)} / 5
+              </p>
+            )}
 
             {/* Image Grid */}
             <div className="image-grid">
@@ -173,6 +187,13 @@ export default function EventDetails() {
                   style={{ backgroundColor: '#28a745' }}
                 >
                   Export Data
+                </button>
+                <button
+                  onClick={openSuggestionsModal}
+                  className="admin-btn"
+                  style={{ backgroundColor: '#17a2b8' }}
+                >
+                  View Suggestions
                 </button>
                 <button
                   onClick={openContributeModal}
@@ -284,6 +305,29 @@ export default function EventDetails() {
                   closecontribute={closeContributeModal}
                   eventId={event._id}
                   eventName={event.title}
+                />
+              </div>
+            )}
+            {isSuggestionsModalOpen && (
+              <div
+                className="suggestionsmodal-overlay"
+                onMouseDown={handleOverlayClick}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  zIndex: 1000,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <SuggestionsModal
+                  closeSuggestions={closeSuggestionsModal}
+                  feedbacks={event.feedbacks}
                 />
               </div>
             )}

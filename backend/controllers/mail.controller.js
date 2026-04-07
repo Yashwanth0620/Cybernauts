@@ -9,34 +9,30 @@ const announce = errorHandler(async (req, res) => {
   // branches is expected to be an array or a JSON string
   const selectedBranches = typeof branches === 'string' ? JSON.parse(branches) : branches || [];
 
-  const fs = require("fs");
-  const path = require("path");
-  const publicDir = path.join(__dirname, "..", "public");
-
-  let excelFile;
-  try {
-    const files = fs.readdirSync(publicDir);
-    excelFile = files.find(file => file.endsWith(".xlsx") || file.endsWith(".xls"));
-  } catch (error) {
-    return res.status(500).json({ message: "Failed to access public folder." });
+  if (!req.file) {
+    return res.status(400).json({ message: "No Excel file uploaded." });
   }
 
-  if (!excelFile) {
-    return res.status(404).json({ message: "No Excel file found in public folder." });
-  }
-
-  const filePath = path.join(publicDir, excelFile);
   const workbook = new ExcelJS.Workbook();
 
   try {
-    await workbook.xlsx.readFile(filePath);
+    await workbook.xlsx.load(req.file.buffer);
   } catch (error) {
-    return res.status(500).json({ message: "Failed to read the Excel file." });
+    return res.status(500).json({ message: "Failed to read the Excel file. Please ensure it is a valid .xlsx file." });
   }
 
-  const worksheet = workbook.getWorksheet(1); // Get the first worksheet
+  const worksheet = workbook.worksheets[0] || workbook.getWorksheet(1); // Get the first worksheet securely
 
   const mails = [];
+
+  const getCellValue = (cell) => {
+    if (cell === null || cell === undefined) return "";
+    if (typeof cell === "object") {
+      if (cell.text) return cell.text;
+      if (cell.richText) return cell.richText.map(t => t.text).join("");
+    }
+    return cell.toString();
+  };
 
   // Iterate over all rows (assuming first row is header)
   worksheet.eachRow((row, rowNumber) => {
@@ -47,8 +43,9 @@ const announce = errorHandler(async (req, res) => {
     const emailCell = row.getCell(3).value;
 
     if (branchCell && emailCell) {
-      const branchName = branchCell.toString().trim();
-      const name = nameCell ? nameCell.toString().trim() : "Student";
+      const branchName = getCellValue(branchCell).trim();
+      const name = getCellValue(nameCell).trim() || "Student";
+      const email = getCellValue(emailCell).trim();
 
       // Check if the branch is in the selected branches list
       // Case-insensitive comparison is safer
@@ -57,9 +54,7 @@ const announce = errorHandler(async (req, res) => {
       );
 
       if (isSelected) {
-        // Handle rich text or simple text for email
-        const email = typeof emailCell === 'object' && emailCell.text ? emailCell.text : emailCell.toString();
-        mails.push({ email: email.trim(), name: name });
+        mails.push({ email: email, name: name });
       }
     }
   });

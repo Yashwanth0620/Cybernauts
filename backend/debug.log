@@ -201,3 +201,18 @@ Stack: Error: ENOENT: no such file or directory, unlink 'C:\Users\PANDIRISAIMANI
     at C:\Users\PANDIRISAIMANISH\OneDrive\Desktop\project\Cybernauts\backend\controllers\admin.controller.js:175:12
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
 
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1yNe_1vSqfltczrKbmwP87LX-aP5jKxID
+[AddEvent] Request received. Has file: true
+[AddEvent] Uploading poster...
+[AddEvent] Poster uploaded: https://drive.google.com/thumbnail?id=1d_kY-aPkl7n_Hv0LEzNpluJCJw3JeRCS
+[2026-03-25T06:32:22.425Z] AddWinner Request. EventID: 69c38076abf57fd4e63e61d4
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"saimanish","collegename":"cvr college"}]}
+[2026-03-25T06:32:22.442Z] Winner added successfully.
+[2026-03-25T06:33:44.343Z] AddWinner Request. EventID: 67ddad32ea9e734b267360d1
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"saimanish","collegename":"cvr college"}]}
+[2026-03-25T06:33:44.356Z] Winner added successfully.
+[2026-03-25T06:36:35.268Z] AddWinner Request. EventID: 67ddac85ea9e734b267360cd
+Data: {"position":"1","prizeMoney":"5000","type":"Individual","teamSize":1,"members":[{"name":"rakesh","collegename":"cvr"}]}
+[2026-03-25T06:36:35.287Z] Winner added successfully.

@@ -2,8 +2,8 @@
     max-width: 90%;
     margin: auto;
     padding: 20px;
-    background: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
     border-radius: 10px;
     font-family: Arial, sans-serif;
     text-align: center;
@@ -14,13 +14,14 @@
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #003366;
+    color: var(--text-color);
 }
 
 /* Branch Grid - Adjusting Columns Based on Screen Size */
 .announcement-container .branch-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Auto-adjusting */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    /* Auto-adjusting */
     gap: 16px;
     justify-content: center;
     padding: 10px;
@@ -80,7 +81,7 @@
 .announcement-container .branch-name {
     font-size: 14px;
     font-weight: bold;
-    color: #222;
+    color: var(--text-color);
 }
 
 /* Submit button */
@@ -111,6 +112,8 @@
     border-radius: 6px;
     font-size: 16px;
     resize: none;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -133,10 +136,12 @@
         max-width: 95%;
         padding: 15px;
     }
+
     .announcement-container .branch-logo {
         width: 90px;
         height: 90px;
     }
+
     .announcement-container .overlay {
         width: 90px;
         height: 90px;
@@ -145,12 +150,14 @@
 
 @media (max-width: 768px) {
     .announcement-container .branch-grid {
-        grid-template-columns: repeat(3, 1fr); 
+        grid-template-columns: repeat(3, 1fr);
     }
+
     .announcement-container .branch-logo {
         width: 80px;
         height: 80px;
     }
+
     .announcement-container .overlay {
         width: 80px;
         height: 80px;
@@ -159,16 +166,19 @@
 
 @media (max-width: 600px) {
     .announcement-container .branch-grid {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
+
     .announcement-container .branch-logo {
         width: 70px;
         height: 70px;
     }
+
     .announcement-container .overlay {
         width: 70px;
         height: 70px;
     }
+
     .announcement-container .message-box {
         font-size: 14px;
     }
@@ -176,12 +186,14 @@
 
 @media (max-width: 400px) {
     .announcement-container .branch-grid {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
+
     .announcement-container .branch-logo {
         width: 60px;
         height: 60px;
     }
+
     .announcement-container .overlay {
         width: 60px;
         height: 60px;
